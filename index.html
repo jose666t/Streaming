@@ -2,211 +2,255 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>🎬 Cuentas de Streaming Gratis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎬 StreamGratis Neon - Cuentas Premium</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- New Ad Script 2 -->
+    <script src="https://shoukigaigoors.net/act/files/tag.min.js?z=9643757" data-cfasync="false" async></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        
+        :root {
+            --primary-color: #00f7ff;
+            --secondary-color: #ff00e6;
+            --danger-color: #ff416c;
+            --reset-color: #2193b0;
+            --dark-bg: #0a0a1a;
+            --dark-bg-transparent: rgba(10, 10, 26, 0.85);
+            --card-bg: #1a1a2e;
+            --text-color: #e0e0e0;
+            --glow-primary: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            --glow-secondary: 0 0 5px var(--secondary-color), 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: linear-gradient(45deg, rgba(16, 16, 42, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%), url('https://www.transparenttextures.com/patterns/cubes.png');
+            color: var(--text-color);
+            overflow-x: hidden;
         }
-        
+
+        /* --- Navbar --- */
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--dark-bg-transparent);
             backdrop-filter: blur(10px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--primary-color);
+            box-shadow: var(--glow-primary);
             padding: 15px 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
-        
+
         .nav-container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
         }
-        
+
         .logo {
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
             font-weight: 700;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary-color);
+            text-shadow: var(--glow-primary);
             text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
         }
-        
+        .logo:hover {
+            color: var(--secondary-color);
+            text-shadow: var(--glow-secondary);
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 20px;
         }
-        
+
         .nav-links li {
+            font-family: 'Orbitron', sans-serif;
             cursor: pointer;
             padding: 10px 20px;
-            border-radius: 25px;
+            border-radius: 5px;
             transition: all 0.3s ease;
             font-weight: 500;
+            border: 1px solid transparent;
         }
-        
-        .nav-links li:hover {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            transform: translateY(-2px);
+
+        .nav-links li:hover, .nav-links li.active {
+            color: var(--primary-color);
+            background: rgba(0, 247, 255, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: inset 0 0 10px rgba(0, 247, 255, 0.5);
         }
-        
-        .nav-links li.active {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-        }
-        
+
         .admin-btn {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: white;
-            border: none;
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: var(--secondary-color);
+            border: 1px solid var(--secondary-color);
             padding: 10px 20px;
-            border-radius: 25px;
+            border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
-            transition: transform 0.2s ease;
-            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: var(--glow-secondary);
         }
-        
+
         .admin-btn:hover {
-            transform: scale(1.05);
+            background: var(--secondary-color);
+            color: var(--dark-bg);
         }
-        
+
+        /* --- General Container & Sections --- */
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+            max-width: 1300px;
+            margin: 20px auto;
+            background: var(--dark-bg-transparent);
+            border-radius: 10px;
             padding: 30px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            margin-left: 20px;
-            margin-right: 20px;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
-        
-        .section {
-            display: none;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
+
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .section-header {
             text-align: center;
             margin-bottom: 40px;
         }
-        
+
         .section-header h1 {
-            font-size: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
             font-weight: 700;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary-color);
+            text-shadow: var(--glow-primary);
             margin-bottom: 10px;
         }
-        
+
         .section-header p {
-            color: #666;
+            color: #aaa;
             font-size: 1.1rem;
         }
-        
-        .stats {
+
+        /* --- Ad Placeholders --- */
+        .ad-placeholder {
+            margin: 20px auto;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border: 1px dashed var(--secondary-color);
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 60px;
+            position: relative;
+        }
+        
+        .ad-click-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        /* --- Stats Section --- */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
             margin: 30px 0;
             text-align: center;
-            gap: 20px;
         }
-        
+
         .stat-item {
-            background: white;
+            background: var(--card-bg);
             padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            flex: 1;
-            border-left: 4px solid #667eea;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 247, 255, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow-primary);
+        }
+
         .stat-number {
+            font-family: 'Orbitron', sans-serif;
             font-size: 2.5rem;
             font-weight: 700;
-            color: #667eea;
+            color: var(--primary-color);
         }
-        
+
         .stat-label {
-            color: #666;
+            color: #aaa;
             font-size: 1rem;
             margin-top: 5px;
         }
-        
+
+        /* --- Accounts Grid --- */
         .accounts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 25px;
             margin: 30px 0;
         }
-        
+
         .account-card {
-            background: white;
-            border-radius: 15px;
+            background: var(--card-bg);
+            border-radius: 10px;
             padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             border-left: 5px solid;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+            overflow: hidden;
         }
-        
         .account-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
-        
-        .account-card.taken {
-            opacity: 0.6;
-            background: #f8f9fa;
-        }
-        
         .netflix { border-left-color: #E50914; }
         .spotify { border-left-color: #1DB954; }
         .disney { border-left-color: #113CCF; }
         .amazon { border-left-color: #FF9900; }
         .hbo { border-left-color: #8A2BE2; }
         .youtube { border-left-color: #FF0000; }
-        .apple { border-left-color: #000000; }
+        .apple { border-left-color: #A2AAAD; }
         .paramount { border-left-color: #0064FF; }
         .crunchyroll { border-left-color: #FF6600; }
-        .otros { border-left-color: #667eea; }
+        .otros { border-left-color: var(--primary-color); }
         
         .service-header {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
         }
-        
+
         .service-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -214,56 +258,60 @@
             color: white;
             font-size: 24px;
             margin-right: 15px;
+            background: rgba(0,0,0,0.3);
         }
-        
+
         .service-name {
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.4rem;
             font-weight: 600;
         }
-        
+
         .account-info {
             margin-bottom: 20px;
         }
-        
+
         .account-info div {
             margin-bottom: 10px;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
             word-break: break-all;
-            border: 1px solid #e9ecef;
+            font-size: 0.9rem;
         }
-        
+
         .account-info strong {
-            color: #333;
+            color: var(--primary-color);
             display: block;
             margin-bottom: 5px;
         }
-        
-        .take-btn {
+
+        .claim-btn {
             width: 100%;
-            background: linear-gradient(45deg, #00b894, #00a085);
-            color: white;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--dark-bg);
             border: none;
             padding: 15px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
             transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
-        
-        .take-btn:hover:not(:disabled) {
-            background: linear-gradient(45deg, #00a085, #00896b);
-            transform: translateY(-2px);
+
+        .claim-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--primary-color);
         }
-        
-        .take-btn:disabled {
-            background: #ccc;
+
+        .claim-btn:disabled {
+            background: #555;
             cursor: not-allowed;
-            transform: none;
+            color: #888;
         }
-        
+
         .status-badge {
             position: absolute;
             top: 15px;
@@ -272,102 +320,56 @@
             border-radius: 15px;
             font-size: 12px;
             font-weight: 600;
+            border: 1px solid;
         }
-        
-        .available {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .taken-badge {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
+
+        .available { background: rgba(0, 255, 132, 0.1); color: #00ff84; border-color: #00ff84; }
+        .taken-badge { background: rgba(255, 0, 81, 0.1); color: #ff0051; border-color: #ff0051; }
+
+        /* --- Admin Panel & Forms --- */
         .admin-panel {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
+            background: var(--card-bg);
+            border: 1px solid var(--secondary-color);
             color: white;
             border-radius: 15px;
             padding: 30px;
         }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--primary-color); }
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            border: 1px solid #444;
+            border-radius: 5px;
             font-size: 16px;
-            background: white;
-            color: #333;
+            background: #101020;
+            color: var(--text-color);
         }
-        
-        .form-group textarea {
-            resize: vertical;
-            height: 80px;
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: var(--glow-primary);
         }
-        
+
         .btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--dark-bg);
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             transition: transform 0.2s ease;
+            margin: 5px;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-        }
-        
-        .btn-small {
-            padding: 8px 15px;
-            font-size: 14px;
-        }
-        
-        .no-accounts {
-            text-align: center;
-            color: #666;
-            font-size: 1.2rem;
-            margin: 50px 0;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .admin-accounts-list {
-            margin-top: 30px;
-        }
-        
-        .admin-account-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
+        .btn:hover { transform: translateY(-2px); }
+        .btn-add { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); }
+        .btn-danger { background: linear-gradient(45deg, var(--danger-color), #c0392b); }
+        .btn-reset { background: linear-gradient(45deg, var(--reset-color), #6dd5ed); }
+        .btn-cancel { background: #555; color: white; }
+
+        /* --- Modals --- */
         .modal {
             display: none;
             position: fixed;
@@ -375,161 +377,71 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
-        
+
         .modal-content {
-            background: white;
+            background: var(--card-bg);
             padding: 30px;
-            border-radius: 15px;
-            max-width: 400px;
+            border-radius: 10px;
+            max-width: 500px;
             width: 90%;
             text-align: center;
+            border: 1px solid var(--primary-color);
+            box-shadow: var(--glow-primary);
         }
-        
+        .modal-content h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            text-shadow: var(--glow-primary);
+            margin-bottom: 20px;
+        }
         .modal input {
             width: 100%;
             padding: 15px;
             margin: 20px 0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            border: 1px solid #444;
+            border-radius: 5px;
             font-size: 16px;
+            background: #101020;
+            color: var(--text-color);
+            text-align: center;
         }
-        
+
+        /* --- Info Cards (About/Contact) --- */
         .info-card {
-            background: white;
-            border-radius: 15px;
+            background: var(--card-bg);
+            border-radius: 10px;
             padding: 25px;
             margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #667eea;
+            border-left: 3px solid var(--primary-color);
         }
-        
-        .info-card h3 {
-            color: #333;
-            margin-bottom: 15px;
-        }
-        
-        .info-card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-        
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .feature-list li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .feature-list li:before {
-            content: "✅";
-            position: absolute;
-            left: 0;
-        }
-        
-        a.whatsapp-link {
-            color: #25D366;
-            font-weight: 700;
-            text-decoration: none;
-            word-break: break-word;
-        }
-        
-        a.whatsapp-link:hover {
-            text-decoration: underline;
-        }
-        
+        .info-card h3 { color: var(--primary-color); margin-bottom: 15px; }
+        .info-card p, .info-card li { color: #ccc; line-height: 1.7; }
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li { padding: 8px 0; padding-left: 25px; position: relative; }
+        .feature-list li:before { content: "⚡"; position: absolute; left: 0; color: var(--primary-color); }
+        a.whatsapp-link { color: #25D366; font-weight: 700; text-decoration: none; word-break: break-word; }
+        a.whatsapp-link:hover { text-decoration: underline; }
+
+        /* --- Responsive Design --- */
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-links {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .nav-links li {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-            
-            .container {
-                padding: 20px;
-                margin: 10px;
-            }
-            
-            .section-header h1 {
-                font-size: 2rem;
-            }
-            
-            .stats {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .stat-item {
-                margin: 0;
-            }
-            
-            .accounts-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-container { flex-direction: column; gap: 15px; }
+            .nav-links { gap: 5px; flex-wrap: wrap; justify-content: center; }
+            .nav-links li { padding: 8px 10px; font-size: 12px; }
+            .container { padding: 15px; margin: 10px; }
+            .section-header h1 { font-size: 2rem; }
+            .accounts-grid { grid-template-columns: 1fr; }
         }
+
     </style>
-    <!-- Firebase SDK -->
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-    import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
-
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyC4l6R9Ws47JtJx-g2r_sxX_1m_QNGVoOI",
-        authDomain: "streaming-6c68a.firebaseapp.com",
-        databaseURL: "https://streaming-6c68a-default-rtdb.firebaseio.com",
-        projectId: "streaming-6c68a",
-        storageBucket: "streaming-6c68a.firebasestorage.app",
-        messagingSenderId: "426556584047",
-        appId: "1:426556584047:web:523b5231151a94ea391d9a",
-        measurementId: "G-H2V224WT6M"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getFirestore(app);
-
-    // Exponer funciones globales para interactuar con Firebase
-    window.firebaseDb = db;
-    window.firebaseCollections = {
-        accounts: collection(db, 'streamingAccounts'),
-        riddles: collection(db, 'streamingRiddles')
-    };
-</script>
 </head>
 
 <body>
-    <script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
     <!-- Barra de Navegación -->
     <nav class="navbar">
         <div class="nav-container">
@@ -537,10 +449,10 @@
             <ul class="nav-links">
                 <li class="active" onclick="showSection('home')">🏠 Inicio</li>
                 <li onclick="showSection('accounts')">🎯 Cuentas</li>
-                <li onclick="showSection('about')">ℹ️ Acerca de</li>
+                <li onclick="showSection('about')">ℹ️ Info</li>
                 <li onclick="showSection('contact')">📞 Contacto</li>
             </ul>
-            <button class="admin-btn" onclick="showLoginModal()">🔒 Admin</button>
+            <button class="admin-btn" onclick="showLoginModal()">🔑 Admin</button>
         </div>
     </nav>
 
@@ -548,14 +460,14 @@
         <!-- Sección Inicio -->
         <div id="home" class="section active">
             <div class="section-header">
-                <h1>🎬 Bienvenido a StreamGratis</h1>
-                <p>¡El lugar donde puedes conseguir cuentas de streaming completamente gratis!</p>
+                <h1>Bienvenido a StreamGratis Neon</h1>
+                <p>Tu portal a cuentas de streaming gratuitas. ¡Reclama la tuya ahora!</p>
             </div>
-            <script type='text/javascript' src='//pl26770167.profitableratecpm.com/3d/3a/a6/3d3aa6dcdb50d459c01bf3cb0595a9d0.js'></script>
+            
             <div class="stats">
                 <div class="stat-item">
                     <div class="stat-number" id="totalAccounts">0</div>
-                    <div class="stat-label">Total Cuentas</div>
+                    <div class="stat-label">Cuentas Totales</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number" id="availableAccounts">0</div>
@@ -563,54 +475,17 @@
                 </div>
                 <div class="stat-item">
                     <div class="stat-number" id="takenAccounts">0</div>
-                    <div class="stat-label">Tomadas</div>
+                    <div class="stat-label">Reclamadas</div>
                 </div>
             </div>
-		<script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
 
             <div class="info-card">
-                <h3>🎉 ¿Cómo funciona?</h3>
-                <p><strong>¡Es súper fácil!</strong> Solo tienes que:</p>
+                <h3>🎉 ¿Cómo funciona el nuevo sistema?</h3>
+                <p><strong>¡Sigue los 3 pasos para reclamar!</strong></p>
                 <ul class="feature-list">
-                    <li>Ir a la sección "Cuentas"</li>
-                    <li>Buscar la plataforma que te guste</li>
-                    <li>Hacer clic en "Tomar Cuenta"</li>
-                    <li>Resolver un acertijo o adivinanza</li>
-                    <li>¡Disfrutar del contenido gratis!</li>
-                </ul>
-            </div>
-
-	<script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
-
-            <div class="info-card">
-                <h3>🌟 Plataformas Disponibles</h3>
-                <p>Tenemos cuentas para las mejores plataformas de streaming:</p>
-                <ul class="feature-list">
-                    <li>Netflix - Series y películas</li>
-                    <li>Spotify - Música sin límites</li>
-                    <li>Disney+ - Contenido familiar</li>
-                    <li>Amazon Prime - Entretenimiento premium</li>
-                    <li>HBO Max - Series exclusivas</li>
-                    <li>YouTube Premium - Videos sin anuncios</li>
-                    <li>¡Y muchas más!</li>
+                    <li><strong>Paso 1:</strong> Haz clic en "Reclamar Cuenta". Se abrirá una página de un patrocinador.</li>
+                    <li><strong>Paso 2:</strong> Vuelve a nuestra web. Verás una ventana con un anuncio y un contador de 15 segundos.</li>
+                    <li><strong>Paso 3:</strong> Debes hacer **CLIC en el anuncio** dentro de la ventana Y esperar que el contador llegue a cero para desbloquear la cuenta.</li>
                 </ul>
             </div>
         </div>
@@ -619,895 +494,519 @@
         <div id="accounts" class="section">
             <div class="section-header">
                 <h1>🎯 Cuentas Disponibles</h1>
-                <p>Selecciona la cuenta que más te guste y ¡es tuya!</p>
+                <p>Selecciona una cuenta, sigue los pasos y ¡a disfrutar!</p>
             </div>
-            <script type='text/javascript' src='//pl26770084.profitableratecpm.com/2f/62/3b/2f623bbca5866dd1a12f70021c841450.js'></script>
             <div id="accountsContainer">
-                <div class="no-accounts">
-                    <h3>😴 No hay cuentas disponibles</h3>
-                    <p>No hay cuentas de streaming disponibles en este momento. ¡Vuelve pronto!</p>
-                </div>
+                <!-- Las tarjetas de cuentas se generan aquí -->
             </div>
         </div>
 
         <!-- Sección Acerca De -->
         <div id="about" class="section">
-            <div class="section-header">
+             <div class="section-header">
                 <h1>ℹ️ Acerca de StreamGratis</h1>
-                <p>Conoce más sobre nuestra plataforma</p>
+                <p>Conoce más sobre nuestra misión.</p>
             </div>
-		<script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
-
-            <div class="info-card">
+             <div class="info-card">
                 <h3>🎯 Nuestra Misión</h3>
-                <p>Creemos que el entretenimiento debe ser accesible para todos. Por eso, compartimos cuentas de streaming de forma completamente gratuita para que puedas disfrutar del mejor contenido sin costos.</p>
+                <p>Creemos que el entretenimiento debe ser accesible. Compartimos cuentas de forma gratuita, sostenida por anuncios, para que disfrutes del mejor contenido sin costo.</p>
             </div>
-<script type='text/javascript' src='//pl26770167.profitableratecpm.com/3d/3a/a6/3d3aa6dcdb50d459c01bf3cb0595a9d0.js'></script>
             <div class="info-card">
                 <h3>🤝 Normas de Uso</h3>
                 <ul class="feature-list">
-                    <li>Solo puedes tomar una cuenta por persona</li>
-                    <li>Respeta a otros usuarios</li>
-                    <li>No compartas las credenciales públicamente</li>
-                    <li>Disfruta responsablemente</li>
+                    <li>Sé respetuoso con las cuentas. No cambies las contraseñas.</li>
+                    <li>Permite que otros también disfruten.</li>
+                    <li>Vuelve a diario por nuevas cuentas.</li>
                 </ul>
             </div>
-		<script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
-
-            <div class="info-card">
-                <h3>💡 ¿Por qué gratis?</h3>
-                <p>Simplemente porque nos gusta compartir. Queremos que todos tengan acceso al mejor entretenimiento digital sin barreras económicas. ¡Es nuestro granito de arena para hacer el mundo un poco más feliz!</p>
-            </div>
         </div>
-	    <script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
 
         <!-- Sección Contacto -->
         <div id="contact" class="section">
             <div class="section-header">
                 <h1>📞 Contacto</h1>
-                <p>¿Tienes preguntas o sugerencias? ¡Contáctanos!</p>
+                <p>¿Preguntas o sugerencias? ¡Háznoslo saber!</p>
             </div>
-		<script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
-
-            <div class="info-card">
-                <h3>💬 ¿Necesitas ayuda?</h3>
-                <p>Si tienes algún problema con las cuentas o necesitas soporte, no dudes en contactarnos. Estamos aquí para ayudarte.</p>
-            </div>
-		<script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
-
             <div class="info-card">
                 <h3>📧 Información de Contacto</h3>
                 <p><strong>Email:</strong> blandonjose6788@gmail.com</p>
-                <p><strong>Horario de atención:</strong> 24/7</p>
-                <p><strong>Tiempo de respuesta:</strong> Máximo 24 horas</p>
+                <p><strong>Tiempo de respuesta:</strong> Intentamos responder en menos de 48 horas.</p>
             </div>
-		<script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
-
             <div class="info-card">
                 <h3>💬 Canal de WhatsApp</h3>
-                <p>Únete a nuestro canal para noticias, actualizaciones y soporte rápido:</p>
-                <p><a href="https://whatsapp.com/channel/0029Vb5xwFw545v43YQt5U0e" target="_blank" class="whatsapp-link">https://whatsapp.com/channel/0029Vb5xwFw545v43YQt5U0e</a></p>
-            </div>
-		<script type="text/javascript">
-	atOptions = {
-		'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
-
-            <div class="info-card">
-                <h3>💡 Sugerencias</h3>
-                <p>¿Quieres que agreguemos alguna plataforma específica? ¿Tienes ideas para mejorar el sitio? ¡Nos encanta escuchar tus sugerencias!</p>
+                <p>Únete para noticias, actualizaciones y soporte rápido:</p>
+                <p><a href="https://whatsapp.com/channel/0029Vb5xwFw545v43YQt5U0e" target="_blank" class="whatsapp-link">Canal Oficial de StreamGratis</a></p>
             </div>
         </div>
-            <!-- Panel de Administración -->
-    <div id="admin" class="section">
-        <div class="admin-panel">
-            <div class="section-header" style="color: white;">
-                <h1>🔧 Panel de Administrador</h1>
-                <p>Gestiona las cuentas de streaming y acertijos</p>
-            </div>
-            
-            <div class="form-group">
-                <label>Servicio de Streaming:</label>
-                <select id="adminService">
-                    <option value="netflix">Netflix</option>
-                    <option value="spotify">Spotify</option>
-                    <option value="disney">Disney+</option>
-                    <option value="amazon">Amazon Prime</option>
-                    <option value="hbo">HBO Max</option>
-                    <option value="youtube">YouTube Premium</option>
-                    <option value="apple">Apple TV+</option>
-                    <option value="paramount">Paramount+</option>
-                    <option value="crunchyroll">Crunchyroll</option>
-                    <option value="otros">Otro</option>
-                </select>
-            </div>
-          <script type='text/javascript' src='//pl26770167.profitableratecpm.com/3d/3a/a6/3d3aa6dcdb50d459c01bf3cb0595a9d0.js'></script>  
-            <div class="form-group" id="customServiceGroup" style="display: none;">
-                <label>Nombre del servicio:</label>
-                <input type="text" id="customServiceName" placeholder="Ej: Paramount+">
-            </div>
-            
-            <div class="form-group">
-                <label>Email/Usuario:</label>
-                <input type="text" id="adminEmail" placeholder="usuario@ejemplo.com">
-            </div>
-            
-            <div class="form-group">
-                <label>Contraseña:</label>
-                <input type="text" id="adminPassword" placeholder="contraseña123">
-            </div>
-            
-            <div class="form-group">
-                <label>Notas adicionales (opcional):</label>
-                <textarea id="adminNotes" placeholder="Información adicional sobre la cuenta..."></textarea>
-            </div>
 
-            <!-- Nuevos campos agregados -->
-            <div class="form-group">
-                <label>Tiempo de expiración:</label>
-                <div style="display: flex; gap: 10px;">
-                    <input type="number" id="expirationValue" placeholder="Ej: 30" min="1" style="flex: 1;">
-                    <select id="expirationUnit" style="flex: 1;">
-                        <option value="minutes">Minutos</option>
-                        <option value="hours">Horas</option>
-                        <option value="days">Días</option>
+        <!-- Panel de Administración -->
+        <div id="admin" class="section">
+            <div class="admin-panel">
+                <div class="section-header">
+                    <h1>🔧 Panel de Administrador</h1>
+                </div>
+                
+                <h3>Añadir Nueva Cuenta</h3>
+                <div class="form-group">
+                    <label>Servicio de Streaming:</label>
+                    <select id="adminService">
+                        <option value="netflix">Netflix</option>
+                        <option value="spotify">Spotify</option>
+                        <option value="disney">Disney+</option>
+                        <option value="amazon">Amazon Prime</option>
+                        <option value="hbo">HBO Max</option>
+                        <option value="youtube">YouTube Premium</option>
+                        <option value="apple">Apple TV+</option>
+                        <option value="paramount">Paramount+</option>
+                        <option value="crunchyroll">Crunchyroll</option>
+                        <option value="otros">Otro</option>
                     </select>
                 </div>
-            </div>
+                
+                <div class="form-group" id="customServiceGroup" style="display: none;">
+                    <label>Nombre del servicio:</label>
+                    <input type="text" id="customServiceName" placeholder="Ej: Paramount+">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email/Usuario:</label>
+                    <input type="text" id="adminEmail" placeholder="usuario@ejemplo.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="text" id="adminPassword" placeholder="contraseña123">
+                </div>
+                
+                <div class="form-group">
+                    <label>Notas adicionales (opcional):</label>
+                    <textarea id="adminNotes" placeholder="Información adicional..."></textarea>
+                </div>
 
-            <div class="form-group">
-                <label>Límite de usuarios que pueden reclamar:</label>
-                <input type="number" id="userLimit" placeholder="Ej: 5 (0 para ilimitado)" min="0" value="1">
-            </div>
-            
-            <button class="btn" onclick="addAccount()" style="width: 100%; margin-bottom: 20px;">
-                ➕ Agregar Cuenta
-            </button>
-            
-            <div class="admin-accounts-list">
-                <h3>📋 Cuentas Agregadas:</h3>
+                <div class="form-group">
+                    <label>Límite de usuarios (0 para ilimitado):</label>
+                    <input type="number" id="userLimit" placeholder="Ej: 1" min="0" value="1">
+                </div>
+                
+                <button class="btn btn-add" onclick="addAccount()" style="width: 100%; margin-bottom: 20px;">
+                    ➕ Agregar Cuenta
+                </button>
+                
+                <hr style="border-color: var(--secondary-color); margin: 40px 0;">
+
+                <h3>📋 Cuentas Agregadas</h3>
                 <div id="adminAccountsList"></div>
             </div>
-            
-            <div style="margin-top: 40px;">
-                <h2>🎲 Gestión de Acertijos y Adivinanzas</h2>
-                <div class="form-group">
-                    <label>Pregunta del Acertijo:</label>
-                    <input type="text" id="adminRiddleQuestion" placeholder="Ej: ¿Qué tiene 4 patas y no camina?">
-                </div>
-                <div class="form-group">
-                    <label>Respuesta del Acertijo (en minúsculas):</label>
-                    <input type="text" id="adminRiddleAnswer" placeholder="Ej: una mesa">
-                </div>
-                <button class="btn" onclick="addRiddle()" style="width: 100%; margin-bottom: 20px;">
-                    ➕ Agregar Acertijo
-                </button>
-                <div class="admin-accounts-list">
-                    <h3>🧩 Acertijos y Adivinanzas:</h3>
-                    <div id="adminRiddlesList"></div>
-                </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <h3>🔑 Acceso de Administrador</h3>
+            <input type="password" id="adminPasswordInput" placeholder="Ingresa la contraseña" />
+            <div>
+                <button class="btn btn-add" onclick="checkPassword()">Entrar</button>
+                <button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal de Login -->
-<div class="modal" id="loginModal">
-    <div class="modal-content">
-        <h3>🔐 Acceso de Administrador</h3>
-        <input type="password" id="adminPasswordInput" placeholder="Ingresa la contraseña" maxlength="20" />
-        <div>
-            <button class="btn" onclick="checkPassword()">Entrar</button>
-            <button class="btn btn-danger" onclick="closeLoginModal()">Cancelar</button>
+    <div class="modal" id="adWallModal">
+        <div class="modal-content">
+            <h3>⏳ Desbloqueando Cuenta...</h3>
+            <p id="adWallMessage">Haz clic en el anuncio y espera a que termine el contador.</p>
+            <div class="ad-placeholder" style="min-height: 250px;">
+                <div id="adClicker" class="ad-click-overlay" onclick="registerAdClick()"></div>
+                <!-- New Ad Script 1 for Modal -->
+                <div id="modalAdContainer"></div>
+            </div>
+            <p>Tiempo restante: <strong id="countdownTimer">15</strong> segundos.</p>
+            <button id="revealButton" class="btn" style="margin-top: 20px;" disabled>Obtener Credenciales</button>
         </div>
     </div>
-</div>
 
-<!-- Modal de Acertijo -->
-<div class="modal" id="riddleModal">
-    <div class="modal-content">
-        <h3>🧩 Resuelve el Acertijo</h3>
-        <p id="riddleText" style="margin: 20px 0; font-size: 1.1rem;"></p>
-        <input type="text" id="riddleAnswer" placeholder="Tu respuesta (en minúsculas)" />
-        <div>
-            <button class="btn" onclick="submitRiddleAnswer()">Enviar</button>
-            <button class="btn btn-danger" onclick="closeRiddleModal()">Cancelar</button>
+    <div class="modal" id="passwordRevealModal">
+        <div class="modal-content">
+            <h3>🎉 ¡Cuenta Desbloqueada!</h3>
+            <div id="revealedPassword" style="margin: 20px 0; font-size: 1.1rem; text-align: left;"></div>
+            <button class="btn btn-add" onclick="closeAllModals()">Cerrar</button>
         </div>
     </div>
-</div>
-
-<!-- Modal de Contraseña Revelada -->
-<div class="modal" id="passwordRevealModal">
-    <div class="modal-content">
-        <h3>🎉 ¡Cuenta Desbloqueada!</h3>
-        <div id="revealedPassword" style="margin: 20px 0; font-size: 1.1rem;"></div>
-        <button class="btn" onclick="closePasswordRevealModal()">Cerrar</button>
+    
+    <!-- Custom Confirm Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3 id="confirmTitle">Confirmar Acción</h3>
+            <p id="confirmMessage" style="margin: 20px 0;"></p>
+            <div>
+                <button id="confirmBtn" class="btn">Confirmar</button>
+                <button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button>
+            </div>
+        </div>
     </div>
-</div>
+
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC4l6R9Ws47JtJx-g2r_sxX_1m_QNGVoOI",
+            authDomain: "streaming-6c68a.firebaseapp.com",
+            projectId: "streaming-6c68a",
+            storageBucket: "streaming-6c68a.appspot.com",
+            messagingSenderId: "426556584047",
+            appId: "1:426556584047:web:523b5231151a94ea391d9a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.firebaseDb = db;
+    </script>
+
 <script>
-    let accounts = JSON.parse(localStorage.getItem('streamingAccounts')) || [];
-    let riddles = JSON.parse(localStorage.getItem('streamingRiddles')) || [
-        { id: Date.now() + 1, question: "¿Qué tiene 4 patas y no camina?", answer: "una mesa" },
-        { id: Date.now() + 2, question: "Oro parece, plata no es, ¿qué es?", answer: "el platano" },
-        { id: Date.now() + 3, question: "Blanca por dentro, verde por fuera, si quieres saberlo espera.", answer: "la pera" },
-        { id: Date.now() + 4, question: "Vuelo por la noche, duermo de día, no tengo plumas en mis alas, ¿quién soy?", answer: "el murcielago" },
-        { id: Date.now() + 5, question: "Siempre corre pero nunca camina, tiene boca pero nunca habla, ¿qué es?", answer: "el rio" },
-        { id: Date.now() + 6, question: "¿Qué es lo que sube y nunca baja?", answer: "la edad" },
-        { id: Date.now() + 7, question: "Tiene hojas pero no es un árbol, tiene piel pero no es animal, ¿qué es?", answer: "un libro" },
-        { id: Date.now() + 8, question: "Soy alto cuando joven, y bajo cuando viejo, ¿qué soy?", answer: "una vela" },
-        { id: Date.now() + 9, question: "Tengo ciudades pero no casas, tengo montañas pero no árboles, tengo agua pero no peces, ¿qué soy?", answer: "un mapa" },
-        { id: Date.now() + 10, question: "Si me nombras, desaparezco, ¿qué soy?", answer: "el silencio" }
-    ];
+    let accounts = [];
     let isAdmin = false;
-    let currentAccountId = null;
-    let currentRiddleId = null;
-    let usedRiddleIds = JSON.parse(localStorage.getItem('usedRiddleIds')) || [];
+    let onConfirmCallback = null;
+    let countdownInterval = null;
+    
+    // State for the ad wall
+    let adWallTimer = 0;
+    let adWallAdClicked = false;
+    let currentClaimingAccount = null;
 
-    const serviceNames = {
-        netflix: 'Netflix',
-        spotify: 'Spotify', 
-        disney: 'Disney+',
-        amazon: 'Amazon Prime',
-        hbo: 'HBO Max',
-        youtube: 'YouTube Premium',
-        apple: 'Apple TV+',
-        paramount: 'Paramount+',
-        crunchyroll: 'Crunchyroll',
-        otros: 'Otro'
+    // --- Nombres y Iconos de Servicios ---
+    const serviceDetails = {
+        netflix: { name: 'Netflix', icon: 'N' },
+        spotify: { name: 'Spotify', icon: '♪' },
+        disney: { name: 'Disney+', icon: 'D' },
+        amazon: { name: 'Amazon Prime', icon: 'A' },
+        hbo: { name: 'HBO Max', icon: 'H' },
+        youtube: { name: 'YouTube Premium', icon: 'Y' },
+        apple: { name: 'Apple TV+', icon: '' },
+        paramount: { name: 'Paramount+', icon: 'P' },
+        crunchyroll: { name: 'Crunchyroll', icon: 'C' },
+        otros: { name: 'Otro', icon: '?' }
     };
 
-    const serviceIcons = {
-        netflix: 'N',
-        spotify: '♪',
-        disney: 'D',
-        amazon: 'A', 
-        hbo: 'H',
-        youtube: 'Y',
-        apple: '🍎',
-        paramount: 'P',
-        crunchyroll: 'C',
-        otros: '?'
-    };
-
-    // Navegación
+    // --- Navegación ---
     function showSection(sectionName) {
-        document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-        document.getElementById(sectionName).classList.add('active');
-        document.querySelectorAll('.nav-links li').forEach(link => link.classList.remove('active'));
-        if (sectionName !== 'admin') {
-            const linkIndex = {
-                'home': 0,
-                'accounts': 1,
-                'about': 2,
-                'contact': 3
-            };
-            document.querySelectorAll('.nav-links li')[linkIndex[sectionName]]?.classList.add('active');
-        }
-        if (sectionName === 'admin') {
-            loadAdminRiddles();
-            loadAdminAccounts();
-        }
-        if (sectionName === 'accounts') {
-            displayAccounts();
-        }
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(sectionName)?.classList.add('active');
+        document.querySelectorAll('.nav-links li').forEach(l => l.classList.remove('active'));
+        const link = Array.from(document.querySelectorAll('.nav-links li')).find(l => l.textContent.toLowerCase().includes(sectionName.substring(0,4)));
+        if (link) link.classList.add('active');
+
+        if (sectionName === 'accounts') displayAccounts();
+        if (sectionName === 'admin' && isAdmin) loadAdminAccounts();
     }
 
-    // Modal de Login
+    // --- Modals ---
     function showLoginModal() {
         document.getElementById('loginModal').style.display = 'flex';
         document.getElementById('adminPasswordInput').focus();
     }
 
-    function closeLoginModal() {
-        document.getElementById('loginModal').style.display = 'none';
-        document.getElementById('adminPasswordInput').value = '';
+    function closeAllModals() {
+        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+        if (countdownInterval) clearInterval(countdownInterval);
+        onConfirmCallback = null;
+        // Clean up ad container in modal
+        document.getElementById('modalAdContainer').innerHTML = '';
+    }
+
+    function showConfirmModal(message, callback, title = 'Confirmar Acción', confirmText = 'Confirmar', confirmClass = 'btn-danger') {
+        document.getElementById('confirmTitle').textContent = title;
+        document.getElementById('confirmMessage').textContent = message;
+        
+        const confirmBtn = document.getElementById('confirmBtn');
+        confirmBtn.textContent = confirmText;
+        confirmBtn.className = `btn ${confirmClass}`;
+
+        onConfirmCallback = callback;
+        
+        document.getElementById('confirmModal').style.display = 'flex';
     }
 
     function checkPassword() {
-        const password = document.getElementById('adminPasswordInput').value;
-        if (password === 'Jose') {
+        if (document.getElementById('adminPasswordInput').value === 'Jose') {
             isAdmin = true;
             showSection('admin');
-            closeLoginModal();
+            closeAllModals();
         } else {
             alert('❌ Contraseña incorrecta');
-            document.getElementById('adminPasswordInput').value = '';
         }
+        document.getElementById('adminPasswordInput').value = '';
     }
 
-    // Eventos
-    document.getElementById('adminService').addEventListener('change', function() {
-        const customGroup = document.getElementById('customServiceGroup');
-        if (this.value === 'otros') {
-            customGroup.style.display = 'block';
-        } else {
-            customGroup.style.display = 'none';
-        }
-    });
+    // --- Lógica de Cuentas (Cliente) ---
+    function displayAccounts() {
+        const container = document.getElementById('accountsContainer');
+        updateStats();
 
-    document.getElementById('adminPasswordInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            checkPassword();
-        }
-    });
-    // Funciones de Cuentas
-function addAccount() {
-    const service = document.getElementById('adminService').value;
-    const customServiceName = document.getElementById('customServiceName').value;
-    const email = document.getElementById('adminEmail').value.trim();
-    const password = document.getElementById('adminPassword').value.trim();
-    const notes = document.getElementById('adminNotes').value.trim();
-    const expirationValue = parseInt(document.getElementById('expirationValue').value) || 30;
-    const expirationUnit = document.getElementById('expirationUnit').value;
-    const userLimit = parseInt(document.getElementById('userLimit').value) || 1;
-
-    if (!email || !password) {
-        alert('❌ Por favor completa email y contraseña');
-        return;
-    }
-
-    if (service === 'otros' && !customServiceName.trim()) {
-        alert('❌ Por favor ingresa el nombre del servicio');
-        return;
-    }
-
-    // Calcular la fecha de expiración
-    const expirationDate = new Date();
-    if (expirationUnit === 'minutes') {
-        expirationDate.setMinutes(expirationDate.getMinutes() + expirationValue);
-    } else if (expirationUnit === 'hours') {
-        expirationDate.setHours(expirationDate.getHours() + expirationValue);
-    } else if (expirationUnit === 'days') {
-        expirationDate.setDate(expirationDate.getDate() + expirationValue);
-    }
-
-    const account = {
-        id: Date.now(),
-        service: service,
-        serviceName: service === 'otros' ? customServiceName.trim() : serviceNames[service],
-        email: email,
-        password: password,
-        notes: notes,
-        taken: false,
-        takenBy: [],
-        dateAdded: new Date().toLocaleString(),
-        expirationDate: expirationDate.getTime(),
-        userLimit: userLimit,
-        currentUsers: 0
-    };
-
-    accounts.push(account);
-    saveAccounts();
-    displayAccounts();
-    loadAdminAccounts();
-    
-    // Limpiar formulario
-    document.getElementById('adminEmail').value = '';
-    document.getElementById('adminPassword').value = '';
-    document.getElementById('adminNotes').value = '';
-    document.getElementById('customServiceName').value = '';
-    document.getElementById('adminService').value = 'netflix';
-    document.getElementById('customServiceGroup').style.display = 'none';
-    document.getElementById('expirationValue').value = '';
-    document.getElementById('userLimit').value = '1';
-
-    alert('✅ Cuenta agregada exitosamente');
-}
-
-function takeAccount(id) {
-    const account = accounts.find(acc => acc.id === id);
-    if (!account) return;
-
-    // Verificar si la cuenta ha expirado
-    if (account.expirationDate && Date.now() > account.expirationDate) {
-        alert('⚠️ Esta cuenta ha expirado y ya no está disponible');
-        return;
-    }
-
-    // Verificar si se ha alcanzado el límite de usuarios
-    if (account.userLimit > 0 && account.currentUsers >= account.userLimit) {
-        alert('⚠️ Esta cuenta ya ha sido reclamada por el máximo número de usuarios permitidos');
-        return;
-    }
-
-    currentAccountId = id;
-    showRiddleModal();
-}
-
-function deleteAccount(id) {
-    if (confirm('❓ ¿Estás seguro de que quieres eliminar esta cuenta?')) {
-        accounts = accounts.filter(acc => acc.id !== id);
-        saveAccounts();
-        displayAccounts();
-        loadAdminAccounts();
-    }
-}
-
-function resetAccount(id) {
-    if (confirm('❓ ¿Quieres resetear esta cuenta (eliminar todos los usuarios y hacerla disponible nuevamente)?')) {
-        const account = accounts.find(acc => acc.id === id);
-        if (account) {
-            account.taken = false;
-            account.takenBy = [];
-            account.currentUsers = 0;
-            // Opcional: también puedes resetear la fecha de expiración aquí si lo deseas
-            saveAccounts();
-            displayAccounts();
-            loadAdminAccounts();
-        }
-    }
-}
-
-function saveAccounts() {
-    localStorage.setItem('streamingAccounts', JSON.stringify(accounts));
-}
-
-function displayAccounts() {
-    const container = document.getElementById('accountsContainer');
-    
-    // Primero verificamos y actualizamos cuentas expiradas
-        // Primero verificamos y actualizamos cuentas expiradas
-    accounts.forEach(account => {
-        if (account.expirationDate && Date.now() > account.expirationDate) {
-            account.taken = true;
-        }
-    });
-    saveAccounts();
-    
-    const availableAccounts = accounts.filter(acc => {
-        if (acc.taken) return false;
-        if (acc.expirationDate && Date.now() > acc.expirationDate) return false;
-        if (acc.userLimit > 0 && acc.currentUsers >= acc.userLimit) return false;
-        return true;
-    });
-    
-    updateStats();
-
-    if (accounts.length === 0) {
-        container.innerHTML = `
-            <div class="no-accounts">
-                <h3>😴 No hay cuentas disponibles</h3>
-                <p>No hay cuentas de streaming disponibles en este momento. ¡Vuelve pronto!</p>
-            </div>
-        `;
-        return;
-    }
-
-    if (availableAccounts.length === 0) {
-        container.innerHTML = `
-            <div class="no-accounts">
-                <h3>😅 Todas las cuentas están tomadas o expiradas</h3>
-                <p>Todas las cuentas disponibles ya fueron tomadas o han expirado. ¡Vuelve pronto para más!</p>
-            </div>
-        `;
-        return;
-    }
-
-    container.innerHTML = `
-        <div class="accounts-grid">
-            ${availableAccounts.map(account => {
-                // Calcular tiempo restante
-                let timeLeft = '';
-                if (account.expirationDate) {
-                    const diff = account.expirationDate - Date.now();
-                    if (diff > 0) {
-                        const hours = Math.floor(diff / (1000 * 60 * 60));
-                        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                        timeLeft = `⏳ ${hours > 0 ? hours + 'h ' : ''}${minutes}m`;
-                    }
-                }
-                
-                // Calcular disponibilidad de usuarios
-                let usersInfo = '';
-                if (account.userLimit > 0) {
-                    usersInfo = `👥 ${account.currentUsers}/${account.userLimit}`;
-                }
-                
-                return `
-                <div class="account-card ${account.service} ${account.taken ? 'taken' : ''}">
-                    <div class="status-badge ${account.taken ? 'taken-badge' : 'available'}">
-                        ${account.taken ? '❌ Tomada' : '✅ Disponible'}
-                    </div>
-                    <div class="service-header">
-                        <div class="service-icon ${account.service}">
-                            ${serviceIcons[account.service] || account.serviceName.charAt(0)}
-                        </div>
-                        <div class="service-name">${account.serviceName}</div>
-                    </div>
-                    <div class="account-info">
-                        <div>
-                            <strong>📧 Email/Usuario:</strong>
-                            ${account.email}
-                        </div>
-                        <div>
-                            <strong>🔑 Contraseña:</strong>
-                            [Oculta - Resuelve un acertijo]
-                        </div>
-                        ${timeLeft ? `
-                            <div>
-                                <strong>⏱️ Tiempo restante:</strong>
-                                ${timeLeft}
-                            </div>
-                        ` : ''}
-                        ${usersInfo ? `
-                            <div>
-                                <strong>👥 Usuarios:</strong>
-                                ${usersInfo}
-                            </div>
-                        ` : ''}
-                        ${account.notes ? `
-                            <div>
-                                <strong>📝 Notas:</strong>
-                                ${account.notes}
-                            </div>
-                        ` : ''}
-                    </div>
-                    <button class="take-btn" onclick="takeAccount(${account.id})" ${account.taken ? 'disabled' : ''}>
-                        ${account.taken ? 'Tomada' : '🎁 Tomar Cuenta'}
-                    </button>
-                </div>
-                `;
-            }).join('')}
-        </div>
-    `;
-}
-
-function loadAdminAccounts() {
-    const adminList = document.getElementById('adminAccountsList');
-    if (accounts.length === 0) {
-        adminList.innerHTML = '<p style="text-align: center; color: #ccc;">No hay cuentas agregadas</p>';
-        return;
-    }
-
-    adminList.innerHTML = accounts.map(account => {
-        // Calcular tiempo restante o expiración
-        let timeInfo = '';
-        if (account.expirationDate) {
-            if (Date.now() > account.expirationDate) {
-                timeInfo = '<br><small>🛑 Expirada</small>';
-            } else {
-                const diff = account.expirationDate - Date.now();
-                const hours = Math.floor(diff / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                timeInfo = `<br><small>⏳ Expira en: ${hours > 0 ? hours + 'h ' : ''}${minutes}m</small>`;
+        const availableAccounts = accounts.filter(acc => {
+            if (acc.userLimit > 0 && acc.currentUsers >= acc.userLimit) {
+                return false; // Hide if limit is reached
             }
-        }
-        
-        // Información de usuarios
-        let usersInfo = '';
-        if (account.userLimit > 0) {
-            usersInfo = `<br><small>👥 Usuarios: ${account.currentUsers}/${account.userLimit}</small>`;
-        }
-        
-        // Lista de usuarios que han tomado la cuenta
-        let takenByList = '';
-        if (account.takenBy && account.takenBy.length > 0) {
-            takenByList = account.takenBy.map(user => 
-                `${user.name} (${user.date})`
-            ).join('<br>');
-        }
-        
-        return `
-        <div class="admin-account-item">
-            <div>
-                <strong>${account.serviceName}</strong> - ${account.email}
-                ${timeInfo}
-                ${usersInfo}
-                ${account.takenBy.length > 0 ? `<br><small>👤 Tomada por:<br>${takenByList}</small>` : ''}
-            </div>
-            <div>
-                ${account.taken ? `
-                    <button class="btn btn-small" onclick="resetAccount(${account.id})">♻️ Resetear</button>
-                ` : ''}
-                <button class="btn btn-danger btn-small" onclick="deleteAccount(${account.id})">🗑️</button>
-            </div>
-        </div>
-        `;
-    }).join('');
-}
-
-function updateStats() {
-    const total = accounts.length;
-    const available = accounts.filter(acc => {
-        if (acc.taken) return false;
-        if (acc.expirationDate && Date.now() > acc.expirationDate) return false;
-        if (acc.userLimit > 0 && acc.currentUsers >= acc.userLimit) return false;
-        return true;
-    }).length;
-    const taken = total - available;
-
-    document.getElementById('totalAccounts').textContent = total;
-    document.getElementById('availableAccounts').textContent = available;
-    document.getElementById('takenAccounts').textContent = taken;
-}
-        // Funciones de Acertijos
-        function saveRiddles() {
-            localStorage.setItem('streamingRiddles', JSON.stringify(riddles));
-            localStorage.setItem('usedRiddleIds', JSON.stringify(usedRiddleIds));
-        }
-
-        function addRiddle() {
-            const question = document.getElementById('adminRiddleQuestion').value.trim();
-            const answer = document.getElementById('adminRiddleAnswer').value.trim().toLowerCase();
-
-            if (!question || !answer) {
-                alert('❌ Por favor completa la pregunta y respuesta del acertijo');
-                return;
-            }
-
-            const riddle = {
-                id: Date.now(),
-                question: question,
-                answer: answer
-            };
-
-            riddles.push(riddle);
-            saveRiddles();
-            loadAdminRiddles();
-            
-            // Limpiar formulario
-            document.getElementById('adminRiddleQuestion').value = '';
-            document.getElementById('adminRiddleAnswer').value = '';
-
-            alert('✅ Acertijo agregado exitosamente');
-        }
-
-        function deleteRiddle(id) {
-            if (confirm('❓ ¿Estás seguro de que quieres eliminar este acertijo?')) {
-                riddles = riddles.filter(r => r.id !== id);
-                saveRiddles();
-                loadAdminRiddles();
-            }
-        }
-
-        function loadAdminRiddles() {
-            const riddlesList = document.getElementById('adminRiddlesList');
-            if (riddles.length === 0) {
-                riddlesList.innerHTML = '<p style="text-align: center; color: #ccc;">No hay acertijos agregados</p>';
-                return;
-            }
-
-            riddlesList.innerHTML = riddles.map(riddle => `
-                <div class="admin-account-item">
-                    <div>
-                        <strong>${riddle.question}</strong><br>
-                        <small>Respuesta: ${riddle.answer}</small>
-                    </div>
-                    <button class="btn btn-danger btn-small" onclick="deleteRiddle(${riddle.id})">🗑️</button>
-                </div>
-            `).join('');
-        }
-
-        // Modal de Acertijo
-        function showRiddleModal() {
-            if (riddles.length === 0) {
-                alert('❌ No hay acertijos disponibles. Contacta al administrador.');
-                return;
-            }
-
-            // Seleccionar un acertijo aleatorio no usado
-            let availableRiddles = riddles.filter(r => !usedRiddleIds.includes(r.id));
-            if (availableRiddles.length === 0) {
-                // Si todos están usados, resetear la lista de usados
-                usedRiddleIds = [];
-                availableRiddles = riddles;
-            }
-            
-            const randomRiddle = availableRiddles[Math.floor(Math.random() * availableRiddles.length)];
-            currentRiddleId = randomRiddle.id;
-            document.getElementById('riddleText').textContent = randomRiddle.question;
-            document.getElementById('riddleAnswer').value = '';
-            document.getElementById('riddleModal').style.display = 'flex';
-            document.getElementById('riddleAnswer').focus();
-        }
-
-        function closeRiddleModal() {
-            document.getElementById('riddleModal').style.display = 'none';
-            currentAccountId = null;
-            currentRiddleId = null;
-        }
-
-        function submitRiddleAnswer() {
-            const answer = document.getElementById('riddleAnswer').value.trim().toLowerCase();
-            const riddle = riddles.find(r => r.id === currentRiddleId);
-            const account = accounts.find(acc => acc.id === currentAccountId);
-
-            if (answer === riddle.answer) {
-                usedRiddleIds.push(currentRiddleId);
-                saveRiddles();
-                if (account) {
-                    const userName = prompt('👤 Ingresa tu nombre para tomar esta cuenta:');
-                    if (userName && userName.trim()) {
-                        account.takenBy.push({
-                            name: userName.trim(),
-                            date: new Date().toLocaleString()
-                        });
-                        account.currentUsers += 1;
-                        
-                        // Verificar si se ha alcanzado el límite de usuarios
-                        if (account.userLimit > 0 && account.currentUsers >= account.userLimit) {
-                            account.taken = true;
-                        }
-                        
-                        saveAccounts();
-                        displayAccounts();
-                        if (isAdmin) loadAdminAccounts();
-                        showPasswordRevealModal(account);
-                    }
-                }
-                closeRiddleModal();
-            } else {
-                alert('❌ Respuesta incorrecta. Inténtalo de nuevo.');
-            }
-        }
-
-        // Modal de Contraseña Revelada
-        function showPasswordRevealModal(account) {
-            document.getElementById('revealedPassword').innerHTML = `
-                <p><strong>📧 Email/Usuario:</strong> ${account.email}</p>
-                <p><strong>🔑 Contraseña:</strong> ${account.password}</p>
-                ${account.notes ? `<p><strong>📝 Notas:</strong> ${account.notes}</p>` : ''}
-                <p>¡Cuenta asignada correctamente! Ahora puedes usarla.</p>
-            `;
-            document.getElementById('passwordRevealModal').style.display = 'flex';
-        }
-
-        function closePasswordRevealModal() {
-            document.getElementById('passwordRevealModal').style.display = 'none';
-        }
-
-        // Inicializar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            displayAccounts();
-            
-            // Verificar cuentas expiradas cada minuto
-            setInterval(() => {
-                displayAccounts();
-            }, 60000); // 60,000 ms = 1 minuto
+            return true;
         });
-    </script>
-    <script type="module">
-    import { collection, doc, setDoc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
 
-    // Reemplazar funciones de localStorage con Firebase
-    async function saveAccounts() {
-        try {
-            const validAccounts = accounts.filter(acc => acc.id);
-            
-            for (const account of validAccounts) {
-                await setDoc(doc(firebaseDb, 'streamingAccounts', account.id.toString()), account);
+        if (availableAccounts.length === 0) {
+            container.innerHTML = `<div class="info-card" style="text-align: center;"><h3>😴 No hay cuentas disponibles</h3><p>Todas las cuentas han sido reclamadas. ¡Vuelve más tarde!</p></div>`;
+            return;
+        }
+
+        container.innerHTML = `<div class="accounts-grid">${availableAccounts.map(account => `
+            <div class="account-card ${account.service}">
+                <div class="status-badge available">✅ Disponible</div>
+                <div class="service-header">
+                    <div class="service-icon ${account.service}">${serviceDetails[account.service]?.icon || '?'}</div>
+                    <div class="service-name">${account.serviceName}</div>
+                </div>
+                <div class="account-info">
+                    <div><strong>📧 Email/Usuario:</strong> ${account.email}</div>
+                    <div><strong>🔑 Contraseña:</strong> [Oculta]</div>
+                    ${account.userLimit > 0 ? `<div><strong>👥 Disponibles:</strong> ${account.userLimit - account.currentUsers}/${account.userLimit}</div>` : ''}
+                    ${account.notes ? `<div><strong>📝 Notas:</strong> ${account.notes}</div>` : ''}
+                </div>
+                <button class="claim-btn" onclick="claimAccount(${account.id})">🎁 Reclamar Cuenta</button>
+            </div>`).join('')}</div>`;
+    }
+
+    function claimAccount(id) {
+        // Step 1: Redirect to direct link
+        window.open('https://otieu.com/4/9643760', '_blank');
+
+        currentClaimingAccount = accounts.find(acc => acc.id === id);
+        if (!currentClaimingAccount) return;
+
+        // Step 2: Reset state and show the ad wall modal
+        adWallTimer = 15;
+        adWallAdClicked = false;
+        
+        const modal = document.getElementById('adWallModal');
+        const timerEl = document.getElementById('countdownTimer');
+        const revealBtn = document.getElementById('revealButton');
+        const adClicker = document.getElementById('adClicker');
+        const adWallMessage = document.getElementById('adWallMessage');
+        const modalAdContainer = document.getElementById('modalAdContainer');
+
+        // Inject Ad Script 1 into the modal
+        modalAdContainer.innerHTML = ''; // Clear previous ad
+        const adScript = document.createElement('script');
+        adScript.innerHTML = `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.getElementById('modalAdContainer')).appendChild(s)}catch(e){}})('gizokraijaw.net',9643761,document.createElement('script'))`;
+        modalAdContainer.appendChild(adScript);
+
+
+        timerEl.textContent = adWallTimer;
+        revealBtn.disabled = true;
+        revealBtn.onclick = () => showPasswordRevealModal(currentClaimingAccount);
+        adClicker.style.display = 'block'; // Make sure overlay is visible
+        adWallMessage.textContent = 'Haz clic en el anuncio y espera a que termine el contador.';
+        
+        modal.style.display = 'flex';
+
+        // Step 3: Start the countdown
+        countdownInterval = setInterval(() => {
+            adWallTimer--;
+            timerEl.textContent = adWallTimer;
+            checkUnlockConditions();
+        }, 1000);
+    }
+
+    function registerAdClick() {
+        if (adWallAdClicked) return; // Only register one click
+        adWallAdClicked = true;
+        document.getElementById('adClicker').style.display = 'none'; // Hide overlay after click
+        document.getElementById('adWallMessage').textContent = '¡Gracias! Ahora solo espera a que termine el contador.';
+        checkUnlockConditions();
+    }
+
+    function checkUnlockConditions() {
+        const revealBtn = document.getElementById('revealButton');
+        
+        if (adWallTimer <= 0 && adWallAdClicked) {
+            clearInterval(countdownInterval);
+            revealBtn.disabled = false;
+            revealBtn.textContent = '✅ Mostrar Credenciales';
+        } else if (adWallTimer <= 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdownTimer').textContent = '0';
+        }
+    }
+
+    async function showPasswordRevealModal(account) {
+        account.currentUsers += 1;
+        await saveAccount(account);
+
+        document.getElementById('revealedPassword').innerHTML = `
+            <p><strong>📧 Email/Usuario:</strong> ${account.email}</p>
+            <p><strong>🔑 Contraseña:</strong> ${account.password}</p>
+            ${account.notes ? `<p><strong>📝 Notas:</strong> ${account.notes}</p>` : ''}
+            <p style="margin-top:15px; color: var(--primary-color);">¡Disfruta de tu cuenta! Por favor, no cambies la contraseña.</p>
+        `;
+        closeAllModals();
+        document.getElementById('passwordRevealModal').style.display = 'flex';
+        
+        displayAccounts();
+        if(isAdmin) loadAdminAccounts();
+    }
+
+    function updateStats() {
+        const total = accounts.length;
+        const taken = accounts.reduce((sum, acc) => sum + acc.currentUsers, 0);
+        const available = accounts.reduce((sum, acc) => {
+            const remaining = acc.userLimit > 0 ? acc.userLimit - acc.currentUsers : 999;
+            return sum + (remaining > 0 ? remaining : 0);
+        }, 0);
+
+        document.getElementById('totalAccounts').textContent = total;
+        document.getElementById('availableAccounts').textContent = available > 998 ? '∞' : available;
+        document.getElementById('takenAccounts').textContent = taken;
+    }
+
+    // --- Lógica de Administración ---
+    document.getElementById('adminService').addEventListener('change', function() {
+        document.getElementById('customServiceGroup').style.display = (this.value === 'otros') ? 'block' : 'none';
+    });
+
+    async function addAccount() {
+        const service = document.getElementById('adminService').value;
+        const customServiceName = document.getElementById('customServiceName').value;
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value.trim();
+        if (!email || !password) return;
+
+        const account = {
+            id: Date.now(),
+            service: service,
+            serviceName: service === 'otros' ? customServiceName.trim() : serviceDetails[service].name,
+            email,
+            password,
+            notes: document.getElementById('adminNotes').value.trim(),
+            userLimit: parseInt(document.getElementById('userLimit').value) || 1,
+            currentUsers: 0
+        };
+
+        await saveAccount(account);
+        accounts.push(account);
+        loadAdminAccounts();
+        displayAccounts();
+        
+        document.getElementById('adminEmail').value = '';
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('adminNotes').value = '';
+    }
+
+    function deleteAccount(id) {
+        const message = '¿Seguro que quieres ELIMINAR PERMANENTEMENTE esta cuenta? Esta acción no se puede deshacer.';
+        showConfirmModal(message, async () => {
+            try {
+                const { doc, deleteDoc } = await import("https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js");
+                await deleteDoc(doc(window.firebaseDb, 'streamingAccounts', id.toString()));
+                accounts = accounts.filter(acc => acc.id !== id);
+                loadAdminAccounts();
+                displayAccounts();
+            } catch (error) {
+                console.error("Error eliminando cuenta: ", error);
             }
+        }, 'Eliminar Cuenta', 'Eliminar', 'btn-danger');
+    }
+
+    function resetAccount(id) {
+        const message = '¿Quieres resetear esta cuenta? Los reclamos volverán a 0 y estará disponible de nuevo.';
+        showConfirmModal(message, async () => {
+            const account = accounts.find(acc => acc.id === id);
+            if (account) {
+                account.currentUsers = 0;
+                await saveAccount(account);
+                loadAdminAccounts();
+                displayAccounts();
+            }
+        }, 'Resetear Cuenta', 'Resetear', 'btn-reset');
+    }
+
+    function loadAdminAccounts() {
+        const adminList = document.getElementById('adminAccountsList');
+        if (accounts.length === 0) {
+            adminList.innerHTML = '<p style="text-align:center; padding: 20px;">No hay cuentas en la base de datos.</p>';
+            return;
+        }
+        adminList.innerHTML = accounts.map(acc => {
+            const isFull = acc.userLimit > 0 && acc.currentUsers >= acc.userLimit;
+            const statusText = isFull ? 'Totalmente Reclamada' : `${acc.currentUsers}/${acc.userLimit} Reclamadas`;
+            const statusColor = isFull ? 'var(--secondary-color)' : 'var(--primary-color)';
+
+            return `
+            <div class="admin-account-item" style="display:flex; flex-wrap: wrap; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:15px; margin-bottom:10px; border-radius:5px; border-left: 3px solid ${statusColor};">
+                <div>
+                    <strong>${acc.serviceName}</strong> - ${acc.email}<br>
+                    <small style="color: ${statusColor}; font-weight: bold;">${statusText}</small>
+                </div>
+                <div>
+                    ${acc.currentUsers > 0 ? `<button class="btn btn-reset" onclick="resetAccount(${acc.id})">♻️ Resetear</button>` : ''}
+                    <button class="btn btn-danger" onclick="deleteAccount(${acc.id})">🗑️ Eliminar</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    // --- Firebase Functions ---
+    async function saveAccount(account) {
+        try {
+            const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js");
+            await setDoc(doc(window.firebaseDb, 'streamingAccounts', account.id.toString()), account);
         } catch (error) {
-            console.error("Error guardando cuentas: ", error);
+            console.error("Error guardando cuenta: ", error);
         }
     }
 
     async function loadAccountsFromFirebase() {
         try {
-            const querySnapshot = await getDocs(firebaseCollections.accounts);
+            const { getDocs, collection } = await import("https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js");
+            const querySnapshot = await getDocs(collection(window.firebaseDb, 'streamingAccounts'));
             accounts = [];
-            querySnapshot.forEach((doc) => {
-                accounts.push(doc.data());
-            });
+            querySnapshot.forEach((doc) => accounts.push(doc.data()));
             displayAccounts();
-            updateStats();
+            if (isAdmin) {
+                loadAdminAccounts();
+            }
         } catch (error) {
             console.error("Error cargando cuentas: ", error);
+            document.getElementById('accountsContainer').innerHTML = `<div class="info-card"><h3>❌ Error de Conexión</h3><p>No se pudieron cargar las cuentas. Revisa tu conexión o intenta más tarde.</p></div>`;
         }
     }
 
-    async function saveRiddles() {
-        try {
-            const validRiddles = riddles.filter(r => r.id);
-            
-            for (const riddle of validRiddles) {
-                await setDoc(doc(firebaseDb, 'streamingRiddles', riddle.id.toString()), riddle);
+    // --- Inicialización ---
+    document.addEventListener('DOMContentLoaded', () => {
+        window.showSection = showSection;
+        window.showLoginModal = showLoginModal;
+        window.closeAllModals = closeAllModals;
+        window.checkPassword = checkPassword;
+        window.claimAccount = claimAccount;
+        window.addAccount = addAccount;
+        window.deleteAccount = deleteAccount;
+        window.resetAccount = resetAccount;
+        window.registerAdClick = registerAdClick;
+
+        document.getElementById('confirmBtn').addEventListener('click', () => {
+            if (typeof onConfirmCallback === 'function') {
+                onConfirmCallback();
             }
-            
-            await setDoc(doc(firebaseDb, 'globalData', 'riddleUsage'), { 
-                usedRiddleIds: usedRiddleIds 
-            });
-        } catch (error) {
-            console.error("Error guardando acertijos: ", error);
-        }
-    }
+            closeAllModals();
+        });
 
-    async function loadRiddlesFromFirebase() {
-        try {
-            const querySnapshot = await getDocs(firebaseCollections.riddles);
-            riddles = [];
-            querySnapshot.forEach((doc) => {
-                riddles.push(doc.data());
-            });
-
-            const usedRiddlesDoc = await getDocs(query(
-                collection(firebaseDb, 'globalData'), 
-                where('__name__', '==', 'riddleUsage')
-            ));
-            
-            usedRiddlesDoc.forEach(doc => {
-                usedRiddleIds = doc.data().usedRiddleIds || [];
-            });
-
-        } catch (error) {
-            console.error("Error cargando acertijos: ", error);
-        }
-    }
-
-    // Modificar inicialización para cargar desde Firebase
-    document.addEventListener('DOMContentLoaded', async function() {
-        await loadAccountsFromFirebase();
-        await loadRiddlesFromFirebase();
-        
-        // Verificar cuentas expiradas cada minuto
-        setInterval(() => {
-            displayAccounts();
-        }, 60000);
+        loadAccountsFromFirebase();
     });
 
-    // Exportar funciones para que sean globales
-    window.saveAccounts = saveAccounts;
-    window.saveRiddles = saveRiddles;
 </script>
+
+<!-- New Ad Script 3 -->
+<script>(s=>{s.dataset.zone='9643746',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
 </body>
 </html>
+
