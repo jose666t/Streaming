@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎬 StreamGratis Neon - Cuentas Premium</title>
+    <title>🎬 Stream free</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <!-- New Ad Script 2 -->
+    <!-- Ad Script 2 -->
     <script src="https://shoukigaigoors.net/act/files/tag.min.js?z=9643757" data-cfasync="false" async></script>
     
     <style>
@@ -161,7 +161,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            min-height: 60px;
+            min-height: 250px; /* Default height for banner */
             position: relative;
         }
         
@@ -457,6 +457,11 @@
     </nav>
 
     <div class="container">
+        <!-- BANNER SUPERIOR -->
+        <div class="ad-placeholder">
+            <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
+        </div>
+
         <!-- Sección Inicio -->
         <div id="home" class="section active">
             <div class="section-header">
@@ -479,6 +484,11 @@
                 </div>
             </div>
 
+            <!-- BANNER MEDIO (INICIO) -->
+            <div class="ad-placeholder">
+                <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
+            </div>
+
             <div class="info-card">
                 <h3>🎉 ¿Cómo funciona el nuevo sistema?</h3>
                 <p><strong>¡Sigue los 3 pasos para reclamar!</strong></p>
@@ -496,6 +506,12 @@
                 <h1>🎯 Cuentas Disponibles</h1>
                 <p>Selecciona una cuenta, sigue los pasos y ¡a disfrutar!</p>
             </div>
+            
+            <!-- BANNER MEDIO (CUENTAS) -->
+            <div class="ad-placeholder">
+                <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
+            </div>
+
             <div id="accountsContainer">
                 <!-- Las tarjetas de cuentas se generan aquí -->
             </div>
@@ -511,6 +527,12 @@
                 <h3>🎯 Nuestra Misión</h3>
                 <p>Creemos que el entretenimiento debe ser accesible. Compartimos cuentas de forma gratuita, sostenida por anuncios, para que disfrutes del mejor contenido sin costo.</p>
             </div>
+            
+            <!-- BANNER MEDIO (ACERCA DE) -->
+            <div class="ad-placeholder">
+                <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
+            </div>
+
             <div class="info-card">
                 <h3>🤝 Normas de Uso</h3>
                 <ul class="feature-list">
@@ -598,6 +620,11 @@
                 <div id="adminAccountsList"></div>
             </div>
         </div>
+        
+        <!-- BANNER INFERIOR -->
+        <div class="ad-placeholder">
+            <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
+        </div>
     </div>
 
     <!-- Modals -->
@@ -618,7 +645,7 @@
             <p id="adWallMessage">Haz clic en el anuncio y espera a que termine el contador.</p>
             <div class="ad-placeholder" style="min-height: 250px;">
                 <div id="adClicker" class="ad-click-overlay" onclick="registerAdClick()"></div>
-                <!-- New Ad Script 1 for Modal -->
+                <!-- New Ad Script Container for Modal -->
                 <div id="modalAdContainer"></div>
             </div>
             <p>Tiempo restante: <strong id="countdownTimer">15</strong> segundos.</p>
@@ -794,12 +821,11 @@
         const adWallMessage = document.getElementById('adWallMessage');
         const modalAdContainer = document.getElementById('modalAdContainer');
 
-        // Inject Ad Script 1 into the modal
+        // Inject Ad Script into the modal
         modalAdContainer.innerHTML = ''; // Clear previous ad
         const adScript = document.createElement('script');
         adScript.innerHTML = `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.getElementById('modalAdContainer')).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))`;
         modalAdContainer.appendChild(adScript);
-
 
         timerEl.textContent = adWallTimer;
         revealBtn.disabled = true;
