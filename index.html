@@ -458,9 +458,7 @@
 
     <div class="container">
         <!-- BANNER SUPERIOR -->
-        <div class="ad-placeholder">
-            <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
-        </div>
+        <div class="ad-placeholder" id="ad-top"></div>
 
         <!-- Sección Inicio -->
         <div id="home" class="section active">
@@ -485,9 +483,7 @@
             </div>
 
             <!-- BANNER MEDIO (INICIO) -->
-            <div class="ad-placeholder">
-                <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
-            </div>
+            <div class="ad-placeholder" id="ad-home-middle"></div>
 
             <div class="info-card">
                 <h3>🎉 ¿Cómo funciona el nuevo sistema?</h3>
@@ -508,9 +504,7 @@
             </div>
             
             <!-- BANNER MEDIO (CUENTAS) -->
-            <div class="ad-placeholder">
-                <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
-            </div>
+            <div class="ad-placeholder" id="ad-accounts-middle"></div>
 
             <div id="accountsContainer">
                 <!-- Las tarjetas de cuentas se generan aquí -->
@@ -529,9 +523,7 @@
             </div>
             
             <!-- BANNER MEDIO (ACERCA DE) -->
-            <div class="ad-placeholder">
-                <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
-            </div>
+            <div class="ad-placeholder" id="ad-about-middle"></div>
 
             <div class="info-card">
                 <h3>🤝 Normas de Uso</h3>
@@ -622,9 +614,7 @@
         </div>
         
         <!-- BANNER INFERIOR -->
-        <div class="ad-placeholder">
-            <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))</script>
-        </div>
+        <div class="ad-placeholder" id="ad-bottom"></div>
     </div>
 
     <!-- Modals -->
@@ -741,7 +731,6 @@
         document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         if (countdownInterval) clearInterval(countdownInterval);
         onConfirmCallback = null;
-        // Clean up ad container in modal
         document.getElementById('modalAdContainer').innerHTML = '';
     }
 
@@ -776,7 +765,7 @@
 
         const availableAccounts = accounts.filter(acc => {
             if (acc.userLimit > 0 && acc.currentUsers >= acc.userLimit) {
-                return false; // Hide if limit is reached
+                return false;
             }
             return true;
         });
@@ -804,13 +793,11 @@
     }
 
     function claimAccount(id) {
-        // Step 1: Redirect to direct link
         window.open('https://otieu.com/4/9643760', '_blank');
 
         currentClaimingAccount = accounts.find(acc => acc.id === id);
         if (!currentClaimingAccount) return;
 
-        // Step 2: Reset state and show the ad wall modal
         adWallTimer = 15;
         adWallAdClicked = false;
         
@@ -821,21 +808,19 @@
         const adWallMessage = document.getElementById('adWallMessage');
         const modalAdContainer = document.getElementById('modalAdContainer');
 
-        // Inject Ad Script into the modal
-        modalAdContainer.innerHTML = ''; // Clear previous ad
+        modalAdContainer.innerHTML = ''; 
         const adScript = document.createElement('script');
-        adScript.innerHTML = `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.getElementById('modalAdContainer')).appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))`;
+        adScript.text = `(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.getElementById('modalAdContainer')).appendChild(s)}catch(e){}})('vemtoutcheeg.com',9648243,document.createElement('script'))`;
         modalAdContainer.appendChild(adScript);
 
         timerEl.textContent = adWallTimer;
         revealBtn.disabled = true;
         revealBtn.onclick = () => showPasswordRevealModal(currentClaimingAccount);
-        adClicker.style.display = 'block'; // Make sure overlay is visible
+        adClicker.style.display = 'block'; 
         adWallMessage.textContent = 'Haz clic en el anuncio y espera a que termine el contador.';
         
         modal.style.display = 'flex';
 
-        // Step 3: Start the countdown
         countdownInterval = setInterval(() => {
             adWallTimer--;
             timerEl.textContent = adWallTimer;
@@ -844,9 +829,9 @@
     }
 
     function registerAdClick() {
-        if (adWallAdClicked) return; // Only register one click
+        if (adWallAdClicked) return;
         adWallAdClicked = true;
-        document.getElementById('adClicker').style.display = 'none'; // Hide overlay after click
+        document.getElementById('adClicker').style.display = 'none';
         document.getElementById('adWallMessage').textContent = '¡Gracias! Ahora solo espera a que termine el contador.';
         checkUnlockConditions();
     }
@@ -1006,7 +991,17 @@
         }
     }
 
-    // --- Inicialización ---
+    // --- Inicialización y Carga de Anuncios ---
+    function loadBanner(containerId) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = ''; // Limpiar por si acaso
+            const adScript = document.createElement('script');
+            adScript.text = `(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.getElementById('${containerId}')).appendChild(s)}catch(e){}})('vemtoutcheeg.com',9648243,document.createElement('script'))`;
+            container.appendChild(adScript);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         window.showSection = showSection;
         window.showLoginModal = showLoginModal;
@@ -1026,6 +1021,13 @@
         });
 
         loadAccountsFromFirebase();
+
+        // Cargar todos los banners estáticos
+        loadBanner('ad-top');
+        loadBanner('ad-home-middle');
+        loadBanner('ad-accounts-middle');
+        loadBanner('ad-about-middle');
+        loadBanner('ad-bottom');
     });
 
 </script>
