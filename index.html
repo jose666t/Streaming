@@ -663,6 +663,9 @@
         </div>
     </div>
 
+    <!-- Hidden storage for the modal ad -->
+    <div id="ad-storage" style="display: none;"></div>
+
 
     <!-- Firebase SDK -->
     <script type="module">
@@ -731,7 +734,13 @@
         document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         if (countdownInterval) clearInterval(countdownInterval);
         onConfirmCallback = null;
-        document.getElementById('modalAdContainer').innerHTML = '';
+        
+        // Move ad content back to storage
+        const modalAdContainer = document.getElementById('modalAdContainer');
+        const adStorage = document.getElementById('ad-storage');
+        while (modalAdContainer.firstChild) {
+            adStorage.appendChild(modalAdContainer.firstChild);
+        }
     }
 
     function showConfirmModal(message, callback, title = 'Confirmar Acción', confirmText = 'Confirmar', confirmClass = 'btn-danger') {
@@ -806,12 +815,13 @@
         const revealBtn = document.getElementById('revealButton');
         const adClicker = document.getElementById('adClicker');
         const adWallMessage = document.getElementById('adWallMessage');
+        
+        // Move pre-loaded ad content into the modal
         const modalAdContainer = document.getElementById('modalAdContainer');
-
-        modalAdContainer.innerHTML = ''; 
-        const adScript = document.createElement('script');
-        adScript.text = `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.getElementById('modalAdContainer')).appendChild(s)}catch(e){}})('gizokraijaw.net',9648317,document.createElement('script'))`;
-        modalAdContainer.appendChild(adScript);
+        const adStorage = document.getElementById('ad-storage');
+        while (adStorage.firstChild) {
+            modalAdContainer.appendChild(adStorage.firstChild);
+        }
 
         timerEl.textContent = adWallTimer;
         revealBtn.disabled = true;
@@ -1028,6 +1038,9 @@
         loadBanner('ad-accounts-middle');
         loadBanner('ad-about-middle');
         loadBanner('ad-bottom');
+        
+        // Pre-cargar el anuncio para el modal en el storage oculto
+        loadBanner('ad-storage');
     });
 
 </script>
