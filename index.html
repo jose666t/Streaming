@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎬 StreamGratis Neon</title>
+    <title>🎬 Shadow Account</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (para los iconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
     <!-- Ad Script (se carga uno aquí para disponibilidad temprana) -->
     <script src="https://shoukigaigoors.net/act/files/tag.min.js?z=9643757" data-cfasync="false" async></script>
@@ -45,19 +48,19 @@
             z-index: 1000;
         }
         .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); text-decoration: none; transition: color 0.3s, text-shadow 0.3s; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); text-decoration: none; transition: color 0.3s, text-shadow 0.3s; display: flex; align-items: center; gap: 10px; }
         .logo:hover { color: var(--secondary-color); text-shadow: var(--glow-secondary); }
-        .nav-links { display: flex; list-style: none; gap: 20px; }
-        .nav-links li { font-family: 'Orbitron', sans-serif; cursor: pointer; padding: 10px 20px; border-radius: 5px; transition: all 0.3s ease; font-weight: 500; border: 1px solid transparent; }
+        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-links li { font-family: 'Orbitron', sans-serif; cursor: pointer; padding: 10px 20px; border-radius: 5px; transition: all 0.3s ease; font-weight: 500; border: 1px solid transparent; display: flex; align-items: center; gap: 8px; }
         .nav-links li:hover, .nav-links li.active { color: var(--primary-color); background: rgba(0, 247, 255, 0.1); border-color: var(--primary-color); box-shadow: inset 0 0 10px rgba(0, 247, 255, 0.5); }
-        .admin-btn { font-family: 'Orbitron', sans-serif; background: transparent; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; box-shadow: var(--glow-secondary); }
+        .admin-btn { font-family: 'Orbitron', sans-serif; background: transparent; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; box-shadow: var(--glow-secondary); display: flex; align-items: center; gap: 8px; }
         .admin-btn:hover { background: var(--secondary-color); color: var(--dark-bg); }
         .container { max-width: 1300px; margin: 20px auto; background: var(--dark-bg-transparent); border-radius: 10px; padding: 30px; border: 1px solid rgba(0, 247, 255, 0.2); box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
         .section { display: none; }
         .section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .section-header { text-align: center; margin-bottom: 40px; }
-        .section-header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); margin-bottom: 10px; }
+        .section-header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         .section-header p { color: #aaa; font-size: 1.1rem; }
         .ad-placeholder { margin: 20px auto; padding: 10px; background: rgba(0,0,0,0.2); border: 1px dashed var(--secondary-color); display: flex; justify-content: center; align-items: center; text-align: center; min-height: 90px; width: 100%; }
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; text-align: center; }
@@ -111,14 +114,14 @@
     <!-- Barra de Navegación -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">🎬 StreamGratis</a>
+            <a href="#" class="logo"><i class="fas fa-ghost"></i> Shadow Account</a>
             <ul class="nav-links">
-                <li class="active" onclick="showSection('home')">🏠 Inicio</li>
-                <li onclick="showSection('accounts')">🎯 Cuentas</li>
-                <li onclick="showSection('about')">ℹ️ Info</li>
-                <li onclick="showSection('contact')">📞 Contacto</li>
+                <li class="active" onclick="showSection('home')"><i class="fas fa-fire"></i> Inicio</li>
+                <li onclick="showSection('accounts')"><i class="fas fa-bullseye"></i> Cuentas</li>
+                <li onclick="showSection('about')"><i class="fas fa-info-circle"></i> Info</li>
+                <li onclick="showSection('contact')"><i class="fas fa-phone-alt"></i> Contacto</li>
             </ul>
-            <button class="admin-btn" onclick="showLoginModal()">🔑 Admin</button>
+            <button class="admin-btn" onclick="showLoginModal()"><i class="fas fa-key"></i> Admin</button>
         </div>
     </nav>
 
@@ -129,7 +132,7 @@
         <!-- Sección Inicio -->
         <div id="home" class="section active">
             <div class="section-header">
-                <h1>Bienvenido a StreamGratis Neon</h1>
+                <h1>Bienvenido a Shadow Account</h1>
                 <p>Tu portal a cuentas de streaming gratuitas. ¡Reclama la tuya ahora!</p>
             </div>
             <div class="stats">
@@ -151,14 +154,14 @@
 
         <!-- Sección Cuentas -->
         <div id="accounts" class="section">
-            <div class="section-header"><h1>🎯 Cuentas Disponibles</h1><p>Selecciona una cuenta, sigue los pasos y ¡a disfrutar!</p></div>
+            <div class="section-header"><h1><i class="fas fa-bullseye"></i> Cuentas Disponibles</h1><p>Selecciona una cuenta, sigue los pasos y ¡a disfrutar!</p></div>
             <div class="ad-placeholder" id="ad-accounts-middle"></div>
             <div id="accountsContainer"></div>
         </div>
 
         <!-- Sección Acerca De -->
         <div id="about" class="section">
-             <div class="section-header"><h1>ℹ️ Acerca de StreamGratis</h1><p>Conoce más sobre nuestra misión.</p></div>
+             <div class="section-header"><h1><i class="fas fa-info-circle"></i> Acerca de Shadow Account</h1><p>Conoce más sobre nuestra misión.</p></div>
              <div class="info-card"><h3>🎯 Nuestra Misión</h3><p>Creemos que el entretenimiento debe ser accesible. Compartimos cuentas de forma gratuita, sostenida por anuncios, para que disfrutes del mejor contenido sin costo.</p></div>
             <div class="ad-placeholder" id="ad-about-middle"></div>
             <div class="info-card"><h3>🤝 Normas de Uso</h3><ul class="feature-list"><li>Sé respetuoso con las cuentas. No cambies las contraseñas.</li><li>Permite que otros también disfruten.</li><li>Vuelve a diario por nuevas cuentas.</li></ul></div>
@@ -166,15 +169,15 @@
 
         <!-- Sección Contacto -->
         <div id="contact" class="section">
-            <div class="section-header"><h1>📞 Contacto</h1><p>¿Preguntas o sugerencias? ¡Háznoslo saber!</p></div>
+            <div class="section-header"><h1><i class="fas fa-phone-alt"></i> Contacto</h1><p>¿Preguntas o sugerencias? ¡Háznoslo saber!</p></div>
             <div class="info-card"><h3>📧 Información de Contacto</h3><p><strong>Email:</strong> blandonjose6788@gmail.com</p><p><strong>Tiempo de respuesta:</strong> Intentamos responder en menos de 48 horas.</p></div>
-            <div class="info-card"><h3>💬 Canal de WhatsApp</h3><p>Únete para noticias, actualizaciones y soporte rápido:</p><p><a href="https://whatsapp.com/channel/0029Vb5xwFw545v43YQt5U0e" target="_blank" class="whatsapp-link">Canal Oficial de StreamGratis</a></p></div>
+            <div class="info-card"><h3>💬 Canal de WhatsApp</h3><p>Únete para noticias, actualizaciones y soporte rápido:</p><p><a href="https://whatsapp.com/channel/0029Vb5xwFw545v43YQt5U0e" target="_blank" class="whatsapp-link">Canal Oficial de Shadow Account</a></p></div>
         </div>
 
         <!-- Panel de Administración -->
         <div id="admin" class="section">
             <div class="admin-panel">
-                <div class="section-header"><h1>🔧 Panel de Administrador</h1></div>
+                <div class="section-header"><h1><i class="fas fa-tools"></i> Panel de Administrador</h1></div>
                 <h3>Añadir Nueva Cuenta</h3>
                 <div class="form-group"><label>Servicio de Streaming:</label><select id="adminService"><option value="netflix">Netflix</option><option value="spotify">Spotify</option><option value="disney">Disney+</option><option value="amazon">Amazon Prime</option><option value="hbo">HBO Max</option><option value="youtube">YouTube Premium</option><option value="apple">Apple TV+</option><option value="paramount">Paramount+</option><option value="crunchyroll">Crunchyroll</option><option value="otros">Otro</option></select></div>
                 <div class="form-group" id="customServiceGroup" style="display: none;"><label>Nombre del servicio:</label><input type="text" id="customServiceName" placeholder="Ej: Paramount+"></div>
@@ -192,7 +195,7 @@
     </div>
 
     <!-- Modals -->
-    <div class="modal" id="loginModal"><div class="modal-content"><h3>🔑 Acceso de Administrador</h3><input type="password" id="adminPasswordInput" placeholder="Ingresa la contraseña" /><div><button class="btn btn-add" onclick="checkPassword()">Entrar</button><button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button></div></div></div>
+    <div class="modal" id="loginModal"><div class="modal-content"><h3><i class="fas fa-key"></i> Acceso de Administrador</h3><input type="password" id="adminPasswordInput" placeholder="Ingresa la contraseña" /><div><button class="btn btn-add" onclick="checkPassword()">Entrar</button><button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button></div></div></div>
     
     <!-- NUEVO MODAL DE CLICS -->
     <div class="modal" id="clickWallModal">
@@ -232,7 +235,7 @@
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById(sectionName)?.classList.add('active');
         document.querySelectorAll('.nav-links li').forEach(l => l.classList.remove('active'));
-        const link = Array.from(document.querySelectorAll('.nav-links li')).find(l => l.textContent.toLowerCase().includes(sectionName.substring(0,4)));
+        const link = Array.from(document.querySelectorAll('.nav-links li')).find(l => l.textContent.trim().toLowerCase() === sectionName.toLowerCase());
         if (link) link.classList.add('active');
         if (sectionName === 'accounts') displayAccounts();
         if (sectionName === 'admin' && isAdmin) loadAdminAccounts();
