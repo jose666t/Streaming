@@ -49,7 +49,7 @@
         .main-content { display: none; }
         
         .navbar {
-            background: var(--dark-bg-transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--primary-color); box-shadow: var(--glow-primary); padding: 15px 20px; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; /* Permitir que los grupos principales se envuelvan */
+            background: var(--dark-bg-transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--primary-color); box-shadow: var(--glow-primary); padding: 15px 20px; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
         }
         .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); text-decoration: none; transition: color 0.3s, text-shadow 0.3s; display: flex; align-items: center; gap: 10px; }
         .logo:hover { color: var(--secondary-color); text-shadow: var(--glow-secondary); }
@@ -57,19 +57,91 @@
         .nav-links li { font-family: 'Orbitron', sans-serif; cursor: pointer; padding: 8px 15px; border-radius: 5px; transition: all 0.3s ease; font-weight: 500; border: 1px solid transparent; display: flex; align-items: center; gap: 8px; }
         .nav-links li:hover, .nav-links li.active { color: var(--primary-color); background: rgba(0, 247, 255, 0.1); border-color: var(--primary-color); box-shadow: inset 0 0 10px rgba(0, 247, 255, 0.5); }
         
-        /* --- REFINADO: Barra de acciones --- */
         .nav-actions {
             display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center;
         }
         .token-balance { font-family: 'Orbitron', sans-serif; background: rgba(249, 202, 36, 0.1); color: var(--token-color); padding: 8px 15px; border-radius: 5px; font-weight: 700; border: 1px solid var(--token-color); box-shadow: var(--glow-token); }
-        .user-profile { display: none; align-items: center; gap: 10px; color: var(--primary-color); font-weight: bold; }
-        .user-profile button { font-family: 'Orbitron', sans-serif; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; background-color: var(--danger-color); color: white; }
-        .admin-btn { font-family: 'Orbitron', sans-serif; background: transparent; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; box-shadow: var(--glow-secondary); display: flex; align-items: center; gap: 8px; }
-        .admin-btn:hover { background: var(--secondary-color); color: var(--dark-bg); }
+        
+        /* --- NUEVO: ESTILOS DEL PERFIL DROPDOWN --- */
+        .profile-dropdown {
+            position: relative;
+            display: none; /* Oculto por defecto, se muestra con JS */
+        }
+        .profile-avatar-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .profile-avatar-btn:hover {
+            box-shadow: var(--glow-primary);
+            transform: scale(1.1);
+        }
+        .dropdown-content {
+            display: none; /* Se cambia a block con JS */
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2), var(--glow-primary);
+            min-width: 200px;
+            z-index: 1;
+            overflow: hidden;
+            animation: fadeIn 0.3s;
+        }
+        .dropdown-content.show {
+            display: block;
+        }
+        .dropdown-header {
+            padding: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--primary-color);
+            text-align: center;
+        }
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: rgba(0, 247, 255, 0.1);
+        }
+        .dropdown-item .fas {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        .admin-btn-dropdown .fas {
+            color: var(--secondary-color);
+        }
+        .hidden {
+            display: none;
+        }
+        /* --- FIN DE ESTILOS DEL PERFIL DROPDOWN --- */
+
         .container { max-width: 1300px; margin: 20px auto; background: var(--dark-bg-transparent); border-radius: 10px; padding: 30px; border: 1px solid rgba(0, 247, 255, 0.2); box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
         .section { display: none; }
         .section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .section-header { text-align: center; margin-bottom: 40px; }
         .section-header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         .section-header p { color: #aaa; font-size: 1.1rem; }
@@ -118,12 +190,11 @@
         .referral-box { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; text-align: center; }
         .referral-box input { background: #101020; border: 1px solid var(--primary-color); color: var(--text-color); text-align: center; font-size: 1.1rem; padding: 10px; border-radius: 5px; width: 100%; margin-bottom: 15px; }
         
-        /* --- REFINADO: Media Queries para Responsividad --- */
         @media (max-width: 992px) {
             .navbar {
                 flex-direction: column;
                 align-items: center;
-                gap: 20px; /* Un poco más de espacio cuando se apila */
+                gap: 20px;
             }
         }
         @media (max-width: 768px) {
@@ -157,11 +228,17 @@
             </ul>
             <div class="nav-actions">
                 <div class="token-balance"><i class="fas fa-coins"></i> <span id="userTokenBalance">0</span> Tokens</div>
-                <div class="user-profile" id="userProfile">
-                    <span id="userName"></span>
-                    <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Salir</button>
+                
+                <!-- NUEVO: Perfil de Usuario con Dropdown -->
+                <div class="profile-dropdown" id="profileDropdownContainer">
+                    <button onclick="toggleProfileDropdown(event)" class="profile-avatar-btn" id="profileAvatarBtn"></button>
+                    <div id="profileDropdown" class="dropdown-content">
+                        <div class="dropdown-header" id="dropdownUserName"></div>
+                        <a href="#" onclick="openAdminPanel()" class="dropdown-item admin-btn-dropdown"><i class="fas fa-key"></i> Admin</a>
+                        <a href="#" onclick="logout()" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                    </div>
                 </div>
-                <button class="admin-btn" onclick="showLoginModal()"><i class="fas fa-key"></i> Admin</button>
+
             </div>
         </nav>
 
@@ -272,17 +349,20 @@
     // --- Lógica Principal de la App ---
     function initializeAppLogic() {
         const { onAuthStateChanged } = window.auth;
+        const profileContainer = document.getElementById('profileDropdownContainer');
         onAuthStateChanged(window.firebase.auth, async (user) => {
             const loginWall = document.getElementById('login-wall');
             const mainContent = document.querySelector('.main-content');
             if (user && !user.isAnonymous) {
                 loginWall.style.display = 'none';
                 mainContent.style.display = 'block';
+                profileContainer.style.display = 'block';
                 await setupUser(user);
                 loadAccountsFromFirebase();
             } else {
                 loginWall.style.display = 'flex';
                 mainContent.style.display = 'none';
+                profileContainer.style.display = 'none';
             }
         });
     }
@@ -331,12 +411,16 @@
     }
 
     function updateUIAfterLogin(user) {
-        if (!currentUser) return;
+        if (!currentUser || !user) return;
+        // Actualizar balance de tokens
         document.getElementById('userTokenBalance').textContent = currentUser.tokens;
+        // Actualizar enlace de referido
         document.getElementById('referralLink').value = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode}`;
-        const userProfile = document.getElementById('userProfile');
-        userProfile.style.display = 'flex';
-        document.getElementById('userName').textContent = user.displayName.split(' ')[0];
+        
+        // --- NUEVO: Lógica del Perfil Dropdown ---
+        const initial = user.displayName ? user.displayName.charAt(0).toUpperCase() : '?';
+        document.getElementById('profileAvatarBtn').textContent = initial;
+        document.getElementById('dropdownUserName').textContent = user.displayName;
     }
 
     // --- Autenticación ---
@@ -355,6 +439,9 @@
         await window.auth.signOut(window.firebase.auth);
         currentUser = null;
         isAdmin = false;
+        closeProfileDropdown();
+        // Recargar la página para un estado limpio
+        window.location.reload();
     }
     
     // --- Lógica de Cuentas (Cliente) ---
@@ -466,7 +553,13 @@
     }
 
     function showAlert(title, message) { document.getElementById('alertTitle').textContent = title; document.getElementById('alertMessage').textContent = message; document.getElementById('alertModal').style.display = 'flex'; }
-    function copyReferralLink() { const linkInput = document.getElementById('referralLink'); linkInput.select(); linkInput.setSelectionRange(0, 99999); try { document.execCommand('copy'); showAlert('¡Copiado!', 'Tu enlace de referido ha sido copiado al portapapeles.'); } catch (err) { showAlert('Error', 'No se pudo copiar el enlace. Por favor, cópialo manually.'); } }
+    function copyReferralLink() { const linkInput = document.getElementById('referralLink'); linkInput.select(); linkInput.setSelectionRange(0, 99999); try { document.execCommand('copy'); showAlert('¡Copiado!', 'Tu enlace de referido ha sido copiado al portapapeles.'); } catch (err) { showAlert('Error', 'No se pudo copiar el enlace. Por favor, cópialo manualmente.'); } }
+    
+    // --- Lógica de Administración ---
+    function openAdminPanel() {
+        closeProfileDropdown();
+        showLoginModal();
+    }
     function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; document.getElementById('adminPasswordInput').focus(); }
     function checkPassword() { if (document.getElementById('adminPasswordInput').value === 'Jose') { isAdmin = true; showSection('admin'); closeAllModals(); } else { showAlert('Error', 'Contraseña incorrecta'); } document.getElementById('adminPasswordInput').value = ''; }
     function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); onConfirmCallback = null; }
@@ -529,10 +622,21 @@
         }
     }
 
-    // --- Inicialización ---
+    // --- NUEVO: Lógica del Dropdown ---
+    function toggleProfileDropdown(event) {
+        event.stopPropagation(); // Evita que el click se propague al window
+        document.getElementById('profileDropdown').classList.toggle('show');
+    }
+
+    function closeProfileDropdown() {
+        document.getElementById('profileDropdown').classList.remove('show');
+    }
+
+    // --- Inicialización y Event Listeners ---
     document.addEventListener('DOMContentLoaded', () => {
+        // Asignar funciones a window para que sean accesibles desde el HTML
         window.showSection = showSection;
-        window.showLoginModal = showLoginModal;
+        window.openAdminPanel = openAdminPanel;
         window.closeAllModals = closeAllModals;
         window.checkPassword = checkPassword;
         window.redeemAccount = redeemAccount;
@@ -541,6 +645,17 @@
         window.copyReferralLink = copyReferralLink;
         window.signInWithGoogle = signInWithGoogle;
         window.logout = logout;
+        window.toggleProfileDropdown = toggleProfileDropdown;
+
+        // Listener para cerrar el dropdown si se hace click fuera
+        window.addEventListener('click', (event) => {
+            if (!event.target.matches('.profile-avatar-btn')) {
+                const dropdown = document.getElementById('profileDropdown');
+                if (dropdown.classList.contains('show')) {
+                    closeProfileDropdown();
+                }
+            }
+        });
 
         document.getElementById('confirmBtn').addEventListener('click', () => {
             if (typeof onConfirmCallback === 'function') onConfirmCallback();
@@ -551,6 +666,7 @@
             document.getElementById('customServiceGroup').style.display = (this.value === 'otros') ? 'block' : 'none';
         });
 
+        // Carga de scripts de anuncios
         const adContainer = document.getElementById('ad-container-main');
         const adScripts = [ `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{document.body.appendChild(s)}catch(e){}})('gizokraijaw.net',9648317,document.createElement('script'))`, `(function(d,z,s){s.src='https://'+d+'/400/'+z;try{document.body.appendChild(s)}catch(e){}})('vemtoutcheeg.com',9648243,document.createElement('script'))`, `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{document.body.appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))`, `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{document.body.appendChild(s)}catch(e){}})('gizokraijaw.net',9643761,document.createElement('script'))`, `(s=>{s.dataset.zone='9643746',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))` ];
         adScripts.forEach(scriptText => { const adScript = document.createElement('script'); adScript.text = scriptText; adContainer.appendChild(adScript); });
