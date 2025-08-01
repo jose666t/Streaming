@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🎬 Shadow Account</title>
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     
+    <!-- Font Awesome (para los iconos) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
     <style>
@@ -35,56 +37,30 @@
             overflow-x: hidden;
         }
         
-        /* --- NUEVO: Pantalla de Bienvenida --- */
         #login-wall {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: var(--dark-bg);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            flex-direction: column;
-            padding: 20px;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--dark-bg); z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center; flex-direction: column; padding: 20px;
         }
-        #login-wall .logo {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        #login-wall h1 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--text-color);
-            margin-bottom: 15px;
-        }
-        #login-wall p {
-            color: #aaa;
-            max-width: 500px;
-            margin-bottom: 30px;
-        }
-        .btn-google { 
-            font-family: 'Orbitron', sans-serif; border: none; padding: 15px 30px; border-radius: 5px; cursor: pointer; font-weight: 700; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px; font-size: 1.1rem;
-            background-color: var(--google-color); color: white;
-        }
+        #login-wall .logo { font-size: 3rem; margin-bottom: 20px; }
+        #login-wall h1 { font-family: 'Orbitron', sans-serif; color: var(--text-color); margin-bottom: 15px; }
+        #login-wall p { color: #aaa; max-width: 500px; margin-bottom: 30px; }
+        .btn-google { font-family: 'Orbitron', sans-serif; border: none; padding: 15px 30px; border-radius: 5px; cursor: pointer; font-weight: 700; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px; font-size: 1.1rem; background-color: var(--google-color); color: white; }
         .btn-google:hover { background-color: #5a95f5; transform: translateY(-3px); }
 
-        /* --- MODIFICADO: Ocultar contenido principal por defecto --- */
-        .main-content {
-            display: none; /* Se mostrará con JS tras el login */
-        }
+        .main-content { display: none; }
         
         .navbar {
-            background: var(--dark-bg-transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--primary-color); box-shadow: var(--glow-primary); padding: 15px 20px; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+            background: var(--dark-bg-transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--primary-color); box-shadow: var(--glow-primary); padding: 15px 20px; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; /* Permitir que los grupos principales se envuelvan */
         }
         .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); text-decoration: none; transition: color 0.3s, text-shadow 0.3s; display: flex; align-items: center; gap: 10px; }
         .logo:hover { color: var(--secondary-color); text-shadow: var(--glow-secondary); }
-        .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; flex-wrap: wrap; justify-content: center; }
         .nav-links li { font-family: 'Orbitron', sans-serif; cursor: pointer; padding: 8px 15px; border-radius: 5px; transition: all 0.3s ease; font-weight: 500; border: 1px solid transparent; display: flex; align-items: center; gap: 8px; }
         .nav-links li:hover, .nav-links li.active { color: var(--primary-color); background: rgba(0, 247, 255, 0.1); border-color: var(--primary-color); box-shadow: inset 0 0 10px rgba(0, 247, 255, 0.5); }
-        .nav-actions { display: flex; align-items: center; gap: 15px; }
+        
+        /* --- REFINADO: Barra de acciones --- */
+        .nav-actions {
+            display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center;
+        }
         .token-balance { font-family: 'Orbitron', sans-serif; background: rgba(249, 202, 36, 0.1); color: var(--token-color); padding: 8px 15px; border-radius: 5px; font-weight: 700; border: 1px solid var(--token-color); box-shadow: var(--glow-token); }
         .user-profile { display: none; align-items: center; gap: 10px; color: var(--primary-color); font-weight: bold; }
         .user-profile button { font-family: 'Orbitron', sans-serif; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; background-color: var(--danger-color); color: white; }
@@ -94,7 +70,6 @@
         .section { display: none; }
         .section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        /* ... (resto de tu CSS permanece igual) ... */
         .section-header { text-align: center; margin-bottom: 40px; }
         .section-header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         .section-header p { color: #aaa; font-size: 1.1rem; }
@@ -127,7 +102,6 @@
         .btn:hover { transform: translateY(-2px); }
         .btn-add { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); }
         .btn-danger { background: linear-gradient(45deg, var(--danger-color), #c0392b); }
-        .btn-reset { background: linear-gradient(45deg, var(--reset-color), #6dd5ed); }
         .btn-cancel { background: #555; color: white; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal-content { background: var(--card-bg); padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; text-align: center; border: 1px solid var(--primary-color); box-shadow: var(--glow-primary); }
@@ -143,12 +117,26 @@
         a.whatsapp-link:hover { text-decoration: underline; }
         .referral-box { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; text-align: center; }
         .referral-box input { background: #101020; border: 1px solid var(--primary-color); color: var(--text-color); text-align: center; font-size: 1.1rem; padding: 10px; border-radius: 5px; width: 100%; margin-bottom: 15px; }
-        @media (max-width: 992px) { .navbar { flex-direction: column; gap: 15px; } }
-        @media (max-width: 768px) { .nav-links { gap: 5px; flex-wrap: wrap; justify-content: center; } .nav-links li { padding: 8px 10px; font-size: 12px; } .container { padding: 15px; margin: 10px; } .section-header h1 { font-size: 2rem; } .accounts-grid { grid-template-columns: 1fr; } }
+        
+        /* --- REFINADO: Media Queries para Responsividad --- */
+        @media (max-width: 992px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px; /* Un poco más de espacio cuando se apila */
+            }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 15px; margin: 10px; }
+            .section-header h1 { font-size: 2rem; }
+            .accounts-grid { grid-template-columns: 1fr; }
+            .nav-links li { font-size: 14px; }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Pantalla de Bienvenida -->
     <div id="login-wall">
         <a href="#" class="logo"><i class="fas fa-ghost"></i> Shadow Account</a>
         <h1>Bienvenido</h1>
@@ -156,7 +144,9 @@
         <button class="btn-google" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Acceder con Google</button>
     </div>
 
+    <!-- Contenido principal -->
     <div class="main-content">
+        <!-- Barra de Navegación -->
         <nav class="navbar">
             <a href="#" class="logo"><i class="fas fa-ghost"></i> Shadow Account</a>
             <ul class="nav-links">
@@ -167,11 +157,9 @@
             </ul>
             <div class="nav-actions">
                 <div class="token-balance"><i class="fas fa-coins"></i> <span id="userTokenBalance">0</span> Tokens</div>
-                <div id="auth-container">
-                    <div class="user-profile" id="userProfile">
-                        <span id="userName"></span>
-                        <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Salir</button>
-                    </div>
+                <div class="user-profile" id="userProfile">
+                    <span id="userName"></span>
+                    <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Salir</button>
                 </div>
                 <button class="admin-btn" onclick="showLoginModal()"><i class="fas fa-key"></i> Admin</button>
             </div>
@@ -180,6 +168,7 @@
         <div class="container">
             <div class="ad-placeholder" id="ad-container-main"></div>
 
+            <!-- Sección Inicio -->
             <div id="home" class="section active">
                 <div class="section-header" style="margin-bottom: 20px;">
                     <h1>Bienvenido a Shadow Account</h1>
@@ -200,11 +189,13 @@
                 </div>
             </div>
 
+            <!-- Sección Cuentas -->
             <div id="accounts" class="section">
                 <div class="section-header"><h1><i class="fas fa-stream"></i> Cuentas Disponibles</h1><p>Usa tus tokens para canjear una cuenta. ¡Vuelve pronto por más!</p></div>
                 <div id="accountsContainer"></div>
             </div>
 
+            <!-- Sección Ganar Tokens -->
             <div id="earn" class="section">
                 <div class="section-header"><h1><i class="fas fa-coins"></i> Ganar Tokens</h1><p>¡La forma más fácil de conseguir cuentas es invitando amigos!</p></div>
                 <div class="info-card">
@@ -217,21 +208,44 @@
                 </div>
             </div>
 
+            <!-- Sección Acerca De -->
             <div id="about" class="section">
                 <div class="section-header"><h1><i class="fas fa-info-circle"></i> Acerca de Shadow Account</h1><p>Conoce más sobre nuestra misión.</p></div>
                 <div class="info-card"><h3>🎯 Nuestra Misión</h3><p>Creemos que el entretenimiento debe ser accesible. Hemos creado un sistema justo donde puedes obtener cuentas premium colaborando con el crecimiento de nuestra comunidad.</p></div>
                 <div class="info-card"><h3>💬 Canal de WhatsApp</h3><p>Únete para noticias, actualizaciones y soporte rápido:</p><p><a href="https://whatsapp.com/channel/0029Vb5xwFw545v43YQt5U0e" target="_blank" class="whatsapp-link">Canal Oficial de Shadow Account</a></p></div>
             </div>
 
+            <!-- Panel de Administración -->
             <div id="admin" class="section">
+                <div class="admin-panel">
+                    <div class="section-header"><h1><i class="fas fa-tools"></i> Panel de Administrador</h1></div>
+                    <h3>Añadir Nueva Cuenta</h3>
+                    <div class="form-group"><label>Servicio:</label><select id="adminService"><option value="netflix">Netflix</option><option value="spotify">Spotify</option><option value="disney">Disney+</option><option value="amazon">Amazon Prime</option><option value="hbo">HBO Max</option><option value="youtube">YouTube Premium</option><option value="apple">Apple TV+</option><option value="paramount">Paramount+</option><option value="crunchyroll">Crunchyroll</option><option value="otros">Otro</option></select></div>
+                    <div class="form-group" id="customServiceGroup" style="display: none;"><label>Nombre del servicio:</label><input type="text" id="customServiceName"></div>
+                    <div class="form-group"><label>Email/Usuario:</label><input type="text" id="adminEmail"></div>
+                    <div class="form-group"><label>Contraseña:</label><input type="text" id="adminPassword"></div>
+                    <div class="form-group"><label>Costo en Tokens:</label><input type="number" id="adminCost" min="0" value="50"></div>
+                    <div class="form-group"><label>Límite de usuarios (0 para ilimitado):</label><input type="number" id="userLimit" min="0" value="1"></div>
+                    <button class="btn btn-add" onclick="addAccount()" style="width: 100%; margin-bottom: 20px;">➕ Agregar Cuenta</button>
+                    <hr style="border-color: var(--secondary-color); margin: 40px 0;">
+                    <h3>📋 Cuentas Agregadas</h3>
+                    <div id="adminAccountsList"></div>
                 </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modals -->
+    <div class="modal" id="loginModal"><div class="modal-content"><h3><i class="fas fa-key"></i> Acceso Admin</h3><input type="password" id="adminPasswordInput" placeholder="Contraseña" /><div><button class="btn btn-add" onclick="checkPassword()">Entrar</button><button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button></div></div></div>
+    <div class="modal" id="passwordRevealModal"><div class="modal-content"><h3>🎉 ¡Cuenta Canjeada!</h3><div id="revealedPassword" style="margin: 20px 0; font-size: 1.1rem; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 5px;"></div><button class="btn btn-add" onclick="closeAllModals()">Cerrar</button></div></div></div>
+    <div class="modal" id="confirmModal"><div class="modal-content"><h3 id="confirmTitle">Confirmar Acción</h3><p id="confirmMessage" style="margin: 20px 0;"></p><div><button id="confirmBtn" class="btn">Confirmar</button><button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button></div></div></div>
+    <div class="modal" id="alertModal"><div class="modal-content"><h3 id="alertTitle"></h3><p id="alertMessage" style="margin: 20px 0;"></p><div><button class="btn btn-add" onclick="closeAllModals()">Entendido</button></div></div></div>
+
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, getDocs, deleteDoc, runTransaction, increment } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, getDocs, deleteDoc, runTransaction, increment, where, query } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
         
         const firebaseConfig = { apiKey: "AIzaSyC4l6R9Ws47JtJx-g2r_sxX_1m_QNGVoOI", authDomain: "streaming-6c68a.firebaseapp.com", projectId: "streaming-6c68a", storageBucket: "streaming-6c68a.appspot.com", messagingSenderId: "426556584047", appId: "1:426556584047:web:523b5231151a94ea391d9a" };
         
@@ -240,7 +254,7 @@
         const db = getFirestore(app);
 
         window.firebase = { app, auth, db };
-        window.firestore = { collection, doc, getDoc, setDoc, updateDoc, getDocs, deleteDoc, runTransaction, increment };
+        window.firestore = { collection, doc, getDoc, setDoc, updateDoc, getDocs, deleteDoc, runTransaction, increment, where, query };
         window.auth = { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut };
 
         initializeAppLogic();
@@ -253,26 +267,20 @@
     let isAdmin = false;
     let onConfirmCallback = null;
     const TOKENS_PER_REFERRAL = 10;
-
     const serviceDetails = { netflix: { name: 'Netflix', icon: 'N' }, spotify: { name: 'Spotify', icon: '♪' }, disney: { name: 'Disney+', icon: 'D' }, amazon: { name: 'Amazon Prime', icon: 'A' }, hbo: { name: 'HBO Max', icon: 'H' }, youtube: { name: 'YouTube Premium', icon: 'Y' }, apple: { name: 'Apple TV+', icon: '' }, paramount: { name: 'Paramount+', icon: 'P' }, crunchyroll: { name: 'Crunchyroll', icon: 'C' }, otros: { name: 'Otro', icon: '?' } };
 
-    // --- Lógica Principal de la App (MODIFICADA) ---
+    // --- Lógica Principal de la App ---
     function initializeAppLogic() {
         const { onAuthStateChanged } = window.auth;
-        
         onAuthStateChanged(window.firebase.auth, async (user) => {
             const loginWall = document.getElementById('login-wall');
             const mainContent = document.querySelector('.main-content');
-
-            // Si el usuario existe y no es anónimo (ha iniciado sesión con Google)
             if (user && !user.isAnonymous) {
                 loginWall.style.display = 'none';
                 mainContent.style.display = 'block';
                 await setupUser(user);
                 loadAccountsFromFirebase();
-            } 
-            // Si el usuario no existe o es anónimo, muestra la pantalla de login
-            else {
+            } else {
                 loginWall.style.display = 'flex';
                 mainContent.style.display = 'none';
             }
@@ -283,7 +291,6 @@
         const { doc, getDoc, setDoc } = window.firestore;
         const userRef = doc(window.firebase.db, "users", user.uid);
         const userSnap = await getDoc(userRef);
-
         if (!userSnap.exists()) {
             const referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
             const newUserProfile = {
@@ -304,29 +311,40 @@
         updateUIAfterLogin(user);
     }
     
-    // Función de referido (sin cambios)
     async function handleReferral(newUserId) {
-        // ... (esta función no necesita cambios)
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref');
+        if (!refCode) return;
+        const { doc, getDoc, updateDoc, increment, collection, where, query, getDocs } = window.firestore;
+        const userRef = doc(window.firebase.db, "users", newUserId);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists() && userDoc.data().creditedBy) return;
+        if (currentUser.referralCode === refCode) return;
+        await updateDoc(userRef, { creditedBy: refCode });
+        const usersRef = collection(window.firebase.db, "users");
+        const q = query(usersRef, where("referralCode", "==", refCode));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (document) => {
+            const referrerRef = doc(window.firebase.db, "users", document.id);
+            await updateDoc(referrerRef, { tokens: increment(TOKENS_PER_REFERRAL) });
+        });
     }
 
-    // Actualizar UI (con pequeños ajustes)
     function updateUIAfterLogin(user) {
         if (!currentUser) return;
         document.getElementById('userTokenBalance').textContent = currentUser.tokens;
         document.getElementById('referralLink').value = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode}`;
-        
         const userProfile = document.getElementById('userProfile');
         userProfile.style.display = 'flex';
         document.getElementById('userName').textContent = user.displayName.split(' ')[0];
     }
 
-    // --- Autenticación (MODIFICADA) ---
+    // --- Autenticación ---
     async function signInWithGoogle() {
         const { GoogleAuthProvider, signInWithPopup } = window.auth;
         const provider = new GoogleAuthProvider();
         try {
             await signInWithPopup(window.firebase.auth, provider);
-            // onAuthStateChanged se encargará del resto automáticamente
         } catch (error) {
             console.error("Error al iniciar sesión con Google:", error);
             showAlert("Error de Acceso", "No se pudo iniciar sesión. Por favor, intenta de nuevo. Asegúrate de que las ventanas emergentes no estén bloqueadas.");
@@ -335,19 +353,11 @@
 
     async function logout() {
         await window.auth.signOut(window.firebase.auth);
-        // onAuthStateChanged se encargará de mostrar la pantalla de login
-        // y reseteamos el estado local
         currentUser = null;
         isAdmin = false;
     }
     
-    // --- Resto de funciones (Lógica de Cuentas, Admin, etc.) ---
-    // NO SE NECESITAN CAMBIOS EN LAS SIGUIENTES FUNCIONES:
-    // displayAccounts, redeemAccount, showPasswordRevealModal, updateStats,
-    // showSection, showAlert, copyReferralLink, showLoginModal, checkPassword,
-    // closeAllModals, addAccount, deleteAccount, loadAdminAccounts, 
-    // loadAccountsFromFirebase
-
+    // --- Lógica de Cuentas (Cliente) ---
     function displayAccounts() {
         const container = document.getElementById('accountsContainer');
         updateStats();
@@ -383,7 +393,6 @@
             showAlert('Tokens Insuficientes', 'Necesitas más tokens para canjear esta cuenta. ¡Invita a más amigos!');
             return;
         }
-
         const message = `¿Canjear "${account.serviceName}" por ${account.cost} tokens? Esta acción no se puede deshacer.`;
         showConfirmModal(message, async () => {
             try {
@@ -419,6 +428,7 @@
         displayAccounts();
         updateUIAfterLogin(window.firebase.auth.currentUser);
     }
+
     async function updateStats() {
         const { getDocs, collection } = window.firestore;
         const accountsSnapshot = await getDocs(collection(window.firebase.db, "streamingAccounts"));
@@ -432,22 +442,95 @@
         document.getElementById('usersOnline').textContent = usersSnapshot.size;
     }
     
-    function showSection(sectionName) { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(sectionName)?.classList.add('active'); document.querySelectorAll('.nav-links li').forEach(l => l.classList.remove('active')); const link = Array.from(document.querySelectorAll('.nav-links li')).find(l => l.textContent.trim().toLowerCase().includes(sectionName.toLowerCase())); if (link) link.classList.add('active'); if (sectionName === 'accounts') displayAccounts(); if (sectionName === 'admin' && isAdmin) loadAdminAccounts(); }
-    function showAlert(title, message) { document.getElementById('alertTitle').textContent = title; document.getElementById('alertMessage').textContent = message; document.getElementById('alertModal').style.display = 'flex'; }
-    function copyReferralLink() { const linkInput = document.getElementById('referralLink'); linkInput.select(); linkInput.setSelectionRange(0, 99999); try { document.execCommand('copy'); showAlert('¡Copiado!', 'Tu enlace de referido ha sido copiado al portapapeles.'); } catch (err) { showAlert('Error', 'No se pudo copiar el enlace. Por favor, cópialo manualmente.'); } }
-    function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; document.getElementById('adminPasswordInput').focus(); }
-    function checkPassword() { if (document.getElementById('adminPasswordInput').value === 'Jose') { isAdmin = true; showSection('admin'); closeAllModals(); } else { alert('❌ Contraseña incorrecta'); } document.getElementById('adminPasswordInput').value = ''; }
-    function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); onConfirmCallback = null; }
-    document.getElementById('adminService')?.addEventListener('change', function() { document.getElementById('customServiceGroup').style.display = (this.value === 'otros') ? 'block' : 'none'; });
-    async function addAccount() { const { setDoc, doc } = window.firestore; const service = document.getElementById('adminService').value; const email = document.getElementById('adminEmail').value.trim(); const password = document.getElementById('adminPassword').value.trim(); if (!email || !password) return; const account = { id: Date.now(), service, serviceName: service === 'otros' ? document.getElementById('customServiceName').value.trim() : serviceDetails[service].name, email, password, cost: parseInt(document.getElementById('adminCost').value) || 50, userLimit: parseInt(document.getElementById('userLimit').value) || 0, currentUsers: 0 }; await setDoc(doc(window.firebase.db, 'streamingAccounts', account.id.toString()), account); loadAccountsFromFirebase(); document.getElementById('adminEmail').value = ''; document.getElementById('adminPassword').value = ''; }
-    function deleteAccount(id) { showConfirmModal('¿Seguro que quieres ELIMINAR PERMANENTEMENTE esta cuenta?', async () => { try { await window.firestore.deleteDoc(window.firestore.doc(window.firebase.db, 'streamingAccounts', id.toString())); loadAccountsFromFirebase(); } catch (error) { console.error("Error eliminando cuenta: ", error); } }, 'Eliminar Cuenta', 'Eliminar', 'btn-danger'); }
-    function loadAdminAccounts() { const adminList = document.getElementById('adminAccountsList'); adminList.innerHTML = accounts.length === 0 ? '<p style="text-align:center; padding: 20px;">No hay cuentas.</p>' : accounts.map(acc => { const isFull = acc.userLimit > 0 && acc.currentUsers >= acc.userLimit; const statusText = acc.userLimit === 0 ? 'Ilimitados' : (isFull ? 'Totalmente Reclamada' : `${acc.currentUsers}/${acc.userLimit} Reclamadas`); const statusColor = isFull ? 'var(--secondary-color)' : 'var(--primary-color)'; return `<div style="display:flex; flex-wrap: wrap; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:15px; margin-bottom:10px; border-radius:5px; border-left: 3px solid ${statusColor};"><div><strong>${acc.serviceName}</strong> (${acc.cost} tokens)<br><small style="color: ${statusColor}; font-weight: bold;">${statusText}</small></div><div><button class="btn btn-danger" onclick="deleteAccount(${acc.id})">🗑️ Eliminar</button></div></div>`; }).join(''); }
-    async function loadAccountsFromFirebase() { try { const { getDocs, collection } = window.firestore; const querySnapshot = await getDocs(collection(window.firebase.db, 'streamingAccounts')); accounts = []; querySnapshot.forEach((doc) => accounts.push(doc.data())); accounts.sort((a, b) => a.serviceName.localeCompare(b.serviceName)); displayAccounts(); if (isAdmin) { loadAdminAccounts(); } updateStats(); } catch (error) { console.error("Error cargando cuentas: ", error); document.getElementById('accountsContainer').innerHTML = `<div class="info-card"><h3>❌ Error de Conexión</h3><p>No se pudieron cargar las cuentas.</p></div>`; } }
+    function showSection(sectionName) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        const section = document.getElementById(sectionName);
+        if (section) section.classList.add('active');
+        
+        document.querySelectorAll('.nav-links li').forEach(l => l.classList.remove('active'));
+        const link = Array.from(document.querySelectorAll('.nav-links li')).find(l => l.textContent.trim().toLowerCase().includes(sectionName.toLowerCase()));
+        if (link) link.classList.add('active');
+        
+        if (sectionName === 'accounts') displayAccounts();
+        if (sectionName === 'admin' && isAdmin) loadAdminAccounts();
+    }
 
+    function showConfirmModal(message, callback, title = 'Confirmar Acción', confirmText = 'Confirmar', btnClass = 'btn-add') {
+        document.getElementById('confirmTitle').textContent = title;
+        document.getElementById('confirmMessage').textContent = message;
+        const confirmBtn = document.getElementById('confirmBtn');
+        confirmBtn.textContent = confirmText;
+        confirmBtn.className = `btn ${btnClass}`;
+        onConfirmCallback = callback;
+        document.getElementById('confirmModal').style.display = 'flex';
+    }
+
+    function showAlert(title, message) { document.getElementById('alertTitle').textContent = title; document.getElementById('alertMessage').textContent = message; document.getElementById('alertModal').style.display = 'flex'; }
+    function copyReferralLink() { const linkInput = document.getElementById('referralLink'); linkInput.select(); linkInput.setSelectionRange(0, 99999); try { document.execCommand('copy'); showAlert('¡Copiado!', 'Tu enlace de referido ha sido copiado al portapapeles.'); } catch (err) { showAlert('Error', 'No se pudo copiar el enlace. Por favor, cópialo manually.'); } }
+    function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; document.getElementById('adminPasswordInput').focus(); }
+    function checkPassword() { if (document.getElementById('adminPasswordInput').value === 'Jose') { isAdmin = true; showSection('admin'); closeAllModals(); } else { showAlert('Error', 'Contraseña incorrecta'); } document.getElementById('adminPasswordInput').value = ''; }
+    function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); onConfirmCallback = null; }
+    
+    async function addAccount() {
+        const { setDoc, doc } = window.firestore;
+        const service = document.getElementById('adminService').value;
+        const serviceName = service === 'otros' ? document.getElementById('customServiceName').value.trim() : serviceDetails[service].name;
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value.trim();
+        if (!email || !password || !serviceName) {
+            showAlert('Error', 'Todos los campos son obligatorios.');
+            return;
+        }
+        const account = { id: Date.now(), service, serviceName, email, password, cost: parseInt(document.getElementById('adminCost').value) || 50, userLimit: parseInt(document.getElementById('userLimit').value) || 0, currentUsers: 0 };
+        await setDoc(doc(window.firebase.db, 'streamingAccounts', account.id.toString()), account);
+        loadAccountsFromFirebase();
+        document.getElementById('adminEmail').value = '';
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('customServiceName').value = '';
+    }
+
+    function deleteAccount(id) {
+        showConfirmModal('¿Seguro que quieres ELIMINAR PERMANENTEMENTE esta cuenta?', async () => {
+            try {
+                await window.firestore.deleteDoc(window.firestore.doc(window.firebase.db, 'streamingAccounts', id.toString()));
+                loadAccountsFromFirebase();
+            } catch (error) {
+                console.error("Error eliminando cuenta: ", error);
+                showAlert('Error', 'No se pudo eliminar la cuenta.');
+            }
+        }, 'Eliminar Cuenta', 'Eliminar', 'btn-danger');
+    }
+
+    function loadAdminAccounts() {
+        const adminList = document.getElementById('adminAccountsList');
+        adminList.innerHTML = accounts.length === 0 ? '<p style="text-align:center; padding: 20px;">No hay cuentas.</p>' : accounts.map(acc => {
+            const isFull = acc.userLimit > 0 && acc.currentUsers >= acc.userLimit;
+            const statusText = acc.userLimit === 0 ? 'Ilimitados' : (isFull ? 'Totalmente Reclamada' : `${acc.currentUsers}/${acc.userLimit} Reclamadas`);
+            const statusColor = isFull ? 'var(--secondary-color)' : 'var(--primary-color)';
+            return `<div style="display:flex; flex-wrap: wrap; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:15px; margin-bottom:10px; border-radius:5px; border-left: 3px solid ${statusColor};"><div><strong>${acc.serviceName}</strong> (${acc.cost} tokens)<br><small style="color: ${statusColor}; font-weight: bold;">${statusText}</small></div><div><button class="btn btn-danger" onclick="deleteAccount(${acc.id})">🗑️ Eliminar</button></div></div>`;
+        }).join('');
+    }
+
+    async function loadAccountsFromFirebase() {
+        try {
+            const { getDocs, collection } = window.firestore;
+            const querySnapshot = await getDocs(collection(window.firebase.db, 'streamingAccounts'));
+            accounts = [];
+            querySnapshot.forEach((doc) => accounts.push(doc.data()));
+            accounts.sort((a, b) => a.serviceName.localeCompare(b.serviceName));
+            displayAccounts();
+            if (isAdmin) {
+                loadAdminAccounts();
+            }
+            updateStats();
+        } catch (error) {
+            console.error("Error cargando cuentas: ", error);
+            document.getElementById('accountsContainer').innerHTML = `<div class="info-card"><h3>❌ Error de Conexión</h3><p>No se pudieron cargar las cuentas.</p></div>`;
+        }
+    }
 
     // --- Inicialización ---
     document.addEventListener('DOMContentLoaded', () => {
-        // Asignar funciones a window para que sean accesibles desde el HTML onclick
         window.showSection = showSection;
         window.showLoginModal = showLoginModal;
         window.closeAllModals = closeAllModals;
@@ -459,26 +542,21 @@
         window.signInWithGoogle = signInWithGoogle;
         window.logout = logout;
 
-        // Listener para el botón de confirmación del modal
-        const confirmBtn = document.getElementById('confirmBtn');
-        if(confirmBtn) {
-            confirmBtn.addEventListener('click', () => {
-                if (typeof onConfirmCallback === 'function') {
-                    onConfirmCallback();
-                }
-                closeAllModals();
-            });
-        }
+        document.getElementById('confirmBtn').addEventListener('click', () => {
+            if (typeof onConfirmCallback === 'function') onConfirmCallback();
+            closeAllModals();
+        });
         
-        // Cargar anuncios (sin cambios)
+        document.getElementById('adminService').addEventListener('change', function() {
+            document.getElementById('customServiceGroup').style.display = (this.value === 'otros') ? 'block' : 'none';
+        });
+
         const adContainer = document.getElementById('ad-container-main');
         const adScripts = [ `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{document.body.appendChild(s)}catch(e){}})('gizokraijaw.net',9648317,document.createElement('script'))`, `(function(d,z,s){s.src='https://'+d+'/400/'+z;try{document.body.appendChild(s)}catch(e){}})('vemtoutcheeg.com',9648243,document.createElement('script'))`, `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{document.body.appendChild(s)}catch(e){}})('gizokraijaw.net',9643820,document.createElement('script'))`, `(function(d,z,s){s.src='https://'+d+'/401/'+z;try{document.body.appendChild(s)}catch(e){}})('gizokraijaw.net',9643761,document.createElement('script'))`, `(s=>{s.dataset.zone='9643746',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))` ];
-        if(adContainer) {
-            adScripts.forEach(scriptText => { const adScript = document.createElement('script'); adScript.text = scriptText; adContainer.appendChild(adScript); });
-        }
+        adScripts.forEach(scriptText => { const adScript = document.createElement('script'); adScript.text = scriptText; adContainer.appendChild(adScript); });
     });
-
 </script>
 
 </body>
 </html>
+
