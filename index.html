@@ -422,7 +422,7 @@
             document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
             onConfirmCallback = null;
             const adContainer = document.getElementById('modalAdContainer');
-            adContainer.innerHTML = '';
+            if (adContainer) adContainer.innerHTML = '';
             const claimBtn = document.getElementById('claimTokensFromModalBtn');
             if(claimBtn) {
                 claimBtn.disabled = true;
