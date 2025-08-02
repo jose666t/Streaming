@@ -145,6 +145,71 @@
         .referral-box input { background: #101020; border: 1px solid var(--primary-color); color: var(--text-color); text-align: center; font-size: 1.1rem; padding: 10px; border-radius: 5px; width: 100%; margin-bottom: 15px; }
         .adblock-notice { font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px; }
 
+        /* --- ESTILOS PARA EL NUEVO SISTEMA DE ANUNCIOS --- */
+        .clickable-ad-banner {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            color: var(--dark-bg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            margin-bottom: 15px;
+        }
+        .clickable-ad-banner:hover:not(.disabled) {
+            transform: translateY(-5px);
+            box-shadow: var(--glow-primary);
+        }
+        .clickable-ad-banner.disabled {
+            background: #555;
+            cursor: not-allowed;
+            filter: grayscale(70%);
+        }
+        .clickable-ad-banner h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .clickable-ad-banner p {
+            font-size: 1rem;
+            color: rgba(10, 10, 26, 0.8);
+        }
+        #ad-cooldown-message {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            height: 24px;
+            margin-bottom: 20px;
+        }
+        #ad-reward-history {
+            list-style: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        #ad-reward-history li {
+            background: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        #ad-reward-history .reward-amount {
+            font-weight: 700;
+            color: var(--token-color);
+        }
+        #ad-reward-history .reward-time {
+            color: #888;
+            font-size: 0.8rem;
+        }
+        /* --- FIN DE ESTILOS --- */
+
         @media (max-width: 992px) {
             .navbar { flex-direction: column; align-items: center; gap: 20px; }
         }
@@ -214,7 +279,7 @@
                     <h3>🎉 ¿Cómo funciona el sistema?</h3>
                     <ul class="feature-list">
                         <li><strong>Paso 1:</strong> Ve a la sección "Ganar Tokens".</li>
-                        <li><strong>Paso 2:</strong> Gana tokens viendo anuncios o compartiendo tu enlace de referido.</li>
+                        <li><strong>Paso 2:</strong> Gana tokens haciendo clic en los anuncios o compartiendo tu enlace de referido.</li>
                         <li><strong>Paso 3:</strong> Usa tus tokens para canjear las cuentas que quieras en la sección "Cuentas".</li>
                     </ul>
                 </div>
@@ -238,21 +303,28 @@
             <div id="earn" class="section">
                 <div class="section-header"><h1><i class="fas fa-coins"></i> Ganar Tokens</h1><p>¡Completa tareas simples para obtener tokens!</p></div>
                 
-                <div class="ad-container" id="ad-container-earn">
-                     <script type="text/javascript">
-                        atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-                    </script>
-                    <script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
+                <!-- NUEVO SISTEMA DE ANUNCIOS -->
+                <div class="info-card">
+                    <h3>📺 Recompensa por Anuncio</h3>
+                    <p class="mb-4">Haz clic en el banner de abajo para obtener tu recompensa. ¡Podrás reclamar de nuevo cuando el temporizador termine!</p>
+                    
+                    <div id="clickable-ad-banner" class="clickable-ad-banner">
+                        <h4 id="ad-title">¡Recompensa Lista!</h4>
+                        <p id="ad-text">Haz clic aquí para reclamar tus tokens.</p>
+                    </div>
+                    
+                    <div id="ad-cooldown-message"></div>
+                    
+                    <p class="adblock-notice">Si el sistema no funciona, por favor desactiva tu AdBlock.</p>
                 </div>
 
                 <div class="info-card">
-                    <h3>📺 Ver Anuncios</h3>
-                    <p class="mb-4">Gana tokens haciendo clic en el botón. Puedes hacerlo cada 30 segundos.</p>
-                    <button class="btn btn-add" id="watchAdBtn" onclick="watchAdForTokens()">
-                        <i class="fas fa-video"></i> Ver Anuncio (+<span id="tokensPerAdValue">2</span> Tokens)
-                    </button>
-                    <p class="adblock-notice">Si no ves anuncios, por favor desactiva tu AdBlock.</p>
+                    <h3>📜 Historial de Recompensas</h3>
+                    <ul id="ad-reward-history">
+                        <!-- El historial se llenará dinámicamente -->
+                    </ul>
                 </div>
+
                 <div class="info-card">
                     <h3>📢 Tu Enlace de Referido</h3>
                     <p class="mb-4">Comparte este enlace único. Por cada amigo que entre a la web a través de él, recibirás <strong>10 tokens</strong>. ¡Así de fácil!</p>
@@ -277,8 +349,12 @@
                     
                     <h3>Configuración General</h3>
                     <div class="form-group">
-                        <label for="adminTokensPerAd">Tokens por Anuncio:</label>
+                        <label for="adminTokensPerAd">Tokens por Anuncio (Clic):</label>
                         <input type="number" id="adminTokensPerAd" min="0">
+                    </div>
+                     <div class="form-group">
+                        <label for="adminAdCooldown">Tiempo de espera de anuncio (segundos):</label>
+                        <input type="number" id="adminAdCooldown" min="0">
                     </div>
                     <button class="btn btn-add" onclick="saveAppConfig()">💾 Guardar Configuración</button>
                     <hr style="border-color: var(--secondary-color); margin: 40px 0;">
@@ -333,9 +409,13 @@
     let currentUser = null;
     let isAdmin = false;
     let onConfirmCallback = null;
-    let appConfig = { tokensPerAd: 2 }; // Valor por defecto
+    let appConfig = { tokensPerAd: 5, adCooldown: 30 }; // Valores por defecto
     const TOKENS_PER_REFERRAL = 10;
     const serviceDetails = { netflix: { name: 'Netflix', icon: 'N' }, spotify: { name: 'Spotify', icon: '♪' }, disney: { name: 'Disney+', icon: 'D' }, amazon: { name: 'Amazon Prime', icon: 'A' }, hbo: { name: 'HBO Max', icon: 'H' }, youtube: { name: 'YouTube Premium', icon: 'Y' }, apple: { name: 'Apple TV+', icon: '' }, paramount: { name: 'Paramount+', icon: 'P' }, crunchyroll: { name: 'Crunchyroll', icon: 'C' }, otros: { name: 'Otro', icon: '?' } };
+    
+    // --- Estado del sistema de anuncios por clic ---
+    let isAdAvailable = true;
+    let adRewardHistory = [];
 
     // --- Lógica Principal de la App ---
     async function initializeAppLogic() {
@@ -360,9 +440,9 @@
     }
 
     async function setupUser(user) {
-        const { doc, getDoc, setDoc } = window.firestore;
+        const { doc, getDoc, setDoc, updateDoc } = window.firestore;
         const userRef = doc(window.firebase.db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
+        let userSnap = await getDoc(userRef);
         if (!userSnap.exists()) {
             const referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
             const newUserProfile = {
@@ -372,15 +452,23 @@
                 email: user.email,
                 tokens: 0,
                 referralCode: referralCode,
-                createdAt: new Date()
+                createdAt: new Date(),
+                lastAdClaim: 0 // Nuevo campo
             };
             await setDoc(userRef, newUserProfile);
             currentUser = newUserProfile;
             await handleReferral(user.uid);
         } else {
             currentUser = userSnap.data();
+            // Asegurarse de que el campo lastAdClaim exista
+            if (typeof currentUser.lastAdClaim === 'undefined') {
+                await updateDoc(userRef, { lastAdClaim: 0 });
+                userSnap = await getDoc(userRef); // Recargar datos
+                currentUser = userSnap.data();
+            }
         }
         updateUIAfterLogin(user);
+        checkAdCooldownOnLoad(); // Comprobar estado del anuncio al cargar
     }
     
     async function handleReferral(newUserId) {
@@ -404,7 +492,7 @@
 
     function updateUIAfterLogin(user) {
         if (!currentUser || !user) return;
-        document.getElementById('userTokenBalance').textContent = currentUser.tokens;
+        document.getElementById('userTokenBalance').textContent = Math.floor(currentUser.tokens);
         document.getElementById('referralLink').value = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode}`;
         const initial = user.displayName ? user.displayName.charAt(0).toUpperCase() : '?';
         document.getElementById('profileAvatarBtn').textContent = initial;
@@ -464,7 +552,7 @@
         const account = accounts.find(acc => acc.id.toString() === accountId);
         if (!account) return;
         if (!currentUser || currentUser.tokens < account.cost) {
-            showAlert('Tokens Insuficientes', 'Necesitas más tokens para canjear esta cuenta. ¡Invita a más amigos!');
+            showAlert('Tokens Insuficientes', 'Necesitas más tokens para canjear esta cuenta. ¡Ve a la sección de "Ganar Tokens"!');
             return;
         }
         const message = `¿Canjear "${account.serviceName}" por ${account.cost} tokens? Esta acción no se puede deshacer.`;
@@ -543,7 +631,7 @@
     // --- Lógica de Administración ---
     function openAdminPanel() { closeProfileDropdown(); showLoginModal(); }
     function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; document.getElementById('adminPasswordInput').focus(); }
-    function checkPassword() { if (document.getElementById('adminPasswordInput').value === 'Jose') { isAdmin = true; document.getElementById('adminTokensPerAd').value = appConfig.tokensPerAd; showSection('admin'); closeAllModals(); } else { showAlert('Error', 'Contraseña incorrecta'); } document.getElementById('adminPasswordInput').value = ''; }
+    function checkPassword() { if (document.getElementById('adminPasswordInput').value === 'Jose') { isAdmin = true; document.getElementById('adminTokensPerAd').value = appConfig.tokensPerAd; document.getElementById('adminAdCooldown').value = appConfig.adCooldown; showSection('admin'); closeAllModals(); } else { showAlert('Error', 'Contraseña incorrecta'); } document.getElementById('adminPasswordInput').value = ''; }
     function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); onConfirmCallback = null; }
     
     async function addAccount() {
@@ -599,21 +687,21 @@
         if (configSnap.exists()) {
             appConfig = configSnap.data();
         }
-        document.getElementById('tokensPerAdValue').textContent = appConfig.tokensPerAd;
     }
 
     async function saveAppConfig() {
         if (!isAdmin) return;
         const { doc, setDoc } = window.firestore;
         const newTokensPerAd = parseInt(document.getElementById('adminTokensPerAd').value);
-        if (isNaN(newTokensPerAd) || newTokensPerAd < 0) {
-            showAlert('Valor Inválido', 'Por favor, introduce un número válido para los tokens.');
+        const newAdCooldown = parseInt(document.getElementById('adminAdCooldown').value);
+        if (isNaN(newTokensPerAd) || newTokensPerAd < 0 || isNaN(newAdCooldown) || newAdCooldown < 0) {
+            showAlert('Valores Inválidos', 'Por favor, introduce números válidos.');
             return;
         }
         try {
-            await setDoc(doc(window.firebase.db, "config", "main"), { tokensPerAd: newTokensPerAd }, { merge: true });
-            appConfig.tokensPerAd = newTokensPerAd;
-            document.getElementById('tokensPerAdValue').textContent = newTokensPerAd;
+            const newConfig = { tokensPerAd: newTokensPerAd, adCooldown: newAdCooldown };
+            await setDoc(doc(window.firebase.db, "config", "main"), newConfig, { merge: true });
+            appConfig = newConfig;
             showAlert('Éxito', 'La configuración ha sido guardada.');
         } catch (error) {
             console.error("Error guardando configuración: ", error);
@@ -621,51 +709,111 @@
         }
     }
 
-    async function watchAdForTokens() {
-        const watchAdBtn = document.getElementById('watchAdBtn');
-        const AD_COOLDOWN_MS = 30000;
-        const lastAdTime = localStorage.getItem('lastAdTime');
-
-        if (lastAdTime && (Date.now() - lastAdTime < AD_COOLDOWN_MS)) {
-            const timeLeft = Math.ceil((AD_COOLDOWN_MS - (Date.now() - lastAdTime)) / 1000);
-            showAlert('Espera un poco', `Puedes volver a ganar tokens en ${timeLeft} segundos.`);
-            return;
-        }
-
-        watchAdBtn.disabled = true;
-        watchAdBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Abriendo anuncio...`;
-
-        // Lanza un anuncio real de Adsterra dinámicamente.
-        // Esto debería abrir un pop-under o una nueva pestaña.
+    // --- NUEVO SISTEMA DE ANUNCIOS POR CLIC ---
+    async function claimAdTokens() {
+        if (!isAdAvailable || !currentUser) return;
+        
+        isAdAvailable = false;
+        
+        // Lanzar anuncio pop-under
         const adScript = document.createElement('script');
         adScript.type = 'text/javascript';
         adScript.src = '//pl26770084.profitableratecpm.com/2f/62/3b/2f623bbca5866dd1a12f70021c841450.js';
-        adScript.onload = () => adScript.remove(); // Limpia el script después de cargarlo
-        adScript.onerror = () => adScript.remove(); // Limpia también en caso de error
+        adScript.onload = () => adScript.remove();
+        adScript.onerror = () => adScript.remove();
         document.body.appendChild(adScript);
 
-        // Se otorga la recompensa después de un breve retraso para asegurar
-        // que el usuario perciba que el anuncio se ha lanzado.
-        setTimeout(async () => {
-            try {
-                const { doc, updateDoc, increment } = window.firestore;
-                const userRef = doc(window.firebase.db, "users", currentUser.uid);
-                await updateDoc(userRef, { tokens: increment(appConfig.tokensPerAd) });
+        try {
+            const { doc, updateDoc, increment } = window.firestore;
+            const userRef = doc(window.firebase.db, "users", currentUser.uid);
+            
+            await updateDoc(userRef, { 
+                tokens: increment(appConfig.tokensPerAd),
+                lastAdClaim: Date.now()
+            });
 
-                currentUser.tokens += appConfig.tokensPerAd;
-                updateUIAfterLogin(window.firebase.auth.currentUser);
-                
-                localStorage.setItem('lastAdTime', Date.now());
-                showAlert('¡Recompensa!', `Has ganado ${appConfig.tokensPerAd} tokens.`);
+            currentUser.tokens += appConfig.tokensPerAd;
+            currentUser.lastAdClaim = Date.now();
 
-            } catch (error) {
-                console.error("Error al dar tokens por anuncio: ", error);
-                showAlert('Error', 'No se pudo procesar tu recompensa. Intenta de nuevo.');
-            } finally {
-                watchAdBtn.disabled = false;
-                watchAdBtn.innerHTML = `<i class="fas fa-video"></i> Ver Anuncio (+${appConfig.tokensPerAd} Tokens)`;
+            updateUIAfterLogin(window.firebase.auth.currentUser);
+            showAlert('¡Recompensa!', `Has ganado ${appConfig.tokensPerAd} tokens.`);
+            
+            const newRecord = { amount: appConfig.tokensPerAd, timestamp: new Date() };
+            adRewardHistory.unshift(newRecord);
+            if (adRewardHistory.length > 5) adRewardHistory.pop(); // Mantener solo los últimos 5
+
+            startAdCooldown();
+
+        } catch (error) {
+            console.error("Error al reclamar tokens: ", error);
+            showAlert('Error', 'No se pudo procesar tu recompensa. Inténtalo de nuevo.');
+            isAdAvailable = true; // Re-habilitar si falla
+        }
+    }
+
+    function startAdCooldown() {
+        const adBanner = document.getElementById('clickable-ad-banner');
+        const cooldownMsg = document.getElementById('ad-cooldown-message');
+        
+        adBanner.classList.add('disabled');
+        let secondsRemaining = appConfig.adCooldown;
+
+        const interval = setInterval(() => {
+            if (secondsRemaining > 0) {
+                cooldownMsg.textContent = `Próxima recompensa en ${secondsRemaining} segundos...`;
+                secondsRemaining--;
+            } else {
+                clearInterval(interval);
+                isAdAvailable = true;
+                adBanner.classList.remove('disabled');
+                cooldownMsg.textContent = '';
+                document.getElementById('ad-title').textContent = '¡Recompensa Lista!';
+                document.getElementById('ad-text').textContent = 'Haz clic aquí para reclamar tus tokens.';
             }
-        }, 2500); // Delay de 2.5 segundos
+        }, 1000);
+        updateAdUI();
+    }
+    
+    function checkAdCooldownOnLoad() {
+        if (!currentUser) return;
+        const timeSinceLastClaim = Date.now() - currentUser.lastAdClaim;
+        const cooldownMillis = appConfig.adCooldown * 1000;
+
+        if (timeSinceLastClaim < cooldownMillis) {
+            isAdAvailable = false;
+            const remainingCooldown = Math.ceil((cooldownMillis - timeSinceLastClaim) / 1000);
+            appConfig.adCooldown = remainingCooldown; // Seteamos el cooldown restante
+            startAdCooldown();
+        } else {
+            isAdAvailable = true;
+            updateAdUI();
+        }
+    }
+
+    function updateAdUI() {
+        const adBanner = document.getElementById('clickable-ad-banner');
+        const historyList = document.getElementById('ad-reward-history');
+
+        if (isAdAvailable) {
+            adBanner.classList.remove('disabled');
+        } else {
+            adBanner.classList.add('disabled');
+        }
+
+        // Actualizar historial
+        if (adRewardHistory.length === 0) {
+            historyList.innerHTML = `<li style="text-align:center; color:#888;">Aún no has reclamado recompensas.</li>`;
+        } else {
+            historyList.innerHTML = adRewardHistory.map(record => `
+                <li>
+                    <span>Recompensa de anuncio</span>
+                    <div>
+                        <span class="reward-amount">+${record.amount} Tokens</span>
+                        <span class="reward-time">${record.timestamp.toLocaleTimeString()}</span>
+                    </div>
+                </li>
+            `).join('');
+        }
     }
 
     // --- Lógica del Dropdown ---
@@ -674,11 +822,14 @@
 
     // --- Inicialización y Event Listeners ---
     document.addEventListener('DOMContentLoaded', () => {
-        window.showSection = showSection; window.openAdminPanel = openAdminPanel; window.closeAllModals = closeAllModals; window.checkPassword = checkPassword; window.redeemAccount = redeemAccount; window.addAccount = addAccount; window.deleteAccount = deleteAccount; window.copyReferralLink = copyReferralLink; window.signInWithGoogle = signInWithGoogle; window.logout = logout; window.toggleProfileDropdown = toggleProfileDropdown; window.saveAppConfig = saveAppConfig; window.watchAdForTokens = watchAdForTokens;
+        window.showSection = showSection; window.openAdminPanel = openAdminPanel; window.closeAllModals = closeAllModals; window.checkPassword = checkPassword; window.redeemAccount = redeemAccount; window.addAccount = addAccount; window.deleteAccount = deleteAccount; window.copyReferralLink = copyReferralLink; window.signInWithGoogle = signInWithGoogle; window.logout = logout; window.toggleProfileDropdown = toggleProfileDropdown; window.saveAppConfig = saveAppConfig; 
 
         window.addEventListener('click', (event) => { if (!event.target.matches('.profile-avatar-btn')) { const dropdown = document.getElementById('profileDropdown'); if (dropdown.classList.contains('show')) { closeProfileDropdown(); } } });
         document.getElementById('confirmBtn').addEventListener('click', () => { if (typeof onConfirmCallback === 'function') onConfirmCallback(); closeAllModals(); });
         document.getElementById('adminService').addEventListener('change', function() { document.getElementById('customServiceGroup').style.display = (this.value === 'otros') ? 'block' : 'none'; });
+        
+        // Listener para el nuevo banner de anuncios
+        document.getElementById('clickable-ad-banner').addEventListener('click', claimAdTokens);
     });
 </script>
 
