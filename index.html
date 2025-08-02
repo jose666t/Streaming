@@ -91,13 +91,12 @@
         .section-header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--primary-color); text-shadow: var(--glow-primary); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 15px; }
         .section-header p { color: #aaa; font-size: 1.1rem; }
         
-        /* Contenedor de anuncios */
         .ad-container {
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 25px 0;
-            min-height: 60px; /* Altura mínima para evitar colapso */
+            min-height: 60px;
         }
 
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin: 30px 0; text-align: center; }
@@ -144,7 +143,8 @@
         a.whatsapp-link:hover { text-decoration: underline; }
         .referral-box { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; text-align: center; }
         .referral-box input { background: #101020; border: 1px solid var(--primary-color); color: var(--text-color); text-align: center; font-size: 1.1rem; padding: 10px; border-radius: 5px; width: 100%; margin-bottom: 15px; }
-        
+        .adblock-notice { font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px; }
+
         @media (max-width: 992px) {
             .navbar { flex-direction: column; align-items: center; gap: 20px; }
         }
@@ -203,16 +203,9 @@
                     <div class="stat-item"><div class="stat-number" id="usersOnline">0</div><div class="stat-label">Usuarios</div></div>
                 </div>
                 
-                <!-- NUEVO: Contenedor de Anuncio Banner (Inicio) -->
                 <div class="ad-container" id="ad-container-home">
                     <script type="text/javascript">
-                        atOptions = {
-                            'key' : 'b78a72eee080de30d1b51d1f09ed9a39',
-                            'format' : 'iframe',
-                            'height' : 60,
-                            'width' : 468,
-                            'params' : {}
-                        };
+                        atOptions = { 'key' : 'b78a72eee080de30d1b51d1f09ed9a39', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
                     </script>
                     <script type="text/javascript" src="//www.highperformanceformat.com/b78a72eee080de30d1b51d1f09ed9a39/invoke.js"></script>
                 </div>
@@ -231,16 +224,9 @@
             <div id="accounts" class="section">
                 <div class="section-header"><h1><i class="fas fa-stream"></i> Cuentas Disponibles</h1><p>Usa tus tokens para canjear una cuenta. ¡Vuelve pronto por más!</p></div>
                 
-                <!-- NUEVO: Contenedor de Anuncio Banner (Cuentas) -->
                 <div class="ad-container" id="ad-container-accounts">
                     <script type="text/javascript">
-                        atOptions = {
-                            'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce',
-                            'format' : 'iframe',
-                            'height' : 250,
-                            'width' : 300,
-                            'params' : {}
-                        };
+                        atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
                     </script>
                     <script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
                 </div>
@@ -251,12 +237,21 @@
             <!-- Sección Ganar Tokens -->
             <div id="earn" class="section">
                 <div class="section-header"><h1><i class="fas fa-coins"></i> Ganar Tokens</h1><p>¡Completa tareas simples para obtener tokens!</p></div>
+                
+                <div class="ad-container" id="ad-container-earn">
+                     <script type="text/javascript">
+                        atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
+                </div>
+
                 <div class="info-card">
                     <h3>📺 Ver Anuncios</h3>
-                    <p class="mb-4">Gana tokens viendo un anuncio rápido. Puedes hacerlo cada 30 segundos.</p>
+                    <p class="mb-4">Gana tokens haciendo clic en el botón. Puedes hacerlo cada 30 segundos.</p>
                     <button class="btn btn-add" id="watchAdBtn" onclick="watchAdForTokens()">
                         <i class="fas fa-video"></i> Ver Anuncio (+<span id="tokensPerAdValue">2</span> Tokens)
                     </button>
+                    <p class="adblock-notice">Si no ves anuncios, por favor desactiva tu AdBlock.</p>
                 </div>
                 <div class="info-card">
                     <h3>📢 Tu Enlace de Referido</h3>
@@ -329,8 +324,7 @@
         initializeAppLogic();
     </script>
 
-    <!-- NUEVO: Scripts de Anuncios Adsterra (Popunder/Direct) -->
-    <script type='text/javascript' src='//pl26770084.profitableratecpm.com/2f/62/3b/2f623bbca5866dd1a12f70021c841450.js'></script>
+    <!-- Scripts de Anuncios Adsterra (Popunder/Direct) -->
     <script type='text/javascript' src='//pl26770167.profitableratecpm.com/3d/3a/a6/3d3aa6dcdb50d459c01bf3cb0595a9d0.js'></script>
 
 <script>
@@ -345,7 +339,7 @@
 
     // --- Lógica Principal de la App ---
     async function initializeAppLogic() {
-        await loadAppConfig(); // Cargar configuración primero
+        await loadAppConfig();
         const { onAuthStateChanged } = window.auth;
         const profileContainer = document.getElementById('profileDropdownContainer');
         onAuthStateChanged(window.firebase.auth, async (user) => {
@@ -634,13 +628,24 @@
 
         if (lastAdTime && (Date.now() - lastAdTime < AD_COOLDOWN_MS)) {
             const timeLeft = Math.ceil((AD_COOLDOWN_MS - (Date.now() - lastAdTime)) / 1000);
-            showAlert('Espera un poco', `Puedes ver otro anuncio en ${timeLeft} segundos.`);
+            showAlert('Espera un poco', `Puedes volver a ganar tokens en ${timeLeft} segundos.`);
             return;
         }
 
         watchAdBtn.disabled = true;
-        watchAdBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Cargando...`;
+        watchAdBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Abriendo anuncio...`;
 
+        // Lanza un anuncio real de Adsterra dinámicamente.
+        // Esto debería abrir un pop-under o una nueva pestaña.
+        const adScript = document.createElement('script');
+        adScript.type = 'text/javascript';
+        adScript.src = '//pl26770084.profitableratecpm.com/2f/62/3b/2f623bbca5866dd1a12f70021c841450.js';
+        adScript.onload = () => adScript.remove(); // Limpia el script después de cargarlo
+        adScript.onerror = () => adScript.remove(); // Limpia también en caso de error
+        document.body.appendChild(adScript);
+
+        // Se otorga la recompensa después de un breve retraso para asegurar
+        // que el usuario perciba que el anuncio se ha lanzado.
         setTimeout(async () => {
             try {
                 const { doc, updateDoc, increment } = window.firestore;
@@ -660,7 +665,7 @@
                 watchAdBtn.disabled = false;
                 watchAdBtn.innerHTML = `<i class="fas fa-video"></i> Ver Anuncio (+${appConfig.tokensPerAd} Tokens)`;
             }
-        }, 2000);
+        }, 2500); // Delay de 2.5 segundos
     }
 
     // --- Lógica del Dropdown ---
