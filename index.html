@@ -771,6 +771,9 @@
         adContainer.appendChild(adScript);
         adContainer.appendChild(adLoaderScript);
         
+        // Añadir el listener para cuando el usuario haga clic en el anuncio
+        document.getElementById('modalAdContainer').addEventListener('click', handleAdClickInModal, { once: true });
+
         modal.style.display = 'flex';
     }
 
@@ -778,11 +781,15 @@
         const claimBtn = document.getElementById('claimTokensFromModalBtn');
         claimBtn.disabled = false;
         claimBtn.innerHTML = `<i class="fas fa-unlock"></i> Reclamar Tokens Ahora`;
-        // Remover el listener para que no se pueda activar múltiples veces
-        document.getElementById('modalAdContainer').removeEventListener('click', handleAdClickInModal);
     }
 
     async function finalizeTokenClaim() {
+        const claimBtn = document.getElementById('claimTokensFromModalBtn');
+        if (claimBtn.disabled) {
+            showAlert('Acción Requerida', 'Debes hacer clic en el anuncio primero para poder reclamar.');
+            return;
+        }
+
         isAdAvailable = false;
         closeAllModals();
 
@@ -911,7 +918,6 @@
         
         // Listeners para el nuevo flujo de anuncios
         document.getElementById('clickable-ad-banner').addEventListener('click', showAdModal);
-        document.getElementById('modalAdContainer').addEventListener('click', handleAdClickInModal);
         document.getElementById('claimTokensFromModalBtn').addEventListener('click', finalizeTokenClaim);
     });
 </script>
