@@ -374,6 +374,9 @@
 
     <!-- Scripts de Anuncios Adsterra (Popunder/Direct) -->
     <script type='text/javascript' src='//pl26770167.profitableratecpm.com/3d/3a/a6/3d3aa6dcdb50d459c01bf3cb0595a9d0.js'></script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/b78a72eee080de30d1b51d1f09ed9a39/invoke.js"></script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
+
 
     <!-- Firebase SDK y Lógica de la App -->
     <script type="module">
@@ -394,6 +397,7 @@
         let onConfirmCallback = null;
         let appConfig = { tokensPerAd: 5, adCooldown: 30 };
         let adRewardHistory = [];
+        let isAdAvailable = true;
         const TOKENS_PER_REFERRAL = 10;
         const serviceDetails = { netflix: { name: 'Netflix', icon: 'N' }, spotify: { name: 'Spotify', icon: '♪' }, disney: { name: 'Disney+', icon: 'D' }, amazon: { name: 'Amazon Prime', icon: 'A' }, hbo: { name: 'HBO Max', icon: 'H' }, youtube: { name: 'YouTube Premium', icon: 'Y' }, apple: { name: 'Apple TV+', icon: '' }, paramount: { name: 'Paramount+', icon: 'P' }, crunchyroll: { name: 'Crunchyroll', icon: 'C' }, otros: { name: 'Otro', icon: '?' } };
 
@@ -422,7 +426,7 @@
             document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
             onConfirmCallback = null;
             const adContainer = document.getElementById('modalAdContainer');
-            if (adContainer) adContainer.innerHTML = '';
+            if(adContainer) adContainer.innerHTML = '';
             const claimBtn = document.getElementById('claimTokensFromModalBtn');
             if(claimBtn) {
                 claimBtn.disabled = true;
@@ -447,6 +451,11 @@
             const initial = currentUser.displayName ? currentUser.displayName.charAt(0).toUpperCase() : '?';
             document.getElementById('profileAvatarBtn').textContent = initial;
             document.getElementById('dropdownUserName').textContent = currentUser.displayName;
+        };
+        
+        const toggleProfileDropdown = (event) => {
+            event.stopPropagation();
+            document.getElementById('profileDropdown').classList.toggle('show');
         };
 
         // --- LÓGICA DE CUENTAS ---
@@ -532,7 +541,7 @@
                      const currentUsers = acc.currentUsers || 0;
                      const userLimit = acc.userLimit ?? 1;
                      if (userLimit === 0) {
-                         available += 999; // Representa ilimitado
+                         available += 999; 
                      } else {
                          available += (userLimit - currentUsers);
                      }
@@ -601,9 +610,32 @@
                     createdAt: new Date(),
                     lastAdClaim: 0
                 });
+                await handleReferral(user.uid);
             }
             currentUser = (await getDoc(userRef)).data();
             updateUIAfterLogin();
+            checkAdCooldownOnLoad();
+        };
+        
+        const handleReferral = async (newUserId) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            if (!refCode) return;
+
+            const userRef = doc(db, "users", newUserId);
+            const userDoc = await getDoc(userRef);
+
+            if (userDoc.exists() && userDoc.data().creditedBy) return;
+            if (currentUser.referralCode === refCode) return;
+
+            await updateDoc(userRef, { creditedBy: refCode });
+            
+            const q = query(collection(db, "users"), where("referralCode", "==", refCode));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (document) => {
+                const referrerRef = doc(db, "users", document.id);
+                await updateDoc(referrerRef, { tokens: increment(TOKENS_PER_REFERRAL) });
+            });
         };
 
         const signInWithGoogle = async () => {
@@ -620,12 +652,170 @@
             await signOut(auth);
             window.location.reload();
         };
+
+        // --- LÓGICA DE GANAR TOKENS (ANUNCIOS Y REFERIDOS) ---
+        const showAdModal = () => {
+            if (!isAdAvailable || !currentUser) return;
+            const modal = document.getElementById('adBannerModal');
+            const adContainer = document.getElementById('modalAdContainer');
+            adContainer.innerHTML = '';
+            
+            const adScript = document.createElement('script');
+            adScript.type = 'text/javascript';
+            adScript.innerHTML = `atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };`;
+            const adLoaderScript = document.createElement('script');
+            adLoaderScript.type = 'text/javascript';
+            adLoaderScript.src = '//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js';
+            adContainer.appendChild(adScript);
+            adContainer.appendChild(adLoaderScript);
+            
+            setTimeout(() => {
+                const claimBtn = document.getElementById('claimTokensFromModalBtn');
+                if (claimBtn) {
+                    claimBtn.disabled = false;
+                    claimBtn.innerHTML = `<i class="fas fa-unlock"></i> Reclamar Tokens Ahora`;
+                }
+            }, 5000);
+            modal.style.display = 'flex';
+        };
+
+        const finalizeTokenClaim = async () => {
+            const claimBtn = document.getElementById('claimTokensFromModalBtn');
+            if (claimBtn.disabled) return;
+            isAdAvailable = false;
+            closeAllModals();
+            try {
+                const userRef = doc(db, "users", currentUser.uid);
+                await updateDoc(userRef, { 
+                    tokens: increment(appConfig.tokensPerAd),
+                    lastAdClaim: Date.now()
+                });
+                currentUser.tokens += appConfig.tokensPerAd;
+                currentUser.lastAdClaim = Date.now();
+                updateUIAfterLogin();
+                showAlert('¡Recompensa!', `Has ganado ${appConfig.tokensPerAd} tokens.`);
+                startAdCooldown();
+            } catch (error) {
+                console.error("Error al reclamar tokens: ", error);
+                isAdAvailable = true;
+            }
+        };
+
+        const startAdCooldown = () => {
+            const adBanner = document.getElementById('clickable-ad-banner');
+            const cooldownMsg = document.getElementById('ad-cooldown-message');
+            adBanner.classList.add('disabled');
+            let secondsRemaining = appConfig.adCooldown;
+            const interval = setInterval(() => {
+                if (secondsRemaining > 0) {
+                    cooldownMsg.textContent = `Próxima recompensa en ${secondsRemaining} segundos...`;
+                    secondsRemaining--;
+                } else {
+                    clearInterval(interval);
+                    isAdAvailable = true;
+                    adBanner.classList.remove('disabled');
+                    cooldownMsg.textContent = '';
+                }
+            }, 1000);
+        };
+        
+        const checkAdCooldownOnLoad = () => {
+            if (!currentUser || typeof currentUser.lastAdClaim === 'undefined') return;
+            const timeSinceLastClaim = Date.now() - currentUser.lastAdClaim;
+            const cooldownMillis = (appConfig.adCooldown || 30) * 1000;
+            if (timeSinceLastClaim < cooldownMillis) {
+                isAdAvailable = false;
+                const remainingCooldown = Math.ceil((cooldownMillis - timeSinceLastClaim) / 1000);
+                startAdCooldownWithRemaining(remainingCooldown);
+            }
+        };
+
+        const startAdCooldownWithRemaining = (seconds) => {
+            const adBanner = document.getElementById('clickable-ad-banner');
+            const cooldownMsg = document.getElementById('ad-cooldown-message');
+            adBanner.classList.add('disabled');
+            let secondsRemaining = seconds;
+            const interval = setInterval(() => {
+                if (secondsRemaining > 0) {
+                    cooldownMsg.textContent = `Próxima recompensa en ${secondsRemaining} segundos...`;
+                    secondsRemaining--;
+                } else {
+                    clearInterval(interval);
+                    isAdAvailable = true;
+                    adBanner.classList.remove('disabled');
+                    cooldownMsg.textContent = '';
+                }
+            }, 1000);
+        };
+
+        const copyReferralLink = () => {
+            const linkInput = document.getElementById('referralLink');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+            try {
+                document.execCommand('copy');
+                showAlert('¡Copiado!', 'Tu enlace de referido ha sido copiado.');
+            } catch (err) {
+                showAlert('Error', 'No se pudo copiar el enlace.');
+            }
+        };
+
+        // --- LÓGICA DE ADMINISTRACIÓN ---
+        const loadAdminData = async () => {
+            const configRef = doc(db, "config", "main");
+            const configSnap = await getDoc(configRef);
+            if (configSnap.exists()) {
+                appConfig = configSnap.data();
+                document.getElementById('adminTokensPerAd').value = appConfig.tokensPerAd;
+                document.getElementById('adminAdCooldown').value = appConfig.adCooldown;
+            }
+            loadAdminAccounts();
+        };
+
+        const loadAdminAccounts = () => {
+            const adminList = document.getElementById('adminAccountsList');
+            adminList.innerHTML = accounts.length === 0 ? '<p>No hay cuentas.</p>' : accounts.map(acc => {
+                const isFull = acc.userLimit > 0 && (acc.currentUsers || 0) >= acc.userLimit;
+                return `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333;"><span>${acc.serviceName}</span><button class="btn btn-danger" data-delete-id="${acc.id}">Eliminar</button></div>`;
+            }).join('');
+        };
+
+        const addAccount = async () => {
+            const service = document.getElementById('adminService').value;
+            const serviceName = service === 'otros' ? document.getElementById('customServiceName').value.trim() : serviceDetails[service].name;
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+            if (!email || !password || !serviceName) { showAlert('Error', 'Todos los campos son obligatorios.'); return; }
+            const newId = Date.now().toString();
+            const account = { service, serviceName, email, password, cost: parseInt(document.getElementById('adminCost').value) || 50, userLimit: parseInt(document.getElementById('userLimit').value) || 0, currentUsers: 0 };
+            await setDoc(doc(db, 'streamingAccounts', newId), account);
+            loadAccountsFromFirebase();
+            document.getElementById('adminEmail').value = ''; document.getElementById('adminPassword').value = ''; document.getElementById('customServiceName').value = '';
+        };
+
+        const deleteAccount = async (id) => {
+            showConfirmModal('¿Seguro que quieres ELIMINAR esta cuenta?', async () => {
+                await deleteDoc(doc(db, 'streamingAccounts', id));
+                loadAccountsFromFirebase();
+            }, 'Eliminar Cuenta', 'Eliminar', 'btn-danger');
+        };
+        
+        const saveAppConfig = async () => {
+            const newConfig = {
+                tokensPerAd: parseInt(document.getElementById('adminTokensPerAd').value),
+                adCooldown: parseInt(document.getElementById('adminAdCooldown').value)
+            };
+            await setDoc(doc(db, "config", "main"), newConfig, { merge: true });
+            appConfig = newConfig;
+            showAlert('Éxito', 'Configuración guardada.');
+        };
         
         // --- INICIALIZACIÓN DE LA APP ---
         document.addEventListener('DOMContentLoaded', () => {
             // Asignar event listeners
             document.getElementById('signInBtn').addEventListener('click', signInWithGoogle);
             document.getElementById('logoutBtn').addEventListener('click', logout);
+            document.getElementById('profileAvatarBtn').addEventListener('click', toggleProfileDropdown);
             document.getElementById('adminBtn').addEventListener('click', () => {
                  closeAllModals();
                  document.getElementById('loginModal').style.display = 'flex';
@@ -640,7 +830,7 @@
                 if (typeof onConfirmCallback === 'function') onConfirmCallback();
                 closeAllModals();
             });
-             document.getElementById('accountsContainer').addEventListener('click', (e) => {
+            document.getElementById('accountsContainer').addEventListener('click', (e) => {
                 if (e.target.matches('.claim-btn')) {
                     redeemAccount(e.target.dataset.accountId);
                 }
@@ -648,11 +838,20 @@
             document.getElementById('checkPasswordBtn').addEventListener('click', () => {
                  if (document.getElementById('adminPasswordInput').value === 'Jose') { 
                     isAdmin = true; 
+                    loadAdminData();
                     showSection('admin'); 
                     closeAllModals(); 
                 } else { 
                     showAlert('Error', 'Contraseña incorrecta'); 
                 }
+            });
+            document.getElementById('addAccountBtn').addEventListener('click', addAccount);
+            document.getElementById('saveConfigBtn').addEventListener('click', saveAppConfig);
+            document.getElementById('copyLinkBtn').addEventListener('click', copyReferralLink);
+            document.getElementById('clickable-ad-banner').addEventListener('click', showAdModal);
+            document.getElementById('claimTokensFromModalBtn').addEventListener('click', finalizeTokenClaim);
+            document.getElementById('adminAccountsList').addEventListener('click', e => {
+                if(e.target.dataset.deleteId) deleteAccount(e.target.dataset.deleteId);
             });
             
             // Lógica de autenticación principal
