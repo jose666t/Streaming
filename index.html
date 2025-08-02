@@ -217,7 +217,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             border: 2px dashed var(--primary-color);
             border-radius: 8px;
             background: rgba(0,0,0,0.2);
@@ -399,7 +398,7 @@
     <div class="modal" id="adBannerModal">
         <div class="modal-content">
             <h3><i class="fas fa-eye"></i> Recompensa de Anuncio</h3>
-            <p style="margin: 0 0 20px 0; color: #aaa;">Haz clic en el anuncio de abajo para activar el botón de reclamo.</p>
+            <p style="margin: 0 0 20px 0; color: #aaa;">Espera a que el botón se active para reclamar tu recompensa.</p>
             <div id="modalAdContainer">
                 <!-- El script del anuncio se insertará aquí -->
             </div>
@@ -571,7 +570,7 @@
                 </div>
                 <div class="account-details">
                     <div class="account-cost"><i class="fas fa-coins"></i> ${account.cost} Tokens</div>
-                     ${account.userLimit > 0 ? `<div><strong>Disponibles:</strong> ${account.userLimit - account.currentUsers}/${account.userLimit}</div>` : '<div><strong>Disponibles:</strong> Ilimitados</div>'}
+                     ${account.userLimit > 0 ? `<div><strong>Disponibles:</strong> ${account.userLimit - acc.currentUsers}/${account.userLimit}</div>` : '<div><strong>Disponibles:</strong> Ilimitados</div>'}
                 </div>
                 <button class="claim-btn" onclick="redeemAccount('${account.id}')" ${!canAfford ? 'disabled' : ''}>
                     ${canAfford ? 'Canjear Cuenta' : 'Tokens Insuficientes'}
@@ -771,22 +770,24 @@
         adContainer.appendChild(adScript);
         adContainer.appendChild(adLoaderScript);
         
-        // Añadir el listener para cuando el usuario haga clic en el anuncio
-        document.getElementById('modalAdContainer').addEventListener('click', handleAdClickInModal, { once: true });
+        // CORRECCIÓN: Activar el botón después de un tiempo, en lugar de esperar un clic.
+        setTimeout(handleAdViewed, 5000); // 5 segundos para "ver" el anuncio
 
         modal.style.display = 'flex';
     }
 
-    function handleAdClickInModal() {
+    function handleAdViewed() {
         const claimBtn = document.getElementById('claimTokensFromModalBtn');
-        claimBtn.disabled = false;
-        claimBtn.innerHTML = `<i class="fas fa-unlock"></i> Reclamar Tokens Ahora`;
+        if (claimBtn) { // Verificar que el modal siga abierto
+            claimBtn.disabled = false;
+            claimBtn.innerHTML = `<i class="fas fa-unlock"></i> Reclamar Tokens Ahora`;
+        }
     }
 
     async function finalizeTokenClaim() {
         const claimBtn = document.getElementById('claimTokensFromModalBtn');
         if (claimBtn.disabled) {
-            showAlert('Acción Requerida', 'Debes hacer clic en el anuncio primero para poder reclamar.');
+            showAlert('Acción Requerida', 'Debes esperar a que el botón se active para poder reclamar.');
             return;
         }
 
@@ -890,7 +891,7 @@
         }
 
         if (adRewardHistory.length === 0) {
-            historyList.innerHTML = `<li style="text-align:center; color:#888;">Aún no has reclamado recompensas.</li>`;
+            historyList.innerHTML = `<li style="text-align:center; color:#888;">Aún no has reclamado recompensas.</li>.</li>`;
         } else {
             historyList.innerHTML = adRewardHistory.map(record => `
                 <li>
