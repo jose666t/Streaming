@@ -398,7 +398,7 @@
     <div class="modal" id="adBannerModal">
         <div class="modal-content">
             <h3><i class="fas fa-eye"></i> Recompensa de Anuncio</h3>
-            <p style="margin: 0 0 20px 0; color: #aaa;">Dale click al anuncio, esperá 5 segunditos y luego regresá pa’ que el botón de reclamar se active.</p>
+            <p style="margin: 0 0 20px 0; color: #aaa;">Espera a que el botón se active para reclamar tu recompensa.</p>
             <div id="modalAdContainer">
                 <!-- El script del anuncio se insertará aquí -->
             </div>
@@ -717,10 +717,7 @@
             displayAccounts();
             if (isAdmin) loadAdminAccounts();
             updateStats();
-        } catch (error) { 
-            console.error("Error cargando cuentas desde Firebase: ", error); 
-            document.getElementById('accountsContainer').innerHTML = `<div class="info-card" style="border-left-color: var(--danger-color);"><h3 style="color: var(--danger-color);">❌ Error de Conexión</h3><p>No se pudieron cargar las cuentas. Es posible que las reglas de seguridad de la base de datos no estén configuradas correctamente.</p></div>`; 
-        }
+        } catch (error) { console.error("Error cargando cuentas: ", error); document.getElementById('accountsContainer').innerHTML = `<div class="info-card"><h3>❌ Error de Conexión</h3><p>No se pudieron cargar las cuentas.</p></div>`; }
     }
 
     // --- Lógica de Configuración y Anuncios ---
@@ -773,7 +770,7 @@
         adContainer.appendChild(adScript);
         adContainer.appendChild(adLoaderScript);
         
-        // Activar el botón después de un tiempo, en lugar de esperar un clic.
+        // CORRECCIÓN: Activar el botón después de un tiempo, en lugar de esperar un clic.
         setTimeout(handleAdViewed, 5000); // 5 segundos para "ver" el anuncio
 
         modal.style.display = 'flex';
@@ -781,7 +778,7 @@
 
     function handleAdViewed() {
         const claimBtn = document.getElementById('claimTokensFromModalBtn');
-        if (claimBtn && document.getElementById('adBannerModal').style.display === 'flex') { // Verificar que el modal siga abierto
+        if (claimBtn) { // Verificar que el modal siga abierto
             claimBtn.disabled = false;
             claimBtn.innerHTML = `<i class="fas fa-unlock"></i> Reclamar Tokens Ahora`;
         }
@@ -790,7 +787,7 @@
     async function finalizeTokenClaim() {
         const claimBtn = document.getElementById('claimTokensFromModalBtn');
         if (claimBtn.disabled) {
-            showAlert('Acción Requerida', 'Debes esperar 5 segundos para que el botón se active.');
+            showAlert('Acción Requerida', 'Debes esperar a que el botón se active para poder reclamar.');
             return;
         }
 
@@ -894,7 +891,7 @@
         }
 
         if (adRewardHistory.length === 0) {
-            historyList.innerHTML = `<li style="text-align:center; color:#888;">Aún no has reclamado recompensas.</li>`;
+            historyList.innerHTML = `<li style="text-align:center; color:#888;">Aún no has reclamado recompensas.</li>.</li>`;
         } else {
             historyList.innerHTML = adRewardHistory.map(record => `
                 <li>
