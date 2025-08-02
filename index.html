@@ -208,6 +208,20 @@
             color: #888;
             font-size: 0.8rem;
         }
+        #adBannerModal .modal-content {
+            max-width: 550px;
+        }
+        #modalAdContainer {
+            margin: 20px auto;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            background: rgba(0,0,0,0.2);
+        }
         /* --- FIN DE ESTILOS --- */
 
         @media (max-width: 992px) {
@@ -310,7 +324,7 @@
                     
                     <div id="clickable-ad-banner" class="clickable-ad-banner">
                         <h4 id="ad-title">¡Recompensa Lista!</h4>
-                        <p id="ad-text">Haz clic aquí para reclamar tus tokens.</p>
+                        <p id="ad-text">Haz clic aquí para ver un anuncio.</p>
                     </div>
                     
                     <div id="ad-cooldown-message"></div>
@@ -380,6 +394,24 @@
     <div class="modal" id="passwordRevealModal"><div class="modal-content"><h3>🎉 ¡Cuenta Canjeada!</h3><div id="revealedPassword" style="margin: 20px 0; font-size: 1.1rem; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 5px;"></div><button class="btn btn-add" onclick="closeAllModals()">Cerrar</button></div></div></div>
     <div class="modal" id="confirmModal"><div class="modal-content"><h3 id="confirmTitle">Confirmar Acción</h3><p id="confirmMessage" style="margin: 20px 0;"></p><div><button id="confirmBtn" class="btn">Confirmar</button><button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button></div></div></div>
     <div class="modal" id="alertModal"><div class="modal-content"><h3 id="alertTitle"></h3><p id="alertMessage" style="margin: 20px 0;"></p><div><button class="btn btn-add" onclick="closeAllModals()">Entendido</button></div></div></div>
+    
+    <!-- NUEVO MODAL PARA EL ANUNCIO BANNER -->
+    <div class="modal" id="adBannerModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-eye"></i> Recompensa de Anuncio</h3>
+            <p style="margin: 0 0 20px 0; color: #aaa;">Haz clic en el anuncio de abajo para activar el botón de reclamo.</p>
+            <div id="modalAdContainer">
+                <!-- El script del anuncio se insertará aquí -->
+            </div>
+            <div style="margin-top: 20px;">
+                <button id="claimTokensFromModalBtn" class="btn btn-add" disabled>
+                    <i class="fas fa-lock"></i> Reclamar Tokens
+                </button>
+                <button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Firebase SDK -->
     <script type="module">
@@ -632,7 +664,17 @@
     function openAdminPanel() { closeProfileDropdown(); showLoginModal(); }
     function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; document.getElementById('adminPasswordInput').focus(); }
     function checkPassword() { if (document.getElementById('adminPasswordInput').value === 'Jose') { isAdmin = true; document.getElementById('adminTokensPerAd').value = appConfig.tokensPerAd; document.getElementById('adminAdCooldown').value = appConfig.adCooldown; showSection('admin'); closeAllModals(); } else { showAlert('Error', 'Contraseña incorrecta'); } document.getElementById('adminPasswordInput').value = ''; }
-    function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); onConfirmCallback = null; }
+    
+    function closeAllModals() { 
+        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); 
+        onConfirmCallback = null; 
+        // Resetear el modal del anuncio
+        const adContainer = document.getElementById('modalAdContainer');
+        adContainer.innerHTML = '';
+        const claimBtn = document.getElementById('claimTokensFromModalBtn');
+        claimBtn.disabled = true;
+        claimBtn.innerHTML = `<i class="fas fa-lock"></i> Reclamar Tokens`;
+    }
     
     async function addAccount() {
         const { setDoc, doc } = window.firestore;
@@ -709,19 +751,40 @@
         }
     }
 
-    // --- NUEVO SISTEMA DE ANUNCIOS POR CLIC ---
-    async function claimAdTokens() {
+    // --- NUEVO SISTEMA DE ANUNCIOS POR CLIC (CON MODAL) ---
+    
+    function showAdModal() {
         if (!isAdAvailable || !currentUser) return;
-        
-        isAdAvailable = false;
-        
-        // Lanzar anuncio pop-under
+
+        const modal = document.getElementById('adBannerModal');
+        const adContainer = document.getElementById('modalAdContainer');
+        adContainer.innerHTML = ''; // Limpiar contenedor previo
+
+        // Inyectar el script del anuncio banner de Adsterra
         const adScript = document.createElement('script');
         adScript.type = 'text/javascript';
-        adScript.src = '//pl26770084.profitableratecpm.com/2f/62/3b/2f623bbca5866dd1a12f70021c841450.js';
-        adScript.onload = () => adScript.remove();
-        adScript.onerror = () => adScript.remove();
-        document.body.appendChild(adScript);
+        adScript.innerHTML = `atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };`;
+        const adLoaderScript = document.createElement('script');
+        adLoaderScript.type = 'text/javascript';
+        adLoaderScript.src = '//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js';
+        
+        adContainer.appendChild(adScript);
+        adContainer.appendChild(adLoaderScript);
+        
+        modal.style.display = 'flex';
+    }
+
+    function handleAdClickInModal() {
+        const claimBtn = document.getElementById('claimTokensFromModalBtn');
+        claimBtn.disabled = false;
+        claimBtn.innerHTML = `<i class="fas fa-unlock"></i> Reclamar Tokens Ahora`;
+        // Remover el listener para que no se pueda activar múltiples veces
+        document.getElementById('modalAdContainer').removeEventListener('click', handleAdClickInModal);
+    }
+
+    async function finalizeTokenClaim() {
+        isAdAvailable = false;
+        closeAllModals();
 
         try {
             const { doc, updateDoc, increment } = window.firestore;
@@ -740,7 +803,7 @@
             
             const newRecord = { amount: appConfig.tokensPerAd, timestamp: new Date() };
             adRewardHistory.unshift(newRecord);
-            if (adRewardHistory.length > 5) adRewardHistory.pop(); // Mantener solo los últimos 5
+            if (adRewardHistory.length > 5) adRewardHistory.pop();
 
             startAdCooldown();
 
@@ -768,7 +831,7 @@
                 adBanner.classList.remove('disabled');
                 cooldownMsg.textContent = '';
                 document.getElementById('ad-title').textContent = '¡Recompensa Lista!';
-                document.getElementById('ad-text').textContent = 'Haz clic aquí para reclamar tus tokens.';
+                document.getElementById('ad-text').textContent = 'Haz clic aquí para ver un anuncio.';
             }
         }, 1000);
         updateAdUI();
@@ -782,13 +845,32 @@
         if (timeSinceLastClaim < cooldownMillis) {
             isAdAvailable = false;
             const remainingCooldown = Math.ceil((cooldownMillis - timeSinceLastClaim) / 1000);
-            appConfig.adCooldown = remainingCooldown; // Seteamos el cooldown restante
-            startAdCooldown();
+            startAdCooldownWithRemaining(remainingCooldown);
         } else {
             isAdAvailable = true;
             updateAdUI();
         }
     }
+    
+    function startAdCooldownWithRemaining(seconds) {
+        const adBanner = document.getElementById('clickable-ad-banner');
+        const cooldownMsg = document.getElementById('ad-cooldown-message');
+        adBanner.classList.add('disabled');
+        let secondsRemaining = seconds;
+        const interval = setInterval(() => {
+            if (secondsRemaining > 0) {
+                cooldownMsg.textContent = `Próxima recompensa en ${secondsRemaining} segundos...`;
+                secondsRemaining--;
+            } else {
+                clearInterval(interval);
+                isAdAvailable = true;
+                adBanner.classList.remove('disabled');
+                cooldownMsg.textContent = '';
+            }
+        }, 1000);
+        updateAdUI();
+    }
+
 
     function updateAdUI() {
         const adBanner = document.getElementById('clickable-ad-banner');
@@ -800,7 +882,6 @@
             adBanner.classList.add('disabled');
         }
 
-        // Actualizar historial
         if (adRewardHistory.length === 0) {
             historyList.innerHTML = `<li style="text-align:center; color:#888;">Aún no has reclamado recompensas.</li>`;
         } else {
@@ -828,8 +909,10 @@
         document.getElementById('confirmBtn').addEventListener('click', () => { if (typeof onConfirmCallback === 'function') onConfirmCallback(); closeAllModals(); });
         document.getElementById('adminService').addEventListener('change', function() { document.getElementById('customServiceGroup').style.display = (this.value === 'otros') ? 'block' : 'none'; });
         
-        // Listener para el nuevo banner de anuncios
-        document.getElementById('clickable-ad-banner').addEventListener('click', claimAdTokens);
+        // Listeners para el nuevo flujo de anuncios
+        document.getElementById('clickable-ad-banner').addEventListener('click', showAdModal);
+        document.getElementById('modalAdContainer').addEventListener('click', handleAdClickInModal);
+        document.getElementById('claimTokensFromModalBtn').addEventListener('click', finalizeTokenClaim);
     });
 </script>
 
