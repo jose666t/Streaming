@@ -145,84 +145,6 @@
         .referral-box input { background: #101020; border: 1px solid var(--primary-color); color: var(--text-color); text-align: center; font-size: 1.1rem; padding: 10px; border-radius: 5px; width: 100%; margin-bottom: 15px; }
         .adblock-notice { font-size: 0.8rem; color: #888; text-align: center; margin-top: 10px; }
 
-        /* --- ESTILOS PARA EL NUEVO SISTEMA DE ANUNCIOS --- */
-        .clickable-ad-banner {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border-radius: 10px;
-            padding: 25px;
-            text-align: center;
-            color: var(--dark-bg);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            margin-bottom: 15px;
-        }
-        .clickable-ad-banner:hover:not(.disabled) {
-            transform: translateY(-5px);
-            box-shadow: var(--glow-primary);
-        }
-        .clickable-ad-banner.disabled {
-            background: #555;
-            cursor: not-allowed;
-            filter: grayscale(70%);
-        }
-        .clickable-ad-banner h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
-        .clickable-ad-banner p {
-            font-size: 1rem;
-            color: rgba(10, 10, 26, 0.8);
-        }
-        #ad-cooldown-message {
-            text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            color: var(--primary-color);
-            height: 24px;
-            margin-bottom: 20px;
-        }
-        #ad-reward-history {
-            list-style: none;
-            padding: 0;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        #ad-reward-history li {
-            background: rgba(0,0,0,0.2);
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-        #ad-reward-history .reward-amount {
-            font-weight: 700;
-            color: var(--token-color);
-        }
-        #ad-reward-history .reward-time {
-            color: #888;
-            font-size: 0.8rem;
-        }
-        #adBannerModal .modal-content {
-            max-width: 550px;
-        }
-        #modalAdContainer {
-            margin: 20px auto;
-            min-height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed var(--primary-color);
-            border-radius: 8px;
-            background: rgba(0,0,0,0.2);
-        }
-        /* --- FIN DE ESTILOS --- */
-
         @media (max-width: 992px) {
             .navbar { flex-direction: column; align-items: center; gap: 20px; }
         }
@@ -241,7 +163,7 @@
         <a href="#" class="logo"><i class="fas fa-ghost"></i> Shadow Account</a>
         <h1>Bienvenido</h1>
         <p>Para acceder a las cuentas y ganar tokens, necesitas iniciar sesión. Es rápido, seguro y nos ayuda a mantener la comunidad.</p>
-        <button class="btn-google" id="signInBtn"><i class="fab fa-google"></i> Acceder con Google</button>
+        <button class="btn-google" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Acceder con Google</button>
     </div>
 
     <!-- Contenido principal -->
@@ -250,19 +172,19 @@
         <nav class="navbar">
             <a href="#" class="logo"><i class="fas fa-ghost"></i> Shadow Account</a>
             <ul class="nav-links">
-                <li class="active" data-section="home"><i class="fas fa-home"></i> Inicio</li>
-                <li data-section="accounts"><i class="fas fa-stream"></i> Cuentas</li>
-                <li data-section="earn"><i class="fas fa-coins"></i> Ganar Tokens</li>
-                <li data-section="about"><i class="fas fa-info-circle"></i> Info</li>
+                <li class="active" onclick="showSection('home')"><i class="fas fa-home"></i> Inicio</li>
+                <li onclick="showSection('accounts')"><i class="fas fa-stream"></i> Cuentas</li>
+                <li onclick="showSection('earn')"><i class="fas fa-coins"></i> Ganar Tokens</li>
+                <li onclick="showSection('about')"><i class="fas fa-info-circle"></i> Info</li>
             </ul>
             <div class="nav-actions">
                 <div class="token-balance"><i class="fas fa-coins"></i> <span id="userTokenBalance">0</span> Tokens</div>
                 <div class="profile-dropdown" id="profileDropdownContainer">
-                    <button class="profile-avatar-btn" id="profileAvatarBtn"></button>
+                    <button onclick="toggleProfileDropdown(event)" class="profile-avatar-btn" id="profileAvatarBtn"></button>
                     <div id="profileDropdown" class="dropdown-content">
                         <div class="dropdown-header" id="dropdownUserName"></div>
-                        <a href="#" id="adminBtn" class="dropdown-item admin-btn-dropdown"><i class="fas fa-key"></i> Admin</a>
-                        <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                        <a href="#" onclick="openAdminPanel()" class="dropdown-item admin-btn-dropdown"><i class="fas fa-key"></i> Admin</a>
+                        <a href="#" onclick="logout()" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
                     </div>
                 </div>
             </div>
@@ -282,14 +204,17 @@
                 </div>
                 
                 <div class="ad-container" id="ad-container-home">
-                    <!-- El script de Adsterra se insertará aquí -->
+                    <script type="text/javascript">
+                        atOptions = { 'key' : 'b78a72eee080de30d1b51d1f09ed9a39', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/b78a72eee080de30d1b51d1f09ed9a39/invoke.js"></script>
                 </div>
 
                 <div class="info-card">
                     <h3>🎉 ¿Cómo funciona el sistema?</h3>
                     <ul class="feature-list">
                         <li><strong>Paso 1:</strong> Ve a la sección "Ganar Tokens".</li>
-                        <li><strong>Paso 2:</strong> Gana tokens haciendo clic en los anuncios o compartiendo tu enlace de referido.</li>
+                        <li><strong>Paso 2:</strong> Gana tokens viendo anuncios o compartiendo tu enlace de referido.</li>
                         <li><strong>Paso 3:</strong> Usa tus tokens para canjear las cuentas que quieras en la sección "Cuentas".</li>
                     </ul>
                 </div>
@@ -298,39 +223,40 @@
             <!-- Sección Cuentas -->
             <div id="accounts" class="section">
                 <div class="section-header"><h1><i class="fas fa-stream"></i> Cuentas Disponibles</h1><p>Usa tus tokens para canjear una cuenta. ¡Vuelve pronto por más!</p></div>
-                
-                <div class="ad-container" id="ad-container-accounts">
-                   <!-- El script de Adsterra se insertará aquí -->
-                </div>
-
-                <div id="accountsContainer">
-                    <!-- Las cuentas se cargarán aquí dinámicamente -->
-                </div>
+                <div id="accountsContainer"></div>
             </div>
 
             <!-- Sección Ganar Tokens -->
             <div id="earn" class="section">
                 <div class="section-header"><h1><i class="fas fa-coins"></i> Ganar Tokens</h1><p>¡Completa tareas simples para obtener tokens!</p></div>
+                
                 <div class="info-card">
-                    <h3>📺 Recompensa por Anuncio</h3>
-                    <p class="mb-4">Haz clic en el banner de abajo para obtener tu recompensa. ¡Podrás reclamar de nuevo cuando el temporizador termine!</p>
-                    <div id="clickable-ad-banner" class="clickable-ad-banner">
-                        <h4 id="ad-title">¡Recompensa Lista!</h4>
-                        <p id="ad-text">Haz clic aquí para ver un anuncio.</p>
+                    <h3>📺 Ver Anuncio para Recompensa</h3>
+                    <p class="mb-4">Haz clic en el botón para ver un anuncio. Espera a que termine el contador para reclamar tus tokens.</p>
+                    <button class="btn btn-add" id="rewardedAdBtn" onclick="showRewardedAd()">
+                        <i class="fas fa-video"></i> Ver Anuncio (+<span id="tokensPerAdValue">2</span> Tokens)
+                    </button>
+                    <p class="adblock-notice">Si no ves anuncios, por favor desactiva tu AdBlock.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🖱️ Clic en Banner</h3>
+                    <p class="mb-4">Haz clic en el anuncio de abajo y luego reclama tu recompensa. ¡Puedes hacerlo cada 2 minutos!</p>
+                    <div class="ad-container" id="ad-container-click">
+                         <script type="text/javascript">
+                            atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"></script>
                     </div>
-                    <div id="ad-cooldown-message"></div>
-                    <p class="adblock-notice">Si el sistema no funciona, por favor desactiva tu AdBlock.</p>
+                    <button class="btn btn-add" style="margin-top: 15px;" onclick="claimBannerClickReward()">He Hecho Clic (+1 Token)</button>
                 </div>
-                <div class="info-card">
-                    <h3>📜 Historial de Recompensas</h3>
-                    <ul id="ad-reward-history"></ul>
-                </div>
+
                 <div class="info-card">
                     <h3>📢 Tu Enlace de Referido</h3>
                     <p class="mb-4">Comparte este enlace único. Por cada amigo que entre a la web a través de él, recibirás <strong>10 tokens</strong>. ¡Así de fácil!</p>
                     <div class="referral-box">
                         <input type="text" id="referralLink" readonly value="Cargando tu enlace...">
-                        <button class="btn btn-add" id="copyLinkBtn"><i class="fas fa-copy"></i> Copiar Enlace</button>
+                        <button class="btn btn-add" onclick="copyReferralLink()"><i class="fas fa-copy"></i> Copiar Enlace</button>
                     </div>
                 </div>
             </div>
@@ -338,6 +264,12 @@
             <!-- Sección Acerca De -->
             <div id="about" class="section">
                 <div class="section-header"><h1><i class="fas fa-info-circle"></i> Acerca de Shadow Account</h1><p>Conoce más sobre nuestra misión.</p></div>
+                <div class="ad-container">
+                     <script type="text/javascript">
+                        atOptions = { 'key' : 'b78a72eee080de30d1b51d1f09ed9a39', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/b78a72eee080de30d1b51d1f09ed9a39/invoke.js"></script>
+                </div>
                 <div class="info-card"><h3>🎯 Nuestra Misión</h3><p>Creemos que el entretenimiento debe ser accesible. Hemos creado un sistema justo donde puedes obtener cuentas premium colaborando con el crecimiento de nuestra comunidad.</p></div>
                 <div class="info-card"><h3>💬 Canal de WhatsApp</h3><p>Únete para noticias, actualizaciones y soporte rápido:</p><p><a href="https://whatsapp.com/channel/0029Vb5xwFw545v43YQt5U0e" target="_blank" class="whatsapp-link">Canal Oficial de Shadow Account</a></p></div>
             </div>
@@ -346,11 +278,15 @@
             <div id="admin" class="section">
                 <div class="admin-panel">
                     <div class="section-header"><h1><i class="fas fa-tools"></i> Panel de Administrador</h1></div>
+                    
                     <h3>Configuración General</h3>
-                    <div class="form-group"><label for="adminTokensPerAd">Tokens por Anuncio (Clic):</label><input type="number" id="adminTokensPerAd" min="0"></div>
-                    <div class="form-group"><label for="adminAdCooldown">Tiempo de espera de anuncio (segundos):</label><input type="number" id="adminAdCooldown" min="0"></div>
-                    <button class="btn btn-add" id="saveConfigBtn">💾 Guardar Configuración</button>
+                    <div class="form-group">
+                        <label for="adminTokensPerAd">Tokens por Anuncio Visto:</label>
+                        <input type="number" id="adminTokensPerAd" min="0">
+                    </div>
+                    <button class="btn btn-add" onclick="saveAppConfig()">💾 Guardar Configuración</button>
                     <hr style="border-color: var(--secondary-color); margin: 40px 0;">
+
                     <h3>Añadir Nueva Cuenta</h3>
                     <div class="form-group"><label>Servicio:</label><select id="adminService"><option value="netflix">Netflix</option><option value="spotify">Spotify</option><option value="disney">Disney+</option><option value="amazon">Amazon Prime</option><option value="hbo">HBO Max</option><option value="youtube">YouTube Premium</option><option value="apple">Apple TV+</option><option value="paramount">Paramount+</option><option value="crunchyroll">Crunchyroll</option><option value="otros">Otro</option></select></div>
                     <div class="form-group" id="customServiceGroup" style="display: none;"><label>Nombre del servicio:</label><input type="text" id="customServiceName"></div>
@@ -358,7 +294,7 @@
                     <div class="form-group"><label>Contraseña:</label><input type="text" id="adminPassword"></div>
                     <div class="form-group"><label>Costo en Tokens:</label><input type="number" id="adminCost" min="0" value="50"></div>
                     <div class="form-group"><label>Límite de usuarios (0 para ilimitado):</label><input type="number" id="userLimit" min="0" value="1"></div>
-                    <button class="btn btn-add" id="addAccountBtn" style="width: 100%; margin-bottom: 20px;">➕ Agregar Cuenta</button>
+                    <button class="btn btn-add" onclick="addAccount()" style="width: 100%; margin-bottom: 20px;">➕ Agregar Cuenta</button>
                     <hr style="border-color: var(--secondary-color); margin: 40px 0;">
                     <h3>📋 Cuentas Agregadas</h3>
                     <div id="adminAccountsList"></div>
@@ -368,518 +304,461 @@
     </div>
 
     <!-- Modals -->
-    <div class="modal" id="loginModal"><div class="modal-content"><h3><i class="fas fa-key"></i> Acceso Admin</h3><input type="password" id="adminPasswordInput" placeholder="Contraseña" /><div><button class="btn btn-add" id="checkPasswordBtn">Entrar</button><button class="btn btn-cancel" data-close>Cancelar</button></div></div></div>
-    <div class="modal" id="passwordRevealModal"><div class="modal-content"><h3>🎉 ¡Cuenta Canjeada!</h3><div id="revealedPassword" style="margin: 20px 0; font-size: 1.1rem; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 5px;"></div><button class="btn btn-add" data-close>Cerrar</button></div></div></div>
-    <div class="modal" id="confirmModal"><div class="modal-content"><h3 id="confirmTitle">Confirmar Acción</h3><p id="confirmMessage" style="margin: 20px 0;"></p><div><button id="confirmBtn" class="btn">Confirmar</button><button class="btn btn-cancel" data-close>Cancelar</button></div></div></div>
-    <div class="modal" id="alertModal"><div class="modal-content"><h3 id="alertTitle"></h3><p id="alertMessage" style="margin: 20px 0;"></p><div><button class="btn btn-add" data-close>Entendido</button></div></div></div>
-    <div class="modal" id="adBannerModal"><div class="modal-content"><h3><i class="fas fa-eye"></i> Recompensa de Anuncio</h3><p style="margin: 0 0 20px 0; color: #aaa;">Dale click al anuncio, esperá 5 segunditos y luego regresá pa’ que el botón de reclamar se active.</p><div id="modalAdContainer"></div><div style="margin-top: 20px;"><button id="claimTokensFromModalBtn" class="btn btn-add" disabled><i class="fas fa-lock"></i> Reclamar Tokens</button><button class="btn btn-cancel" data-close>Cancelar</button></div></div></div>
-
-    <!-- Scripts de Anuncios Adsterra (Popunder/Direct) -->
-    <script type='text/javascript' src='//pl26770167.profitableratecpm.com/3d/3a/a6/3d3aa6dcdb50d459c01bf3cb0595a9d0.js'></script>
+    <div class="modal" id="loginModal"><div class="modal-content"><h3><i class="fas fa-key"></i> Acceso Admin</h3><input type="password" id="adminPasswordInput" placeholder="Contraseña" /><div><button class="btn btn-add" onclick="checkPassword()">Entrar</button><button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button></div></div></div>
+    <div class="modal" id="passwordRevealModal"><div class="modal-content"><h3>🎉 ¡Cuenta Canjeada!</h3><div id="revealedPassword" style="margin: 20px 0; font-size: 1.1rem; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 5px;"></div><button class="btn btn-add" onclick="closePasswordAndShowAd()">Cerrar</button></div></div></div>
+    <div class="modal" id="confirmModal"><div class="modal-content"><h3 id="confirmTitle">Confirmar Acción</h3><p id="confirmMessage" style="margin: 20px 0;"></p><div><button id="confirmBtn" class="btn">Confirmar</button><button class="btn btn-cancel" onclick="closeAllModals()">Cancelar</button></div></div></div>
+    <div class="modal" id="alertModal"><div class="modal-content"><h3 id="alertTitle"></h3><p id="alertMessage" style="margin: 20px 0;"></p><div><button class="btn btn-add" onclick="closeAllModals()">Entendido</button></div></div></div>
     
-    <!-- Firebase SDK y Lógica de la App -->
+    <!-- NUEVO: Modals para anuncios -->
+    <div class="modal" id="rewardedAdModal">
+        <div class="modal-content">
+            <h3>Recompensa en Camino</h3>
+            <p>Espera a que termine el contador para reclamar tus tokens.</p>
+            <div class="ad-container" id="rewarded-ad-slot"></div>
+            <h2 id="rewardedAdTimer" style="margin: 15px 0; font-family: 'Orbitron'; font-size: 2rem;">10</h2>
+            <button id="claimRewardBtn" class="btn btn-add" disabled>Reclamar Recompensa</button>
+        </div>
+    </div>
+    <div class="modal" id="interstitialAdModal">
+        <div class="modal-content">
+            <h3>Gracias por tu apoyo</h3>
+            <div class="ad-container" id="interstitial-ad-slot"></div>
+            <button class="btn btn-cancel" onclick="closeAllModals()">Cerrar</button>
+        </div>
+    </div>
+
+
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
         import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, getDocs, deleteDoc, runTransaction, increment, where, query } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
         
-        // --- INICIALIZACIÓN DE FIREBASE ---
         const firebaseConfig = { apiKey: "AIzaSyC4l6R9Ws47JtJx-g2r_sxX_1m_QNGVoOI", authDomain: "streaming-6c68a.firebaseapp.com", projectId: "streaming-6c68a", storageBucket: "streaming-6c68a.appspot.com", messagingSenderId: "426556584047", appId: "1:426556584047:web:523b5231151a94ea391d9a" };
+        
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- ESTADO GLOBAL DE LA APLICACIÓN ---
-        let accounts = [];
-        let currentUser = null;
-        let isAdmin = false;
-        let onConfirmCallback = null;
-        let appConfig = { tokensPerAd: 5, adCooldown: 30 };
-        let adRewardHistory = [];
-        let isAdAvailable = true;
-        const TOKENS_PER_REFERRAL = 10;
-        const serviceDetails = { netflix: { name: 'Netflix', icon: 'N' }, spotify: { name: 'Spotify', icon: '♪' }, disney: { name: 'Disney+', icon: 'D' }, amazon: { name: 'Amazon Prime', icon: 'A' }, hbo: { name: 'HBO Max', icon: 'H' }, youtube: { name: 'YouTube Premium', icon: 'Y' }, apple: { name: 'Apple TV+', icon: '' }, paramount: { name: 'Paramount+', icon: 'P' }, crunchyroll: { name: 'Crunchyroll', icon: 'C' }, otros: { name: 'Otro', icon: '?' } };
+        window.firebase = { app, auth, db };
+        window.firestore = { collection, doc, getDoc, setDoc, updateDoc, getDocs, deleteDoc, runTransaction, increment, where, query };
+        window.auth = { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut };
 
-        // --- FUNCIONES DE LA INTERFAZ (UI) ---
-        const showSection = (sectionName) => {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            const section = document.getElementById(sectionName);
-            if (section) section.classList.add('active');
-            document.querySelectorAll('.nav-links li').forEach(l => {
-                l.classList.remove('active');
-                if (l.dataset.section === sectionName) {
-                    l.classList.add('active');
-                }
-            });
-            if (sectionName === 'accounts') displayAccounts();
-            if (sectionName === 'admin' && isAdmin) loadAdminAccounts();
-        };
-
-        const showAlert = (title, message) => {
-            document.getElementById('alertTitle').textContent = title;
-            document.getElementById('alertMessage').textContent = message;
-            document.getElementById('alertModal').style.display = 'flex';
-        };
-
-        const closeAllModals = () => {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-            onConfirmCallback = null;
-            const adContainer = document.getElementById('modalAdContainer');
-            if(adContainer) adContainer.innerHTML = '';
-            const claimBtn = document.getElementById('claimTokensFromModalBtn');
-            if(claimBtn) {
-                claimBtn.disabled = true;
-                claimBtn.innerHTML = `<i class="fas fa-lock"></i> Reclamar Tokens`;
-            }
-        };
-
-        const showConfirmModal = (message, callback, title = 'Confirmar Acción', confirmText = 'Confirmar', btnClass = 'btn-add') => {
-            document.getElementById('confirmTitle').textContent = title;
-            document.getElementById('confirmMessage').textContent = message;
-            const confirmBtn = document.getElementById('confirmBtn');
-            confirmBtn.textContent = confirmText;
-            confirmBtn.className = `btn ${btnClass}`;
-            onConfirmCallback = callback;
-            document.getElementById('confirmModal').style.display = 'flex';
-        };
-
-        const updateUIAfterLogin = () => {
-            if (!currentUser) return;
-            document.getElementById('userTokenBalance').textContent = Math.floor(currentUser.tokens);
-            document.getElementById('referralLink').value = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode}`;
-            const initial = currentUser.displayName ? currentUser.displayName.charAt(0).toUpperCase() : '?';
-            document.getElementById('profileAvatarBtn').textContent = initial;
-            document.getElementById('dropdownUserName').textContent = currentUser.displayName;
-        };
-        
-        const toggleProfileDropdown = (event) => {
-            event.stopPropagation();
-            document.getElementById('profileDropdown').classList.toggle('show');
-        };
-
-        // --- LÓGICA DE CUENTAS ---
-        const loadAccountsFromFirebase = async () => {
-            const container = document.getElementById('accountsContainer');
-            container.innerHTML = `<div class="info-card" style="text-align: center;"><p>Cargando cuentas...</p></div>`;
-            try {
-                const querySnapshot = await getDocs(collection(db, 'streamingAccounts'));
-                accounts = [];
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    if (data.email && data.password && data.serviceName) {
-                         accounts.push({ id: doc.id, ...data });
-                    }
-                });
-                accounts.sort((a, b) => a.serviceName.localeCompare(b.serviceName));
-                displayAccounts();
-                if (isAdmin) loadAdminAccounts();
-                updateStats();
-            } catch (error) {
-                console.error("Error crítico al cargar cuentas:", error);
-                container.innerHTML = `
-                    <div class="info-card" style="border-left-color: var(--danger-color);">
-                        <h3>❌ Error de Conexión</h3>
-                        <p>No se pudieron cargar las cuentas. Esto suele ocurrir por un problema de permisos.</p>
-                        <p style="color: #ff8a8a; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; margin-top: 10px; font-family: monospace; word-break: break-all;">
-                            <strong>Error de Firebase:</strong> ${error.message}
-                        </p>
-                    </div>`;
-            }
-        };
-
-        const displayAccounts = () => {
-            const container = document.getElementById('accountsContainer');
-            if (!currentUser) {
-                 container.innerHTML = `<div class="info-card" style="text-align: center;"><p>Inicia sesión para ver las cuentas.</p></div>`;
-                 return;
-            }
-
-            const availableAccounts = accounts.filter(acc => {
-                const currentUsers = acc.currentUsers || 0;
-                const userLimit = acc.userLimit ?? 1;
-                return userLimit === 0 || currentUsers < userLimit;
-            });
-
-            if (availableAccounts.length === 0) {
-                container.innerHTML = `<div class="info-card" style="text-align: center;"><h3>😴 No hay cuentas disponibles</h3><p>Todas las cuentas han sido reclamadas. ¡Vuelve más tarde!</p></div>`;
-                return;
-            }
-
-            container.innerHTML = `<div class="accounts-grid">${availableAccounts.map(account => {
-                const canAfford = currentUser.tokens >= account.cost;
-                const currentUsers = account.currentUsers || 0;
-                const userLimit = account.userLimit ?? 1;
-                const remaining = userLimit === 0 ? '∞' : userLimit - currentUsers;
-                return `
-                <div class="account-card ${account.service}">
-                    <div class="status-badge available">✅ Disponible</div>
-                    <div class="service-header">
-                        <div class="service-icon ${account.service}">${serviceDetails[account.service]?.icon || '?'}</div>
-                        <div class="service-name">${account.serviceName}</div>
-                    </div>
-                    <div class="account-details">
-                        <div class="account-cost"><i class="fas fa-coins"></i> ${account.cost} Tokens</div>
-                         ${userLimit > 0 ? `<div><strong>Disponibles:</strong> ${remaining}/${userLimit}</div>` : '<div><strong>Disponibles:</strong> Ilimitados</div>'}
-                    </div>
-                    <button class="claim-btn" data-account-id="${account.id}" ${!canAfford ? 'disabled' : ''}>
-                        ${canAfford ? 'Canjear Cuenta' : 'Tokens Insuficientes'}
-                    </button>
-                </div>`
-            }).join('')}</div>`;
-        };
-        
-        const updateStats = async () => {
-            try {
-                const accountsSnapshot = await getDocs(collection(db, "streamingAccounts"));
-                const usersSnapshot = await getDocs(collection(db, "users"));
-                
-                let total = accountsSnapshot.size;
-                let available = 0;
-                accountsSnapshot.forEach(doc => {
-                    const acc = doc.data();
-                     const currentUsers = acc.currentUsers || 0;
-                     const userLimit = acc.userLimit ?? 1;
-                     if (userLimit === 0) {
-                         available += 999; 
-                     } else {
-                         available += (userLimit - currentUsers);
-                     }
-                });
-                
-                document.getElementById('totalAccounts').textContent = total;
-                document.getElementById('availableAccounts').textContent = available > 998 ? '∞' : available;
-                document.getElementById('usersOnline').textContent = usersSnapshot.size;
-            } catch (error) {
-                console.error("Error actualizando estadísticas:", error);
-            }
-        };
-
-        const redeemAccount = async (accountId) => {
-            const account = accounts.find(acc => acc.id === accountId);
-            if (!account) return;
-            if (currentUser.tokens < account.cost) {
-                showAlert('Tokens Insuficientes', 'Necesitas más tokens para canjear esta cuenta.');
-                return;
-            }
-            const message = `¿Canjear "${account.serviceName}" por ${account.cost} tokens?`;
-            showConfirmModal(message, async () => {
-                try {
-                    await runTransaction(db, async (transaction) => {
-                        const userRef = doc(db, "users", currentUser.uid);
-                        const accountRef = doc(db, "streamingAccounts", accountId);
-                        const userDoc = await transaction.get(userRef);
-                        const accountDoc = await transaction.get(accountRef);
-                        if (!userDoc.exists() || !accountDoc.exists()) throw new Error("Documento no existe");
-                        const newTokens = userDoc.data().tokens - account.cost;
-                        if (newTokens < 0) throw new Error("Fondos insuficientes");
-                        const currentAccountData = accountDoc.data();
-                        if (currentAccountData.userLimit > 0 && (currentAccountData.currentUsers || 0) >= currentAccountData.userLimit) throw new Error("Cuenta ya no disponible");
-                        transaction.update(userRef, { tokens: newTokens });
-                        transaction.update(accountRef, { currentUsers: increment(1) });
-                    });
-                    currentUser.tokens -= account.cost;
-                    const accToUpdate = accounts.find(a => a.id === accountId);
-                    if (accToUpdate) accToUpdate.currentUsers = (accToUpdate.currentUsers || 0) + 1;
-                    
-                    document.getElementById('revealedPassword').innerHTML = `<p><strong>📧 Email/Usuario:</strong> ${account.email}</p><p><strong>🔑 Contraseña:</strong> ${account.password}</p><p style="margin-top:15px; color: var(--primary-color);">¡Disfruta! Por favor, no cambies la contraseña.</p>`;
-                    closeAllModals();
-                    document.getElementById('passwordRevealModal').style.display = 'flex';
-                    displayAccounts();
-                    updateUIAfterLogin();
-                } catch (e) {
-                    console.error("Error en la transacción: ", e);
-                    showAlert("Error", `No se pudo completar el canje. ${e.message}`);
-                    loadAccountsFromFirebase();
-                }
-            }, 'Confirmar Canje', 'Confirmar', 'btn-add');
-        };
-
-        // --- LÓGICA DE USUARIO Y AUTENTICACIÓN ---
-        const setupUser = async (user) => {
-            const userRef = doc(db, "users", user.uid);
-            let userSnap = await getDoc(userRef);
-            if (!userSnap.exists()) {
-                const referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-                await setDoc(userRef, {
-                    uid: user.uid,
-                    displayName: user.displayName || 'Usuario',
-                    email: user.email,
-                    tokens: 0,
-                    referralCode: referralCode,
-                    createdAt: new Date(),
-                    lastAdClaim: 0
-                });
-                await handleReferral(user.uid);
-            }
-            currentUser = (await getDoc(userRef)).data();
-            updateUIAfterLogin();
-            checkAdCooldownOnLoad();
-        };
-        
-        const handleReferral = async (newUserId) => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const refCode = urlParams.get('ref');
-            if (!refCode) return;
-
-            const userRef = doc(db, "users", newUserId);
-            const userDoc = await getDoc(userRef);
-
-            if (userDoc.exists() && userDoc.data().creditedBy) return;
-            if (currentUser.referralCode === refCode) return;
-
-            await updateDoc(userRef, { creditedBy: refCode });
-            
-            const q = query(collection(db, "users"), where("referralCode", "==", refCode));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach(async (document) => {
-                const referrerRef = doc(db, "users", document.id);
-                await updateDoc(referrerRef, { tokens: increment(TOKENS_PER_REFERRAL) });
-            });
-        };
-
-        const signInWithGoogle = async () => {
-            const provider = new GoogleAuthProvider();
-            try {
-                await signInWithPopup(auth, provider);
-            } catch (error) {
-                console.error("Error al iniciar sesión con Google:", error);
-                showAlert("Error de Acceso", "No se pudo iniciar sesión. Por favor, intenta de nuevo.");
-            }
-        };
-
-        const logout = async () => {
-            await signOut(auth);
-            window.location.reload();
-        };
-
-        // --- LÓGICA DE GANAR TOKENS (ANUNCIOS Y REFERIDOS) ---
-        const showAdModal = () => {
-            if (!isAdAvailable || !currentUser) return;
-            const modal = document.getElementById('adBannerModal');
-            const adContainer = document.getElementById('modalAdContainer');
-            adContainer.innerHTML = '';
-            
-            const adScript = document.createElement('script');
-            adScript.type = 'text/javascript';
-            adScript.innerHTML = `atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };`;
-            const adLoaderScript = document.createElement('script');
-            adLoaderScript.type = 'text/javascript';
-            adLoaderScript.src = '//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js';
-            adContainer.appendChild(adScript);
-            adContainer.appendChild(adLoaderScript);
-            
-            setTimeout(() => {
-                const claimBtn = document.getElementById('claimTokensFromModalBtn');
-                if (claimBtn) {
-                    claimBtn.disabled = false;
-                    claimBtn.innerHTML = `<i class="fas fa-unlock"></i> Reclamar Tokens Ahora`;
-                }
-            }, 5000);
-            modal.style.display = 'flex';
-        };
-
-        const finalizeTokenClaim = async () => {
-            const claimBtn = document.getElementById('claimTokensFromModalBtn');
-            if (claimBtn.disabled) return;
-            isAdAvailable = false;
-            closeAllModals();
-            try {
-                const userRef = doc(db, "users", currentUser.uid);
-                await updateDoc(userRef, { 
-                    tokens: increment(appConfig.tokensPerAd),
-                    lastAdClaim: Date.now()
-                });
-                currentUser.tokens += appConfig.tokensPerAd;
-                currentUser.lastAdClaim = Date.now();
-                updateUIAfterLogin();
-                showAlert('¡Recompensa!', `Has ganado ${appConfig.tokensPerAd} tokens.`);
-                startAdCooldown();
-            } catch (error) {
-                console.error("Error al reclamar tokens: ", error);
-                isAdAvailable = true;
-            }
-        };
-
-        const startAdCooldown = () => {
-            const adBanner = document.getElementById('clickable-ad-banner');
-            const cooldownMsg = document.getElementById('ad-cooldown-message');
-            adBanner.classList.add('disabled');
-            let secondsRemaining = appConfig.adCooldown;
-            const interval = setInterval(() => {
-                if (secondsRemaining > 0) {
-                    cooldownMsg.textContent = `Próxima recompensa en ${secondsRemaining} segundos...`;
-                    secondsRemaining--;
-                } else {
-                    clearInterval(interval);
-                    isAdAvailable = true;
-                    adBanner.classList.remove('disabled');
-                    cooldownMsg.textContent = '';
-                }
-            }, 1000);
-        };
-        
-        const checkAdCooldownOnLoad = () => {
-            if (!currentUser || typeof currentUser.lastAdClaim === 'undefined') return;
-            const timeSinceLastClaim = Date.now() - currentUser.lastAdClaim;
-            const cooldownMillis = (appConfig.adCooldown || 30) * 1000;
-            if (timeSinceLastClaim < cooldownMillis) {
-                isAdAvailable = false;
-                const remainingCooldown = Math.ceil((cooldownMillis - timeSinceLastClaim) / 1000);
-                startAdCooldownWithRemaining(remainingCooldown);
-            }
-        };
-
-        const startAdCooldownWithRemaining = (seconds) => {
-            const adBanner = document.getElementById('clickable-ad-banner');
-            const cooldownMsg = document.getElementById('ad-cooldown-message');
-            adBanner.classList.add('disabled');
-            let secondsRemaining = seconds;
-            const interval = setInterval(() => {
-                if (secondsRemaining > 0) {
-                    cooldownMsg.textContent = `Próxima recompensa en ${secondsRemaining} segundos...`;
-                    secondsRemaining--;
-                } else {
-                    clearInterval(interval);
-                    isAdAvailable = true;
-                    adBanner.classList.remove('disabled');
-                    cooldownMsg.textContent = '';
-                }
-            }, 1000);
-        };
-
-        const copyReferralLink = () => {
-            const linkInput = document.getElementById('referralLink');
-            linkInput.select();
-            linkInput.setSelectionRange(0, 99999);
-            try {
-                document.execCommand('copy');
-                showAlert('¡Copiado!', 'Tu enlace de referido ha sido copiado.');
-            } catch (err) {
-                showAlert('Error', 'No se pudo copiar el enlace.');
-            }
-        };
-
-        // --- LÓGICA DE ADMINISTRACIÓN ---
-        const loadAdminData = async () => {
-            const configRef = doc(db, "config", "main");
-            const configSnap = await getDoc(configRef);
-            if (configSnap.exists()) {
-                appConfig = configSnap.data();
-                document.getElementById('adminTokensPerAd').value = appConfig.tokensPerAd;
-                document.getElementById('adminAdCooldown').value = appConfig.adCooldown;
-            }
-            loadAdminAccounts();
-        };
-
-        const loadAdminAccounts = () => {
-            const adminList = document.getElementById('adminAccountsList');
-            adminList.innerHTML = accounts.length === 0 ? '<p>No hay cuentas.</p>' : accounts.map(acc => {
-                return `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333;"><span>${acc.serviceName}</span><button class="btn btn-danger" data-delete-id="${acc.id}">Eliminar</button></div>`;
-            }).join('');
-        };
-
-        const addAccount = async () => {
-            const service = document.getElementById('adminService').value;
-            const serviceName = service === 'otros' ? document.getElementById('customServiceName').value.trim() : serviceDetails[service].name;
-            const email = document.getElementById('adminEmail').value.trim();
-            const password = document.getElementById('adminPassword').value.trim();
-            if (!email || !password || !serviceName) { showAlert('Error', 'Todos los campos son obligatorios.'); return; }
-            const newId = Date.now().toString();
-            const account = { service, serviceName, email, password, cost: parseInt(document.getElementById('adminCost').value) || 50, userLimit: parseInt(document.getElementById('userLimit').value) || 0, currentUsers: 0 };
-            await setDoc(doc(db, 'streamingAccounts', newId), account);
-            loadAccountsFromFirebase();
-            document.getElementById('adminEmail').value = ''; document.getElementById('adminPassword').value = ''; document.getElementById('customServiceName').value = '';
-        };
-
-        const deleteAccount = async (id) => {
-            showConfirmModal('¿Seguro que quieres ELIMINAR esta cuenta?', async () => {
-                await deleteDoc(doc(db, 'streamingAccounts', id));
-                loadAccountsFromFirebase();
-            }, 'Eliminar Cuenta', 'Eliminar', 'btn-danger');
-        };
-        
-        const saveAppConfig = async () => {
-            const newConfig = {
-                tokensPerAd: parseInt(document.getElementById('adminTokensPerAd').value),
-                adCooldown: parseInt(document.getElementById('adminAdCooldown').value)
-            };
-            await setDoc(doc(db, "config", "main"), newConfig, { merge: true });
-            appConfig = newConfig;
-            showAlert('Éxito', 'Configuración guardada.');
-        };
-        
-        const injectAds = () => {
-            const adContainerHome = document.getElementById('ad-container-home');
-            adContainerHome.innerHTML = `<script type="text/javascript"> atOptions = { 'key' : 'b78a72eee080de30d1b51d1f09ed9a39', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} }; <\/script><script type="text/javascript" src="//www.highperformanceformat.com/b78a72eee080de30d1b51d1f09ed9a39/invoke.js"><\/script>`;
-            
-            const adContainerAccounts = document.getElementById('ad-container-accounts');
-            adContainerAccounts.innerHTML = `<script type="text/javascript"> atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; <\/script><script type="text/javascript" src="//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js"><\/script>`;
-        };
-
-        // --- INICIALIZACIÓN DE LA APP ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Asignar event listeners
-            document.getElementById('signInBtn').addEventListener('click', signInWithGoogle);
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-            document.getElementById('profileAvatarBtn').addEventListener('click', toggleProfileDropdown);
-            document.getElementById('adminBtn').addEventListener('click', () => {
-                 closeAllModals();
-                 document.getElementById('loginModal').style.display = 'flex';
-            });
-            document.querySelectorAll('.nav-links li').forEach(link => {
-                link.addEventListener('click', () => showSection(link.dataset.section));
-            });
-            document.querySelectorAll('[data-close]').forEach(btn => {
-                btn.addEventListener('click', closeAllModals);
-            });
-            document.getElementById('confirmBtn').addEventListener('click', () => {
-                if (typeof onConfirmCallback === 'function') onConfirmCallback();
-                closeAllModals();
-            });
-             document.getElementById('accountsContainer').addEventListener('click', (e) => {
-                if (e.target.matches('.claim-btn')) {
-                    redeemAccount(e.target.dataset.accountId);
-                }
-            });
-            document.getElementById('checkPasswordBtn').addEventListener('click', () => {
-                 if (document.getElementById('adminPasswordInput').value === 'Jose') { 
-                    isAdmin = true; 
-                    loadAdminData();
-                    showSection('admin'); 
-                    closeAllModals(); 
-                } else { 
-                    showAlert('Error', 'Contraseña incorrecta'); 
-                }
-            });
-            document.getElementById('addAccountBtn').addEventListener('click', addAccount);
-            document.getElementById('saveConfigBtn').addEventListener('click', saveAppConfig);
-            document.getElementById('copyLinkBtn').addEventListener('click', copyReferralLink);
-            document.getElementById('clickable-ad-banner').addEventListener('click', showAdModal);
-            document.getElementById('claimTokensFromModalBtn').addEventListener('click', finalizeTokenClaim);
-            document.getElementById('adminAccountsList').addEventListener('click', e => {
-                if(e.target.dataset.deleteId) deleteAccount(e.target.dataset.deleteId);
-            });
-            
-            // Lógica de autenticación principal
-            onAuthStateChanged(auth, async (user) => {
-                const loginWall = document.getElementById('login-wall');
-                const mainContent = document.querySelector('.main-content');
-                if (user && !user.isAnonymous) {
-                    await setupUser(user);
-                    loginWall.style.display = 'none';
-                    mainContent.style.display = 'block';
-                    document.getElementById('profileDropdownContainer').style.display = 'block';
-                    await loadAccountsFromFirebase(); 
-                    await updateStats();
-                    injectAds(); // Inyectar anuncios después de que el usuario inicie sesión
-                } else {
-                    loginWall.style.display = 'flex';
-                    mainContent.style.display = 'none';
-                    document.getElementById('profileDropdownContainer').style.display = 'none';
-                }
-            });
-        });
+        initializeAppLogic();
     </script>
+
+    <!-- Scripts de Anuncios Adsterra (Popunder/Direct) -->
+    <script type='text/javascript' src='//pl26770084.profitableratecpm.com/2f/62/3b/2f623bbca5866dd1a12f70021c841450.js'></script>
+    <script type='text/javascript' src='//pl26770167.profitableratecpm.com/3d/3a/a6/3d3aa6dcdb50d459c01bf3cb0595a9d0.js'></script>
+
+<script>
+    // --- Variables Globales y Estado ---
+    let accounts = [];
+    let currentUser = null;
+    let isAdmin = false;
+    let onConfirmCallback = null;
+    let appConfig = { tokensPerAd: 2 };
+    let rewardTimerInterval;
+    const TOKENS_PER_REFERRAL = 10;
+    const TOKENS_PER_BANNER_CLICK = 1;
+    const serviceDetails = { netflix: { name: 'Netflix', icon: 'N' }, spotify: { name: 'Spotify', icon: '♪' }, disney: { name: 'Disney+', icon: 'D' }, amazon: { name: 'Amazon Prime', icon: 'A' }, hbo: { name: 'HBO Max', icon: 'H' }, youtube: { name: 'YouTube Premium', icon: 'Y' }, apple: { name: 'Apple TV+', icon: '' }, paramount: { name: 'Paramount+', icon: 'P' }, crunchyroll: { name: 'Crunchyroll', icon: 'C' }, otros: { name: 'Otro', icon: '?' } };
+
+    // --- Lógica Principal de la App ---
+    async function initializeAppLogic() {
+        await loadAppConfig();
+        const { onAuthStateChanged } = window.auth;
+        const profileContainer = document.getElementById('profileDropdownContainer');
+        onAuthStateChanged(window.firebase.auth, async (user) => {
+            const loginWall = document.getElementById('login-wall');
+            const mainContent = document.querySelector('.main-content');
+            if (user && !user.isAnonymous) {
+                loginWall.style.display = 'none';
+                mainContent.style.display = 'block';
+                profileContainer.style.display = 'block';
+                await setupUser(user);
+                loadAccountsFromFirebase();
+            } else {
+                loginWall.style.display = 'flex';
+                mainContent.style.display = 'none';
+                profileContainer.style.display = 'none';
+            }
+        });
+    }
+
+    async function setupUser(user) {
+        const { doc, getDoc, setDoc } = window.firestore;
+        const userRef = doc(window.firebase.db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) {
+            const referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+            const newUserProfile = {
+                uid: user.uid,
+                isAnonymous: user.isAnonymous,
+                displayName: user.displayName || 'Usuario',
+                email: user.email,
+                tokens: 0,
+                referralCode: referralCode,
+                createdAt: new Date()
+            };
+            await setDoc(userRef, newUserProfile);
+            currentUser = newUserProfile;
+            await handleReferral(user.uid);
+        } else {
+            currentUser = userSnap.data();
+        }
+        updateUIAfterLogin(user);
+    }
+    
+    async function handleReferral(newUserId) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref');
+        if (!refCode) return;
+        const { doc, getDoc, updateDoc, increment, collection, where, query, getDocs } = window.firestore;
+        const userRef = doc(window.firebase.db, "users", newUserId);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists() && userDoc.data().creditedBy) return;
+        if (currentUser.referralCode === refCode) return;
+        await updateDoc(userRef, { creditedBy: refCode });
+        const usersRef = collection(window.firebase.db, "users");
+        const q = query(usersRef, where("referralCode", "==", refCode));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (document) => {
+            const referrerRef = doc(window.firebase.db, "users", document.id);
+            await updateDoc(referrerRef, { tokens: increment(TOKENS_PER_REFERRAL) });
+        });
+    }
+
+    function updateUIAfterLogin(user) {
+        if (!currentUser || !user) return;
+        document.getElementById('userTokenBalance').textContent = currentUser.tokens;
+        document.getElementById('referralLink').value = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode}`;
+        const initial = user.displayName ? user.displayName.charAt(0).toUpperCase() : '?';
+        document.getElementById('profileAvatarBtn').textContent = initial;
+        document.getElementById('dropdownUserName').textContent = user.displayName;
+    }
+
+    // --- Autenticación ---
+    async function signInWithGoogle() {
+        const { GoogleAuthProvider, signInWithPopup } = window.auth;
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(window.firebase.auth, provider);
+        } catch (error) {
+            console.error("Error al iniciar sesión con Google:", error);
+            showAlert("Error de Acceso", "No se pudo iniciar sesión. Por favor, intenta de nuevo. Asegúrate de que las ventanas emergentes no estén bloqueadas.");
+        }
+    }
+
+    async function logout() {
+        await window.auth.signOut(window.firebase.auth);
+        currentUser = null;
+        isAdmin = false;
+        closeProfileDropdown();
+        window.location.reload();
+    }
+    
+    // --- Lógica de Cuentas (Cliente) ---
+    function displayAccounts() {
+        const container = document.getElementById('accountsContainer');
+        updateStats();
+        const availableAccounts = accounts.filter(acc => acc.userLimit === 0 || acc.currentUsers < acc.userLimit);
+        if (availableAccounts.length === 0) {
+            container.innerHTML = `<div class="info-card" style="text-align: center;"><h3>😴 No hay cuentas disponibles</h3><p>Todas las cuentas han sido reclamadas. ¡Vuelve más tarde!</p></div>`;
+            return;
+        }
+        container.innerHTML = `<div class="accounts-grid">${availableAccounts.map(account => {
+            const canAfford = currentUser && currentUser.tokens >= account.cost;
+            return `
+            <div class="account-card ${account.service}">
+                <div class="status-badge available">✅ Disponible</div>
+                <div class="service-header">
+                    <div class="service-icon ${account.service}">${serviceDetails[account.service]?.icon || '?'}</div>
+                    <div class="service-name">${account.serviceName}</div>
+                </div>
+                <div class="account-details">
+                    <div class="account-cost"><i class="fas fa-coins"></i> ${account.cost} Tokens</div>
+                     ${account.userLimit > 0 ? `<div><strong>Disponibles:</strong> ${account.userLimit - account.currentUsers}/${account.userLimit}</div>` : '<div><strong>Disponibles:</strong> Ilimitados</div>'}
+                </div>
+                <button class="claim-btn" onclick="redeemAccount('${account.id}')" ${!canAfford ? 'disabled' : ''}>
+                    ${canAfford ? 'Canjear Cuenta' : 'Tokens Insuficientes'}
+                </button>
+            </div>`
+        }).join('')}</div>`;
+    }
+
+    function redeemAccount(accountId) {
+        const account = accounts.find(acc => acc.id.toString() === accountId);
+        if (!account) return;
+        if (!currentUser || currentUser.tokens < account.cost) {
+            showAlert('Tokens Insuficientes', 'Necesitas más tokens para canjear esta cuenta. ¡Invita a más amigos!');
+            return;
+        }
+        const message = `¿Canjear "${account.serviceName}" por ${account.cost} tokens? Esta acción no se puede deshacer.`;
+        showConfirmModal(message, async () => {
+            try {
+                const { runTransaction, doc, increment } = window.firestore;
+                await runTransaction(window.firebase.db, async (transaction) => {
+                    const userRef = doc(window.firebase.db, "users", currentUser.uid);
+                    const accountRef = doc(window.firebase.db, "streamingAccounts", accountId.toString());
+                    const userDoc = await transaction.get(userRef);
+                    const accountDoc = await transaction.get(accountRef);
+                    if (!userDoc.exists() || !accountDoc.exists()) throw "Documento no existe";
+                    const newTokens = userDoc.data().tokens - account.cost;
+                    if (newTokens < 0) throw "Tokens insuficientes";
+                    if (account.userLimit > 0 && accountDoc.data().currentUsers >= account.userLimit) throw "Cuenta ya no disponible";
+                    transaction.update(userRef, { tokens: newTokens });
+                    transaction.update(accountRef, { currentUsers: increment(1) });
+                });
+                currentUser.tokens -= account.cost;
+                const accToUpdate = accounts.find(a => a.id.toString() === accountId);
+                if (accToUpdate) accToUpdate.currentUsers += 1;
+                showPasswordRevealModal(account);
+            } catch (e) {
+                console.error("Error en la transacción: ", e);
+                showAlert("Error", "No se pudo completar el canje. Es posible que alguien más haya reclamado la cuenta. Inténtalo de nuevo.");
+                loadAccountsFromFirebase();
+            }
+        }, 'Confirmar Canje', 'Confirmar', 'btn-add');
+    }
+
+    function showPasswordRevealModal(account) {
+        document.getElementById('revealedPassword').innerHTML = `<p><strong>📧 Email/Usuario:</strong> ${account.email}</p><p><strong>🔑 Contraseña:</strong> ${account.password}</p><p style="margin-top:15px; color: var(--primary-color);">¡Disfruta! Por favor, no cambies la contraseña.</p>`;
+        closeAllModals();
+        document.getElementById('passwordRevealModal').style.display = 'flex';
+    }
+
+    async function updateStats() {
+        const { getDocs, collection } = window.firestore;
+        const accountsSnapshot = await getDocs(collection(window.firebase.db, "streamingAccounts"));
+        let localAccounts = [];
+        accountsSnapshot.forEach(doc => localAccounts.push(doc.data()));
+        const usersSnapshot = await getDocs(collection(window.firebase.db, "users"));
+        const total = localAccounts.length;
+        const available = localAccounts.reduce((sum, acc) => sum + (acc.userLimit > 0 ? acc.userLimit - acc.currentUsers : (acc.userLimit === 0 ? 1 : 0)), 0);
+        document.getElementById('totalAccounts').textContent = total;
+        document.getElementById('availableAccounts').textContent = available > 998 ? '∞' : available;
+        document.getElementById('usersOnline').textContent = usersSnapshot.size;
+    }
+    
+    function showSection(sectionName) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        const section = document.getElementById(sectionName);
+        if (section) section.classList.add('active');
+        document.querySelectorAll('.nav-links li').forEach(l => l.classList.remove('active'));
+        const link = Array.from(document.querySelectorAll('.nav-links li')).find(l => l.textContent.trim().toLowerCase().includes(sectionName.toLowerCase()));
+        if (link) link.classList.add('active');
+        if (sectionName === 'accounts') displayAccounts();
+        if (sectionName === 'admin' && isAdmin) loadAdminAccounts();
+    }
+
+    function showConfirmModal(message, callback, title = 'Confirmar Acción', confirmText = 'Confirmar', btnClass = 'btn-add') {
+        document.getElementById('confirmTitle').textContent = title;
+        document.getElementById('confirmMessage').textContent = message;
+        const confirmBtn = document.getElementById('confirmBtn');
+        confirmBtn.textContent = confirmText;
+        confirmBtn.className = `btn ${btnClass}`;
+        onConfirmCallback = callback;
+        document.getElementById('confirmModal').style.display = 'flex';
+    }
+
+    function showAlert(title, message) { document.getElementById('alertTitle').textContent = title; document.getElementById('alertMessage').textContent = message; document.getElementById('alertModal').style.display = 'flex'; }
+    function copyReferralLink() { const linkInput = document.getElementById('referralLink'); linkInput.select(); linkInput.setSelectionRange(0, 99999); try { document.execCommand('copy'); showAlert('¡Copiado!', 'Tu enlace de referido ha sido copiado al portapapeles.'); } catch (err) { showAlert('Error', 'No se pudo copiar el enlace. Por favor, cópialo manualmente.'); } }
+    
+    // --- Lógica de Administración ---
+    function openAdminPanel() { closeProfileDropdown(); showLoginModal(); }
+    function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; document.getElementById('adminPasswordInput').focus(); }
+    function checkPassword() { if (document.getElementById('adminPasswordInput').value === 'Jose') { isAdmin = true; document.getElementById('adminTokensPerAd').value = appConfig.tokensPerAd; showSection('admin'); closeAllModals(); } else { showAlert('Error', 'Contraseña incorrecta'); } document.getElementById('adminPasswordInput').value = ''; }
+    function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); clearInterval(rewardTimerInterval); }
+    
+    async function addAccount() {
+        const { setDoc, doc } = window.firestore;
+        const service = document.getElementById('adminService').value;
+        const serviceName = service === 'otros' ? document.getElementById('customServiceName').value.trim() : serviceDetails[service].name;
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value.trim();
+        if (!email || !password || !serviceName) { showAlert('Error', 'Todos los campos son obligatorios.'); return; }
+        const account = { id: Date.now(), service, serviceName, email, password, cost: parseInt(document.getElementById('adminCost').value) || 50, userLimit: parseInt(document.getElementById('userLimit').value) || 0, currentUsers: 0 };
+        await setDoc(doc(window.firebase.db, 'streamingAccounts', account.id.toString()), account);
+        loadAccountsFromFirebase();
+        document.getElementById('adminEmail').value = ''; document.getElementById('adminPassword').value = ''; document.getElementById('customServiceName').value = '';
+    }
+
+    function deleteAccount(id) {
+        showConfirmModal('¿Seguro que quieres ELIMINAR PERMANENTEMENTE esta cuenta?', async () => {
+            try {
+                await window.firestore.deleteDoc(window.firestore.doc(window.firebase.db, 'streamingAccounts', id.toString()));
+                loadAccountsFromFirebase();
+            } catch (error) { console.error("Error eliminando cuenta: ", error); showAlert('Error', 'No se pudo eliminar la cuenta.'); }
+        }, 'Eliminar Cuenta', 'Eliminar', 'btn-danger');
+    }
+
+    function loadAdminAccounts() {
+        const adminList = document.getElementById('adminAccountsList');
+        adminList.innerHTML = accounts.length === 0 ? '<p style="text-align:center; padding: 20px;">No hay cuentas.</p>' : accounts.map(acc => {
+            const isFull = acc.userLimit > 0 && acc.currentUsers >= acc.userLimit;
+            const statusText = acc.userLimit === 0 ? 'Ilimitados' : (isFull ? 'Totalmente Reclamada' : `${acc.currentUsers}/${acc.userLimit} Reclamadas`);
+            const statusColor = isFull ? 'var(--secondary-color)' : 'var(--primary-color)';
+            return `<div style="display:flex; flex-wrap: wrap; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:15px; margin-bottom:10px; border-radius:5px; border-left: 3px solid ${statusColor};"><div><strong>${acc.serviceName}</strong> (${acc.cost} tokens)<br><small style="color: ${statusColor}; font-weight: bold;">${statusText}</small></div><div><button class="btn btn-danger" onclick="deleteAccount(${acc.id})">🗑️ Eliminar</button></div></div>`;
+        }).join('');
+    }
+
+    async function loadAccountsFromFirebase() {
+        try {
+            const { getDocs, collection } = window.firestore;
+            const querySnapshot = await getDocs(collection(window.firebase.db, 'streamingAccounts'));
+            accounts = [];
+            querySnapshot.forEach((doc) => accounts.push(doc.data()));
+            accounts.sort((a, b) => a.serviceName.localeCompare(b.serviceName));
+            displayAccounts();
+            if (isAdmin) loadAdminAccounts();
+            updateStats();
+        } catch (error) { console.error("Error cargando cuentas: ", error); document.getElementById('accountsContainer').innerHTML = `<div class="info-card"><h3>❌ Error de Conexión</h3><p>No se pudieron cargar las cuentas.</p></div>`; }
+    }
+
+    // --- Lógica de Configuración y Anuncios ---
+    async function loadAppConfig() {
+        const { doc, getDoc } = window.firestore;
+        const configRef = doc(window.firebase.db, "config", "main");
+        const configSnap = await getDoc(configRef);
+        if (configSnap.exists()) {
+            appConfig = configSnap.data();
+        }
+        document.getElementById('tokensPerAdValue').textContent = appConfig.tokensPerAd;
+    }
+
+    async function saveAppConfig() {
+        if (!isAdmin) return;
+        const { doc, setDoc } = window.firestore;
+        const newTokensPerAd = parseInt(document.getElementById('adminTokensPerAd').value);
+        if (isNaN(newTokensPerAd) || newTokensPerAd < 0) {
+            showAlert('Valor Inválido', 'Por favor, introduce un número válido para los tokens.');
+            return;
+        }
+        try {
+            await setDoc(doc(window.firebase.db, "config", "main"), { tokensPerAd: newTokensPerAd }, { merge: true });
+            appConfig.tokensPerAd = newTokensPerAd;
+            document.getElementById('tokensPerAdValue').textContent = newTokensPerAd;
+            showAlert('Éxito', 'La configuración ha sido guardada.');
+        } catch (error) {
+            console.error("Error guardando configuración: ", error);
+            showAlert('Error', 'No se pudo guardar la configuración.');
+        }
+    }
+
+    function showRewardedAd() {
+        const COOLDOWN_MS = 30000;
+        const lastAdTime = localStorage.getItem('lastRewardedAd');
+        if (lastAdTime && (Date.now() - lastAdTime < COOLDOWN_MS)) {
+            const timeLeft = Math.ceil((COOLDOWN_MS - (Date.now() - lastAdTime)) / 1000);
+            showAlert('Espera un poco', `Puedes ver otro anuncio en ${timeLeft} segundos.`);
+            return;
+        }
+
+        const modal = document.getElementById('rewardedAdModal');
+        const timerEl = document.getElementById('rewardedAdTimer');
+        const claimBtn = document.getElementById('claimRewardBtn');
+        const adSlot = document.getElementById('rewarded-ad-slot');
+
+        // Cargar el anuncio en el modal
+        adSlot.innerHTML = ''; // Limpiar el slot
+        const adScript = document.createElement('script');
+        adScript.type = 'text/javascript';
+        adScript.innerHTML = `atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };`;
+        const adInvokeScript = document.createElement('script');
+        adInvokeScript.type = 'text/javascript';
+        adInvokeScript.src = '//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js';
+        adSlot.appendChild(adScript);
+        adSlot.appendChild(adInvokeScript);
+
+        modal.style.display = 'flex';
+        claimBtn.disabled = true;
+        
+        let countdown = 10;
+        timerEl.textContent = countdown;
+
+        rewardTimerInterval = setInterval(() => {
+            countdown--;
+            timerEl.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(rewardTimerInterval);
+                timerEl.textContent = '¡Listo!';
+                claimBtn.disabled = false;
+            }
+        }, 1000);
+
+        claimBtn.onclick = async () => {
+            try {
+                const { doc, updateDoc, increment } = window.firestore;
+                const userRef = doc(window.firebase.db, "users", currentUser.uid);
+                await updateDoc(userRef, { tokens: increment(appConfig.tokensPerAd) });
+
+                currentUser.tokens += appConfig.tokensPerAd;
+                updateUIAfterLogin(window.firebase.auth.currentUser);
+                
+                localStorage.setItem('lastRewardedAd', Date.now());
+                showAlert('¡Recompensa!', `Has ganado ${appConfig.tokensPerAd} tokens.`);
+            } catch (error) {
+                showAlert('Error', 'No se pudo procesar tu recompensa.');
+            } finally {
+                closeAllModals();
+            }
+        };
+    }
+    
+    async function claimBannerClickReward() {
+        const COOLDOWN_MS = 120000; // 2 minutos
+        const lastClickTime = localStorage.getItem('lastBannerClick');
+        if (lastClickTime && (Date.now() - lastClickTime < COOLDOWN_MS)) {
+            const timeLeft = Math.ceil((COOLDOWN_MS - (Date.now() - lastClickTime)) / 1000);
+            showAlert('Espera un poco', `Puedes volver a reclamar esta recompensa en ${Math.round(timeLeft / 60)} minutos.`);
+            return;
+        }
+
+        try {
+            const { doc, updateDoc, increment } = window.firestore;
+            const userRef = doc(window.firebase.db, "users", currentUser.uid);
+            await updateDoc(userRef, { tokens: increment(TOKENS_PER_BANNER_CLICK) });
+
+            currentUser.tokens += TOKENS_PER_BANNER_CLICK;
+            updateUIAfterLogin(window.firebase.auth.currentUser);
+            localStorage.setItem('lastBannerClick', Date.now());
+            showAlert('¡Gracias!', `Has ganado ${TOKENS_PER_BANNER_CLICK} token por tu apoyo.`);
+        } catch (error) {
+            showAlert('Error', 'No se pudo procesar tu recompensa.');
+        }
+    }
+
+    function closePasswordAndShowAd() {
+        document.getElementById('passwordRevealModal').style.display = 'none';
+        const modal = document.getElementById('interstitialAdModal');
+        const adSlot = document.getElementById('interstitial-ad-slot');
+        adSlot.innerHTML = ''; // Limpiar
+        const adScript = document.createElement('script');
+        adScript.type = 'text/javascript';
+        adScript.innerHTML = `atOptions = { 'key' : 'e1ee4e245867bc4f46bd941d3fa7f0ce', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };`;
+        const adInvokeScript = document.createElement('script');
+        adInvokeScript.type = 'text/javascript';
+        adInvokeScript.src = '//www.highperformanceformat.com/e1ee4e245867bc4f46bd941d3fa7f0ce/invoke.js';
+        adSlot.appendChild(adScript);
+        adSlot.appendChild(adInvokeScript);
+        modal.style.display = 'flex';
+    }
+
+
+    // --- Lógica del Dropdown ---
+    function toggleProfileDropdown(event) { event.stopPropagation(); document.getElementById('profileDropdown').classList.toggle('show'); }
+    function closeProfileDropdown() { document.getElementById('profileDropdown').classList.remove('show'); }
+
+    // --- Inicialización y Event Listeners ---
+    document.addEventListener('DOMContentLoaded', () => {
+        window.showSection = showSection; window.openAdminPanel = openAdminPanel; window.closeAllModals = closeAllModals; window.checkPassword = checkPassword; window.redeemAccount = redeemAccount; window.addAccount = addAccount; window.deleteAccount = deleteAccount; window.copyReferralLink = copyReferralLink; window.signInWithGoogle = signInWithGoogle; window.logout = logout; window.toggleProfileDropdown = toggleProfileDropdown; window.saveAppConfig = saveAppConfig; window.showRewardedAd = showRewardedAd; window.claimBannerClickReward = claimBannerClickReward; window.closePasswordAndShowAd = closePasswordAndShowAd;
+
+        window.addEventListener('click', (event) => { if (!event.target.matches('.profile-avatar-btn')) { const dropdown = document.getElementById('profileDropdown'); if (dropdown.classList.contains('show')) { closeProfileDropdown(); } } });
+        document.getElementById('confirmBtn').addEventListener('click', () => { if (typeof onConfirmCallback === 'function') onConfirmCallback(); closeAllModals(); });
+        document.getElementById('adminService').addEventListener('change', function() { document.getElementById('customServiceGroup').style.display = (this.value === 'otros') ? 'block' : 'none'; });
+    });
+</script>
+
 </body>
 </html>
 
